@@ -2,10 +2,50 @@ body, h1, h2, h3, h4 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
+.panel-title {
+	font-size: 0.9em;
+}
+.sort-text {
+	font-size: 0.6em;
+	text-align: right;
+}
+.rating-table td {
+	padding-top: 0.2em;
+}
+
+.rating-table-review {
+	font-size: 0.8em;
+}
+#entity h3 {
+	margin-top: 0;
+	font-weight: 700;
+}
+
+#large-star .glyphicon {
+	font-size: 1.6em;
+}
+
+.div-buffer {
+	margin-top: 16px;
+}
+.entity-tag {
+	margin-top: 10px;
+}
 #imaginary_container{
     /* Don't copy this */
 }
 
+.review-box h4 {
+	margin-top: 0;
+	font-weight: 700;
+	font-size: 1.2em;
+}
+
+.review-box h5 {
+	font-size: 1em;
+	margin-top: 0.3em;
+	margin-bottom: 0;
+}
 #feature h4 {
 	margin-top: 0;
 	font-weight: 700;
@@ -25,6 +65,10 @@ section.success {
 	background: #18bc9c;
 }
 
+.no-padding-side {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
 .tag-button {
 	margin-top:10px;
 }
@@ -43,6 +87,12 @@ section h2 {
 	margin-top:40px;
 }
 
+.review-section-title {
+	margin-top: 0;
+}
+.entity-buffer {
+	margin-top: 6em;
+}
 .stylish-input-group .input-group-addon{
     background: white !important; 
 }
