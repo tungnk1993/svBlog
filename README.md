@@ -1,13 +1,13 @@
 # svBlog
 
-## Landing Page UI
+## Landing Page UI improve
 
 * Slogan, take action
 * Mission
 * Search suggestion
 * Make list teacher/uni more recognization
 
-## Rating Page UI
+## Rating Page UI improve
 
 * Tag below basic info, more attractive, but may run into displaying problem
 * Make log-in more recognizable
