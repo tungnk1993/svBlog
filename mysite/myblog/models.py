@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # User Model
 class MyUser(models.Model):
 	user = models.OneToOneField(User)
-	profile_pic = models.ImageField()
+	profile_pic = models.ImageField(default='default-user-image.png')
 	short_bio = models.CharField(max_length=100)
 
 	def __unicode__(self):
@@ -22,6 +22,7 @@ class Entity(models.Model):
 	name = models.CharField(max_length=200)
 	short_info = models.TextField()
 	long_info = models.TextField()
+	profile_pic = models.ImageField(default='default-user-image.png')
 
 	def __unicode__(self):
 		return self.name
@@ -33,7 +34,6 @@ class Review(models.Model):
 	date_written = models.DateField()
 	content = models.TextField()
 
-	rating_overall = models.IntegerField()
 	rating_1 = models.IntegerField()
 	rating_2 = models.IntegerField()
 	rating_3 = models.IntegerField()
@@ -49,11 +49,17 @@ class Review(models.Model):
 	def __unicode__(self):
 		return ' - by '.join([self.entity.name, self.author.user.username])
 
+	class Meta:
+		unique_together = ('author', 'entity')
+
 # Vote Model
 class Vote(models.Model):
-	vote_user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='vote_user')
-	vote_review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='vote_review')
+	vote_user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='vote_up_user')
+	vote_review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='vote_down_review')
 	vote_value = models.BooleanField()
-
+	
 	def __unicode__(self):
 		return ' | '.join([self.vote_user.user.username, self.vote_review.__unicode__(), str(self.vote_value)])
+
+	class Meta:
+		unique_together = ('vote_user', 'vote_review')

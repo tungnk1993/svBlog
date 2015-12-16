@@ -29,25 +29,6 @@
 							<a href="#">List university</a>
 						</li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						
-
-						<li>
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<img src="face.jpg" width="20" height="20">
-								&nbsp; A random Name here
-								<span class="caret"></span>
-							</a>
-
-							<ul class="dropdown-menu">
-								<li><a href="#">Action 1</a></li>
-								<li><a href="#">Action 2</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="#">Logout</a></li>
-							</ul>
-						</li>
-						
-					</ul>
 				</div>
 			</div>
 		</div>
@@ -56,27 +37,29 @@
 			
 			<div class = "row" id="entity">
 				<div class = "col-md-3">
-					<img class="img-responsive" src="face.jpg">
+					<img class="img-responsive" src="{{entity_info.profile_pic.url}}">
 				</div>
 
 				<div class="col-md-6">
-					<h3>Thầy Trương Tuấn Dũng</h3>
+					<h3>{{entity_info.name}}</h3>
 					<p class="lead">
-						Hiện đang giảng dạy tại Dại Học Ngoại Thương Hà Nội. Đã có kinh nghiệm 10 năm đi bụi, chuyên ngành xe ôm.
+						{{entity_info.long_info}}
 					</p>
 				</div>
 
 				<div class="col-md-3">
 					<div id = "large-star">
-						<i class="fa fa-star fa-2x"></i>
-						<i class="fa fa-star fa-2x"></i>
-						<i class="fa fa-star fa-2x"></i>
-						<i class="fa fa-star fa-2x"></i>
-						<i class="fa fa-star-half-full fa-2x"></i>
+						{% for star in entity_score_overall.full %}
+							<i class="fa fa-star fa-2x"></i>
+						{% endfor %}
+						
+						{% for half-star in entity_score_overall.half %}
+							<i class="fa fa-star-half-full fa-2x"></i>
+						{% endfor %}
 					</div>
 
 					<div>
-						(Theo 1,000 oánh giá)
+						(Theo {{entity_review_count}} đánh giá)
 					</div>
 
 					<div class="tag-button" id="entity-tag">

@@ -15,7 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from myblog import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    # test
+    url(r'^test_tag/$', views.test_tag),
+    url(r'^test_entity/(\d+)/$', views.test_entity),
+    url(r'^test_review/', views.test_review),
+
+    # dev
+    url(r'^e/(\d+)/$', views.show_entity),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
