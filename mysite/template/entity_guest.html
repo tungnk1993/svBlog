@@ -1,3 +1,4 @@
+{% load star_range %}
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -49,89 +50,44 @@
 
 				<div class="col-md-3">
 					<div id = "large-star">
-						{% for star in entity_score_overall.full %}
+						{% for star in entity_info.score_full|get_range %}
 							<i class="fa fa-star fa-2x"></i>
 						{% endfor %}
 						
-						{% for half-star in entity_score_overall.half %}
+						{% for half_star in entity_info.score_half|get_range %}
 							<i class="fa fa-star-half-full fa-2x"></i>
 						{% endfor %}
 					</div>
 
 					<div>
-						(Theo {{entity_review_count}} đánh giá)
+						(Theo {{entity_info.review_count}} đánh giá)
 					</div>
 
 					<div class="tag-button" id="entity-tag">
-						<a href="#" class="btn btn-default btn-info entity-tag">Dễ tính</a>
-						<a href="#" class="btn btn-default btn-info entity-tag">Hay pha trò</a>
-						<a href="#" class="btn btn-default btn-info entity-tag">Đẹp trai</a>
-						<a href="#" class="btn btn-default btn-info entity-tag">Tận tình giúp đỡ</a>
+						{% for each_tag in entity_best_tag %}
+							<a href="#" class="btn btn-default btn-info entity-tag">{{each_tag.0}}</a>
+						{% endfor %}
 					</div>
 					<div class="div-buffer"></div>
 					<div class="col-md-12 no-padding-side">
 						<table class="table-table-striped table-hover col-md-12 rating-table">
 							<tbody>
+								{% for each_entity_criteria in entity_criteria %}
 								<tr>
 									<td class="col-md-6 no-padding-side">
-										<b>Criteria_1</b>
+										<b>{{each_entity_criteria.name}}</b>
 									</td>
 									<td class="col-md-6 no-padding-side text-right">
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star-empty"></span>
+										{% for star in each_entity_criteria.score_full|get_range %}
+										<i class="fa fa-star fa-x"></i>
+										{% endfor %}
+
+										{% for half-star in each_entity_criteria.score_half|get_range %}
+										<i class="fa fa-star-half-full fa-x"></i>
+										{% endfor %}
 									</td>
 								</tr>
-								<tr>
-									<td class="col-md-6 no-padding-side">
-										<b>Criteria_1</b>
-									</td>
-									<td class="col-md-6 no-padding-side text-right">
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star-empty"></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="col-md-6 no-padding-side">
-										<b>Criteria_3</b>
-									</td>
-									<td class="col-md-6 no-padding-side text-right">
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star-empty"></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="col-md-6 no-padding-side">
-										<b>Criteria_4</b>
-									</td>
-									<td class="col-md-6 no-padding-side text-right">
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star-empty"></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="col-md-6 no-padding-side">
-										<b>Criteria_5</b>
-									</td>
-									<td class="col-md-6 no-padding-side text-right">
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star-empty"></span>
-									</td>
-								</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</div>
@@ -159,124 +115,60 @@
 					</h2>
 				</div>
 			</div>
-
+			{% for each_review in review_list %}
 			<div class="row">
 				<div class="col-md-9">
 					<div class="panel panel-primary review-box">
 						<div class="panel-heading">
-							<h6 class="panel-title">10 trong 13 người (77%) thấy đánh giá này hữu ích</h6>
+							<h6 class="panel-title">{{each_review.vote_up}} trong {{each_review.vote_total}} người ({{each_review.vote_percent}}%) thấy đánh giá này hữu ích</h6>
 						</div>
 						<div class="panel-body">
 							<div class = "col-md-3 no-padding-side">
 								<div class="col-md-12 no-padding-side">
-									<h4>Trương Tuấn Dũng</h4>
+									<h4>{{each_review.author.name}}</h4>
 								</div>
 								<div class="col-md-6 no-padding-side">
-									<img class="img-responsive" src="face.jpg">
+									<img class="img-responsive" src="{{each_review.author.profile_pic.url}}">
 								</div>
 								<div class="col-md-12 no-padding-side">
 									<div>
-										<h5>Sinh viên FTU khóa xx</h5>
-									</div>
-									<div>
-										<h5>30 đánh giá</h5>
+										<h5>{{each_review.author.short_bio}}</h5>
 									</div>
 								</div>
 							</div>
 
 							<div class = "col-md-6 no-padding-side">
-								<h4>Tiêu đề, đâsdsađá </h4>
-								<p class="small">Viết ngày: 05/12/2015</p>
-								<p>
-									Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam nibh. Nunc varius facilisis eros. Sed erat. In in velit quis arcu ornare laoreet. Curabitur adipiscing luctus massa. Integer ut purus ac augue commodo commodo. Nunc nec mi eu justo tempor consectetuer. Etiam vitae nisl. In dignissim lacus ut ante. Cras elit lectus, bibendum a, adipiscing vitae, commodo et, dui. Ut tincidunt tortor.
-								</p>
-								<p>
-									Donec nonummy, enim in lacinia pulvinar, velit tellus scelerisque augue, ac posuere libero urna eget neque. Cras ipsum. Vestibulum pretium, lectus nec venenatis volutpat, purus lectus ultrices risus, a condimentum risus mi et quam. Pellentesque auctor fringilla neque. Duis eu massa ut lorem iaculis vestibulum. Maecenas facilisis elit sed justo. Quisque volutpat malesuada velit. 
-								</p>
+								<h4>{{each_review.title}}</h4>
+								<p class="small">Viết ngày: {{each_review.date_written}}</p>
+								{{each_review.content|linebreaks}}
 							</div>
 
 							<div class = "col-md-3">
 								<div>
-									Tổng thể 
-									<span class="pull-right">
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star"></span>
-										<span class="glyphicon glyphicon-star-empty"></span>
-									</span>
-								</div>
-
-								<div class="div-buffer">
-									<a href="#" class="btn btn-default btn-info entity-tag btn-sm">Dễ tính</a>
-									<a href="#" class="btn btn-default btn-info entity-tag btn-sm">Nghiêm khắc</a>
-									<a href="#" class="btn btn-default btn-info entity-tag btn-sm">Tận tình</a>
-									<a href="#" class="btn btn-default btn-info entity-tag btn-sm">Giảng bài hay</a>
+									{% for each_tag in each_review.tag_list %}
+									<a href="#" class="btn btn-default btn-info entity-tag btn-sm">{{each_tag}}</a>
+									{% endfor %}
 								</div>
 
 								<div class="row-buffer">
 									<table class="table-table-striped table-hover col-md-12 rating-table-review">
 									<tbody>
+										{% for each_rating in each_review.rating %}
 										<tr>
 											<td class="col-md-6 no-padding-side">
-												<b>Criteria_1</b>
+												<b>{{each_rating.name}}</b>
 											</td>
 											<td class="col-md-6 no-padding-side text-right">
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star-empty"></span>
+												{% for star in each_rating.score_full|get_range %}
+												<i class="fa fa-star fa-x"></i>
+												{% endfor %}
+
+												{% for half_star in each_rating.score_half|get_range %}
+												<i class="fa fa-star-half-full fa-x"></i>
+												{% endfor %}
 											</td>
 										</tr>
-										<tr>
-											<td class="col-md-6 no-padding-side">
-												<b>Criteria_1</b>
-											</td>
-											<td class="col-md-6 no-padding-side text-right">
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star-empty"></span>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-md-6 no-padding-side">
-												<b>Criteria_3</b>
-											</td>
-											<td class="col-md-6 no-padding-side text-right">
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star-empty"></span>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-md-6 no-padding-side">
-												<b>Criteria_4</b>
-											</td>
-											<td class="col-md-6 no-padding-side text-right">
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star-empty"></span>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-md-6 no-padding-side">
-												<b>Criteria_5</b>
-											</td>
-											<td class="col-md-6 no-padding-side text-right">
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star"></span>
-												<span class="glyphicon glyphicon-star-empty"></span>
-											</td>
-										</tr>
+										{% endfor %}
 									</tbody>
 									</table>
 								</div>

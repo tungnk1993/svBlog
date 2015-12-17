@@ -6,7 +6,8 @@ class MyUser(models.Model):
 	user = models.OneToOneField(User)
 	profile_pic = models.ImageField(default='default-user-image.png')
 	short_bio = models.CharField(max_length=100)
-
+	name = models.CharField(max_length=100, default='Test User Display Name')
+	
 	def __unicode__(self):
 		return self.user.username
 		
@@ -33,6 +34,8 @@ class Review(models.Model):
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, related_name='entity')
 	date_written = models.DateField()
 	content = models.TextField()
+	title = models.CharField(max_length=200, default='NoTitle')
+	is_teacher = models.BooleanField(default=True)
 
 	rating_1 = models.IntegerField()
 	rating_2 = models.IntegerField()
@@ -63,3 +66,16 @@ class Vote(models.Model):
 
 	class Meta:
 		unique_together = ('vote_user', 'vote_review')
+
+# Criteria Name
+class Criteria_Teacher(models.Model):
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.name
+
+class Criteria_Uni(models.Model):
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.name

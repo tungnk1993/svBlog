@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from models import MyUser, Tag, Entity, Review, Vote
+from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni
 
 def test_tag(request):
 	tag_list = Tag.objects.all().values()
@@ -29,7 +29,18 @@ def test_review(request):
 	'''
 	pass
 
-def show_entity(request):
-	pass
+def show_entity(request, entity_id):
+	print "Fetch entity", entity_id
+
+	return render(request, 'entity_guest.html')
+	'''
+	return render(request, 'entity_guest.html', {
+													'entity_info': entity_info,
+													'entity_best_tag' : entity_best_tag,
+													'entity_criteria' : entity_criteria,
+													'review_list' : review_list,
+												})
+	'''
+
 
 	
