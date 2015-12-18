@@ -104,4 +104,7 @@ USE_TZ = True
 
 MEDIA_ROOT = "C:/Users/User/Documents/GitHub/svBlog/mysite/media/"
 MEDIA_URL = "/media/"
+
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ( os.path.join('static'), )

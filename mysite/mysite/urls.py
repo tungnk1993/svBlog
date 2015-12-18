@@ -23,7 +23,6 @@ urlpatterns = [
     # test
     url(r'^test_tag/$', views.test_tag),
     url(r'^test_entity/(\d+)/$', views.test_entity),
-    url(r'^test_review/', views.test_review),
 
     # dev
     url(r'^e/(\d+)/$', views.show_entity),

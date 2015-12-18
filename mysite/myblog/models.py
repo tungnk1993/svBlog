@@ -24,7 +24,8 @@ class Entity(models.Model):
 	short_info = models.TextField()
 	long_info = models.TextField()
 	profile_pic = models.ImageField(default='default-user-image.png')
-
+	is_teacher = models.BooleanField(default=True)
+	
 	def __unicode__(self):
 		return self.name
 
@@ -35,7 +36,7 @@ class Review(models.Model):
 	date_written = models.DateField()
 	content = models.TextField()
 	title = models.CharField(max_length=200, default='NoTitle')
-	is_teacher = models.BooleanField(default=True)
+	
 
 	rating_1 = models.IntegerField()
 	rating_2 = models.IntegerField()
