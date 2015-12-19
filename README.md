@@ -15,3 +15,22 @@
 * Add useful / report option
 * Add function to insert/modify/suggest profile pic
 * Add share button
+
+## TODO
+
+* Django basic login/register (testing purpose)
+* Empty star
+* Show own review
+* Edit review
+* Delete review
+* Show own votes
+* Change vote
+* List/filter teacher
+* List/filter uni
+* Search box suggestion(vietnamese support if possible)
+  * Create ascii version of entity's name
+  * Transform query to ascii
+  * Match
+  
+## Require
+* django-bleach
