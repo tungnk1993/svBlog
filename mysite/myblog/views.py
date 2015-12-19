@@ -118,10 +118,12 @@ def show_entity(request, entity_id):
 	print "Fetch tag"
 	print tag_list
 
-	review_list = get_list_or_404(Review, entity__id=entity_id)
+	#review_list = get_list_or_404(Review, entity__id=entity_id)
+	review_list = Review.objects.filter(entity__id=entity_id)
 	review_list = add_vote_info(review_list)
 	print "Review List"
 	print review_list
+	print review_list[0].content
 	
 	entity_info.review_count = len(review_list)
 	entity_score = calculate_overall(review_list, len(review_list))

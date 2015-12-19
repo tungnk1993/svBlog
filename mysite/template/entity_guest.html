@@ -139,7 +139,7 @@
 							<div class = "col-md-6">
 								<h4>{{each_review.title}}</h4>
 								<p class="small">Viết ngày: {{each_review.date_written|date:"d/m/Y"}}</p>
-								{{each_review.content|linebreaks}}
+								{{each_review.content|safe|linebreaks}}
 							</div>
 
 							<div class = "col-md-3 no-padding-side">

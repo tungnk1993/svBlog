@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django_bleach.models import BleachField
 # User Model
 class MyUser(models.Model):
 	user = models.OneToOneField(User)
@@ -34,7 +34,9 @@ class Review(models.Model):
 	author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='author')
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, related_name='entity')
 	date_written = models.DateField()
-	content = models.TextField()
+	#content = models.TextField()
+	content = BleachField(allowed_tags=[
+		'b'])
 	title = models.CharField(max_length=200, default='NoTitle')
 	
 
