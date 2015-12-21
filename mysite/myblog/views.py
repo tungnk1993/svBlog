@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, Http404
 from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni
 from collections import defaultdict
+from django.core.exceptions import ObjectDoesNotExist
+import traceback
 
 def test_tag(request):
 	tag_list = Tag.objects.all().values()
@@ -110,6 +112,18 @@ def add_tag_info(review_list, tag_list):
 	print tag_list_with_count
 	return (review_list, tag_list_with_count[:5])
 
+def add_my_vote_info(review_list, my_vote_list):
+	if not my_vote_list:
+		return review_list
+	for each_review in review_list:
+		for vote_info in my_vote_list:
+			if vote_info[0] == each_review.id:
+				each_review.have_own_vote = True
+				each_review.own_vote = vote_info[1]
+				break
+	return review_list
+
+
 def show_entity(request, entity_id):
 	print "Fetch entity", entity_id
 
@@ -123,7 +137,6 @@ def show_entity(request, entity_id):
 	review_list = add_vote_info(review_list)
 	print "Review List"
 	print review_list
-	print review_list[0].content
 	
 	entity_info.review_count = len(review_list)
 	entity_score = calculate_overall(review_list, len(review_list))
@@ -143,20 +156,50 @@ def show_entity(request, entity_id):
 	(review_list, entity_best_tag) = add_tag_info(review_list, tag_list)
 	print 'Best tag', entity_best_tag
 
+	##### registered user section
+	# add own vote details
+	if request.user.is_authenticated():
+		print "Logged in user", request.user.myuser.pk
+		my_vote_list = Vote.objects.filter(vote_user__id=request.user.myuser.pk).values_list('vote_review_id', 'vote_value')
+		print my_vote_list
+		review_list = add_my_vote_info(review_list, my_vote_list)
+
+
+	##########################
 	return render(request, 'entity_guest.html', {
 												'entity_info': entity_info,
 												'review_list' : review_list,
 												'entity_criteria' : entity_criteria,
 												'entity_best_tag' : entity_best_tag,
 												})
-	'''
-	return render(request, 'entity_guest.html', {
-													'entity_info': entity_info,
-													'entity_best_tag' : entity_best_tag,
-													'entity_criteria' : entity_criteria,
-													'review_list' : review_list,
-												})
-	'''
+ 
+
+def change_vote(request, review_id, vote_value):
+	# vote_value = 0(false), 1(true), 2(cancel)
+	# check user logged in, user own this vote
+	valid_vote = [0, 1, 2]
+	try:
+		vote_value = int(vote_value)
+		review_id = int(review_id)
+		print request.path, request.user.id, request.user.myuser.id
+		print "Receive ajax", review_id, vote_value
+		if request.user.is_authenticated():
+			if vote_value == 2:
+				print "Delete vote"
+				target_vote = get_object_or_404(Vote, vote_user_id=request.user.myuser.id, vote_review_id=review_id)
+				target_vote.delete()
+			else:
+				try:
+					target_vote = Vote.objects.get(vote_user__id=request.user.myuser.id, vote_review__id=review_id)
+					target_vote.vote_value = vote_value
+					target_vote.save()
+					print "Update vote"
+				except ObjectDoesNotExist:
+					print "Create vote"
+					target_vote = Vote.objects.create(vote_user_id=request.user.myuser.id, vote_review_id=review_id, vote_value=vote_value)
+	except Exception, e:
+		return HttpResponse("Error AJAX", request.path)		
+	return HttpResponse("OK")
 
 
 	

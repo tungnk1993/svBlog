@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from myblog import views
+from django.contrib.auth.views import login, logout
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,7 +26,13 @@ urlpatterns = [
     url(r'^test_entity/(\d+)/$', views.test_entity),
 
     # dev
-    url(r'^e/(\d+)/$', views.show_entity),
+    url(r'^e/(?P<entity_id>\d+)/$', views.show_entity),
+    url(r'^vote/(?P<review_id>\d+)/(?P<vote_value>\d+)/$', views.change_vote),
+    
+
+    # basic-login
+    url(r'^accounts/login/$', login),
+    url(r'^accounts/logout/$', logout),
 ]
 
 from django.conf import settings

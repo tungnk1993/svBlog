@@ -118,3 +118,17 @@ section h2 {
     border:0;
     background:transparent;
 }
+
+.btn-default-my {
+	color: #333;
+	background-color: #fff;
+	border-color: #2c3e50;
+}
+
+.btn-smaller-border {
+	border-width: 1px;
+}
+
+.btn-default-my:hover {
+	color: #333;
+};

@@ -18,13 +18,10 @@
 
 ## TODO
 
-* Django basic login/register (testing purpose)
 * Empty star
 * Show own review
 * Edit review
 * Delete review
-* Show own votes
-* Change vote
 * List/filter teacher
 * List/filter uni
 * Search box suggestion(vietnamese support if possible)

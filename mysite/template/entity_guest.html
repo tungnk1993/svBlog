@@ -9,6 +9,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="{% static "my.css" %}">
+		<script src="{% static "entity.js" %}"></script>
 	</head>
 
 	<body>
@@ -31,6 +32,25 @@
 							<a href="#">List university</a>
 						</li>
 					</ul>
+					{% if user.is_authenticated %}
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								<img src="{{ user.myuser.profile_pic.url }}" width="20" height="20">
+								&nbsp; {{ user.myuser.name}}
+								<span class="caret"></span>
+							</a>
+
+							<ul class="dropdown-menu">
+								<li><a href="#">Action 1</a></li>
+								<li><a href="#">Action 2</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/accounts/logout">Logout</a></li>
+							</ul>
+						</li>
+						
+					</ul>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -95,6 +115,7 @@
 				</div>
 			</div>
 
+			{% if not user.is_authenticated %}
 			<div class = "row div-buffer">
 				<div class="col-md-4">
 					<div class="well well-sm ">
@@ -103,8 +124,13 @@
 					</div>
 				</div>
 			</div>
+			{% else %}
+				{% if have_own_review %}
+				{% else %}
+				{% endif %}
+			{% endif %}
 
-			<div class="row">
+			<div class="row div-buffer">
 				<div class="col-md-10">
 					<h2 class="review-section-title">
 						Bình luận/cảm nhận/đánh giá
@@ -119,7 +145,7 @@
 				<div class="col-md-10">
 					<div class="panel panel-primary review-box">
 						<div class="panel-heading">
-							<h6 class="panel-title">{{each_review.vote_up}} trong {{each_review.vote_total}} người ({{each_review.vote_percent}}%) thấy đánh giá này hữu ích</h6>
+							<h6 class="panel-title" review-id-info="{{each_review.id}}"><span class="vote-up-info">{{each_review.vote_up}}</span> trong <span class="vote-total-info">{{each_review.vote_total}}</span> người (<span class="vote-percent-info">{{each_review.vote_percent}}</span>%) thấy đánh giá này hữu ích</h6>
 						</div>
 						<div class="panel-body">
 							<div class = "col-md-3 no-padding-side">
@@ -140,6 +166,37 @@
 								<h4>{{each_review.title}}</h4>
 								<p class="small">Viết ngày: {{each_review.date_written|date:"d/m/Y"}}</p>
 								{{each_review.content|safe|linebreaks}}
+
+								{% if each_review.have_own_vote %}
+									{% if each_review.own_vote %}
+									<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-primary btn-sm">
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										Hay
+									</button>
+									<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										Không hay
+									</button>
+									{% else %}
+									<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										Hay
+									</button>
+									<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-danger btn-sm">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										Không hay
+									</button>
+									{% endif %}
+								{% else %}
+								<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									Hay
+								</button>
+								<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									Không hay
+								</button>
+								{% endif %}
 							</div>
 
 							<div class = "col-md-3 no-padding-side">
