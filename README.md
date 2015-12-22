@@ -32,3 +32,4 @@
   
 ## Require
 * django-bleach
+* bootstrap-rating (https://github.com/dreyescat/bootstrap-rating)
