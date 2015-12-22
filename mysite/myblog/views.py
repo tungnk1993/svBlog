@@ -202,4 +202,5 @@ def change_vote(request, review_id, vote_value):
 	return HttpResponse("OK")
 
 
-	
+def write_review(request, entity_id):
+	pass

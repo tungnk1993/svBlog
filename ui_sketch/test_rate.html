@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<title>Bootstrap rating</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="bootstrap-rating.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="bootstrap-rating.min.js"></script>
+	<script>
+	  var a = ['asdasdas' , 'bbbb', 'ccccc', 'ddddd', 'Đăng nhập để đánh giá'];
+	  $(function () {
+		$('.rating-tooltip').rating({
+		  extendSymbol: function (rate) {
+			$(this).tooltip({
+			  container: 'body',
+			  placement: 'bottom',
+			  title: 'Rate ' + a[rate-1]
+			});
+		  }
+		});
+	  });
+	</script>
+  </head>
+  <body>
+	<div class="survey-builder container">
+	  <h2>Bootstrap rating</h2>
+	  <hr/>
+	  <h3>Font Awesome icons</h3>
+	  <input type="hidden" class="rating-tooltip" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x"/>
+	</div>
+	
+	
+  </body>
+</html>

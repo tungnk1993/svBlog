@@ -114,3 +114,25 @@ section h2 {
     border:0;
     background:transparent;
 }
+
+.tag-btn {
+	margin-right: 5px;
+}
+
+.btn-default-my {
+	color: #333;
+	background-color: #ffffff;
+	border-color: #2c3e50;
+}
+
+.btn-default-my:hover {
+	color: #333;
+	background-color: #ffffff;
+	border-color: #2c3e50;	
+}
+.btn-default-my.active {
+	color: #ffffff;
+	background-color: #217dbb;
+	border-color: #2077b2;
+}
+
