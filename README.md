@@ -16,10 +16,10 @@
 * Add function to insert/modify/suggest profile pic
 * Add share button
 
-## TODO
+## TODO (should be in order)
 
-* Empty star
 * Show own review
+* Submit review (form)
 * Edit review
 * Delete review
 * List/filter teacher
@@ -28,6 +28,7 @@
   * Create ascii version of entity's name
   * Transform query to ascii
   * Match
+* Empty star
   
 ## Require
 * django-bleach
