@@ -33,7 +33,7 @@ class Entity(models.Model):
 class Review(models.Model):
 	author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='author')
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, related_name='entity')
-	date_written = models.DateField()
+	date_written = models.DateField(auto_now_add=True)
 	#content = models.TextField()
 	content = BleachField(allowed_tags=[
 		'b'])
@@ -46,11 +46,11 @@ class Review(models.Model):
 	rating_4 = models.IntegerField()
 	rating_5 = models.IntegerField()
 
-	tag_1 = models.ForeignKey(Tag, related_name='tag1')
-	tag_2 = models.ForeignKey(Tag, related_name='tag2')
-	tag_3 = models.ForeignKey(Tag, related_name='tag3')
-	tag_4 = models.ForeignKey(Tag, related_name='tag4')
-	tag_5 = models.ForeignKey(Tag, related_name='tag5')
+	tag_1 = models.ForeignKey(Tag, related_name='tag1', blank=True, null=True)
+	tag_2 = models.ForeignKey(Tag, related_name='tag2', blank=True, null=True)
+	tag_3 = models.ForeignKey(Tag, related_name='tag3', blank=True, null=True)
+	tag_4 = models.ForeignKey(Tag, related_name='tag4', blank=True, null=True)
+	tag_5 = models.ForeignKey(Tag, related_name='tag5', blank=True, null=True)
 
 	def __unicode__(self):
 		return ' - by '.join([self.entity.name, self.author.user.username])

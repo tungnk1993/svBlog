@@ -2,24 +2,6 @@ body, h1, h2, h3, h4 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-.panel-title {
-	font-size: 0.9em;
-}
-.sort-text {
-	font-size: 0.6em;
-	text-align: right;
-}
-.rating-table td {
-	padding-top: 0.2em;
-}
-
-.rating-table-review {
-	font-size: 0.8em;
-}
-
-.rating-table-review td {
-	padding-top: 0.4em;
-}
 
 .rating-table-write td {
 	padding-top: 0.4em;
@@ -43,28 +25,7 @@ body, h1, h2, h3, h4 {
     /* Don't copy this */
 }
 
-.review-box h4 {
-	margin-top: 0;
-	font-weight: 700;
-	font-size: 1.2em;
-}
 
-.review-box h5 {
-	font-size: 1em;
-	margin-top: 0.3em;
-	margin-bottom: 0;
-}
-#feature h4 {
-	margin-top: 0;
-	font-weight: 700;
-}
-
-#feature {
-	padding: 20px 0;
-}
-#feature .glyphicon {
-	margin-right: 5px;
-}
 section {
 	padding: 50px 0;
 }
@@ -95,9 +56,6 @@ section h2 {
 	margin-top:40px;
 }
 
-.review-section-title {
-	margin-top: 0;
-}
 .entity-buffer {
 	margin-top: 6em;
 }
@@ -123,21 +81,28 @@ section h2 {
     background:transparent;
 }
 
-.btn-default-my {
-	color: #333;
-	background-color: #fff;
-	border-color: #2c3e50;
-}
-
-
 .btn-smaller-border {
 	border-width: 1px;
 }
 
+.tag-btn {
+	margin-right: 7px;
+	margin-top: 7px;
+}
+
+.btn-default-my {
+	color: #333;
+	background-color: #ffffff;
+	border-color: #2c3e50;
+}
+
 .btn-default-my:hover {
 	color: #333;
-};
-
-.tag-btn {
-	margin-right: 5px;
+	background-color: #ffffff;
+	border-color: #2c3e50;	
+}
+.btn-default-my.active {
+	color: #ffffff;
+	background-color: #217dbb;
+	border-color: #2077b2;
 }

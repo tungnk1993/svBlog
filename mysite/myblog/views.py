@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni
 from collections import defaultdict
 from django.core.exceptions import ObjectDoesNotExist
@@ -100,8 +101,12 @@ def add_rating_info(review_list, criteria_list):
 def add_tag_info(review_list, tag_list):
 	tag_count = defaultdict(int)
 	for each_review in review_list:
-		review_tag_list = [each_review.tag_1.id, each_review.tag_2.id, each_review.tag_3.id, each_review.tag_4.id, each_review.tag_5.id]
+		review_tag_list = [each_review.tag_1, each_review.tag_2, each_review.tag_3, each_review.tag_4, each_review.tag_5]
+		print review_tag_list
+		review_tag_list = [item.id for item in review_tag_list if item]	
+		print review_tag_list
 		review_tag_list = [tag_list[item-1] for item in review_tag_list]
+		print review_tag_list
 		each_review.tag_list = review_tag_list
 		for item in review_tag_list:
 			tag_count[item] += 1
@@ -203,4 +208,49 @@ def change_vote(request, review_id, vote_value):
 
 
 def write_review(request, entity_id):
-	pass
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
+
+	if request.method == 'GET':
+		entity_info = get_object_or_404(Entity, pk=entity_id)
+		criteria_list = get_criteria_list(entity_info.is_teacher)
+		tag_list = get_list_or_404(Tag)
+
+		return render(request, 'write_review.html', {
+			'entity_info' : entity_info,
+			'criteria_list' : criteria_list,
+			'tag_list' : tag_list,
+		})
+	elif request.method == 'POST':
+		# TODO: validate
+		# populate data, currently ugly
+		tag_id_list = Tag.objects.all().values_list('id', flat=True)
+		selected_tag = [None, None, None, None, None]
+		tag_count = 0
+		for tag_id in tag_id_list:
+			if request.POST.get(''.join(['tag',str(tag_id)])):
+				selected_tag[tag_count] = tag_id
+				tag_count += 1
+
+		try:
+			Review.objects.create(
+				author_id=request.user.myuser.pk,
+				entity_id=entity_id,
+				content=request.POST.get('content'),
+				title=request.POST.get('title'),
+				rating_1=request.POST.get('rating1'),
+				rating_2=request.POST.get('rating2'),
+				rating_3=request.POST.get('rating3'),
+				rating_4=request.POST.get('rating4'),
+				rating_5=request.POST.get('rating5'),
+				tag_1_id=selected_tag[0],
+				tag_2_id=selected_tag[1],
+				tag_3_id=selected_tag[2],
+				tag_4_id=selected_tag[3],
+				tag_5_id=selected_tag[4],
+			)
+			print "Added new review"
+		except Exception, e:
+			print traceback.print_exc()
+
+		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
