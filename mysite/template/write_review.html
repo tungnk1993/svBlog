@@ -12,6 +12,30 @@
 		<script type="text/javascript" src="{% static "bootstrap-rating.min.js" %}"></script>
 		<link rel="stylesheet" href="{% static "write-review.css" %}">
 		<script src="{% static "write-review.js" %}"></script>
+		<script>
+			$(function () {
+				{% if rating1 %}
+					$('input[name="rating1"]').rating('rate', {{rating1}});
+				{% endif %}
+				{% if rating2 %}
+					$('input[name="rating2"]').rating('rate', {{rating2}});
+				{% endif %}
+				{% if rating3 %}
+					$('input[name="rating3"]').rating('rate', {{rating3}});
+				{% endif %}
+				{% if rating4 %}
+					$('input[name="rating4"]').rating('rate', {{rating4}});
+				{% endif %}
+				{% if rating5 %}
+					$('input[name="rating5"]').rating('rate', {{rating5}});
+				{% endif %}
+
+				{% for tag in selected_tag_list %}
+					$('[name={{tag}}]').attr('checked', 'checked');
+					$('[name={{tag}}]').parent().addClass('active');
+				{% endfor %}
+			});
+		</script>
 	</head>
 
 	<body>
@@ -68,14 +92,16 @@
 				<div class = "col-md-6 col-md-offset-1">
 					<div class = "form-group">
 						<label for="review-title">Title</label>
-						<input name="title" type="text" class="form-control" id="review-title" placeholder="Title">
+						<input name="title" type="text" class="form-control" id="review-title" placeholder="Title" value="{{title}}">
+						<span class="{% if error.title %}text-danger{% endif %} help-block">Title cannot be empty</span>
 					</div>
 					
 					<div class = "form-group">
 						<label for="review-content">Content</label>
 						<span tabindex="0" class="pull-right glyphicon glyphicon-question-sign" role="button" data-toggle="popover" data-html="true" aria-hidden="true" title="Gợi ý cách viết" data-content="Pointer 1<br>Pointer 2">
 							</span>
-						<textarea name="content" class="form-control" rows="10" id="review-content"></textarea>
+						<textarea name="content" class="form-control" rows="10" id="review-content">{{content}}</textarea>
+						<span class="{% if error.content %}text-danger{% endif %} help-block">Content at least 100 characters</span>
 					</div>
 				</div>
 				<div class = "col-md-5">
@@ -84,7 +110,7 @@
 							<tbody>
 								{% for criteria in criteria_list %}
 								<tr>
-									<td class="no-padding-side col-md-6">
+									<td class="{% if error.rating %}text-danger{% endif %} no-padding-side col-md-6">
 										<b>{{criteria.name}}</b>
 									</td>
 									<td class="col-md-6 text-left">
@@ -96,14 +122,14 @@
 						</table>
 					</div>
 
-					<div class = "col-md-12 row-buffer">
+					<div class = "{% if error.tag %}text-danger{% endif %} col-md-12 row-buffer">
 						<b>Choose 3-5 tags that describes teacher/uni</b>
 					</div>
 					<div class = "col-md-12 ">
 						<div class="btn-group" data-toggle="buttons">
 						{% for tag in tag_list %}
 						  <label class="btn btn-default-my tag-btn">
-							<input name="tag{{tag.id}}" tag-id="{{tag.id}}" type="checkbox" autocomplete="off">{{tag.tag_name}}
+							<input name="tag{{tag.id}}" id="tag{{tag.id}}" tag-id="{{tag.id}}" type="checkbox" autocomplete="off">{{tag.tag_name}}
 						  </label>
 						{% endfor %}
 						</div>

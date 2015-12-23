@@ -216,24 +216,98 @@ def write_review(request, entity_id):
 		criteria_list = get_criteria_list(entity_info.is_teacher)
 		tag_list = get_list_or_404(Tag)
 
-		return render(request, 'write_review.html', {
-			'entity_info' : entity_info,
-			'criteria_list' : criteria_list,
-			'tag_list' : tag_list,
-		})
+		# check if the user already have a review?, edit mode
+		# very ugly code, i know
+		try:
+			my_review = Review.objects.get(author_id=request.user.myuser.pk, entity_id=entity_id)
+			print "Review already existed, proceed to fetch"
+			selected_tag_list = []
+			if my_review.tag_1:
+				selected_tag_list.append(''.join(['tag', str(my_review.tag_1.id)]))
+			if my_review.tag_2:
+				selected_tag_list.append(''.join(['tag', str(my_review.tag_2.id)]))
+			if my_review.tag_3:
+				selected_tag_list.append(''.join(['tag', str(my_review.tag_3.id)]))
+			if my_review.tag_4:
+				selected_tag_list.append(''.join(['tag', str(my_review.tag_4.id)]))
+			if my_review.tag_5:
+				selected_tag_list.append(''.join(['tag', str(my_review.tag_5.id)]))
+			return render(request, 'write_review.html', {
+				'entity_info' : entity_info,
+				'criteria_list' : criteria_list,
+				'tag_list' : tag_list,
+				'title' : my_review.title,
+				'content' : my_review.content,
+				'rating1': my_review.rating_1,
+				'rating2': my_review.rating_2,
+				'rating3': my_review.rating_3,
+				'rating4': my_review.rating_4,
+				'rating5': my_review.rating_5,
+				'selected_tag_list' : selected_tag_list,
+			})
+		except ObjectDoesNotExist:
+			return render(request, 'write_review.html', {
+				'entity_info' : entity_info,
+				'criteria_list' : criteria_list,
+				'tag_list' : tag_list,
+			})
 	elif request.method == 'POST':
 		# TODO: validate
 		# populate data, currently ugly
+		error = {}
 		tag_id_list = Tag.objects.all().values_list('id', flat=True)
 		selected_tag = [None, None, None, None, None]
 		tag_count = 0
 		for tag_id in tag_id_list:
 			if request.POST.get(''.join(['tag',str(tag_id)])):
+				if tag_count == 5:
+					error["tag"] = True
+					break
 				selected_tag[tag_count] = tag_id
 				tag_count += 1
 
+		if tag_count < 3:
+			error["tag"] = True
+		if not request.POST.get('content'):
+			error["content"] = True
+		elif len(request.POST.get('content')) < 100:
+			error["content"] = True
+		if not request.POST.get('title'):
+			error["title"] = True
+		if not (request.POST.get('rating1') and request.POST.get('rating2') \
+				and request.POST.get('rating3') and request.POST.get('rating4') \
+				and request.POST.get('rating5')):
+			error["rating"] = True
+
+		if error:
+			entity_info = get_object_or_404(Entity, pk=entity_id)
+			criteria_list = get_criteria_list(entity_info.is_teacher)
+			tag_list = get_list_or_404(Tag)
+			form_selected_tag = []
+			for tag_id in tag_id_list:
+				if request.POST.get(''.join(['tag',str(tag_id)])):
+					form_selected_tag.append(''.join(['tag',str(tag_id)]))
+
+			return render(request, 'write_review.html', {
+				'entity_info' : entity_info,
+				'criteria_list' : criteria_list,
+				'tag_list' : tag_list,
+				'error' : error,
+				'title' : request.POST.get('title'),
+				'content' : request.POST.get('content'),
+				'rating1': request.POST.get('rating1', 0),
+				'rating2': request.POST.get('rating2', 0),
+				'rating3': request.POST.get('rating3', 0),
+				'rating4': request.POST.get('rating4', 0),
+				'rating5': request.POST.get('rating5', 0),
+				'selected_tag_list' : form_selected_tag,
+			})
+
 		try:
-			Review.objects.create(
+			print "No error validating review"
+			print "Proceed to create or update review"
+			'''
+			Review.objects.update_or_create(
 				author_id=request.user.myuser.pk,
 				entity_id=entity_id,
 				content=request.POST.get('content'),
@@ -249,7 +323,26 @@ def write_review(request, entity_id):
 				tag_4_id=selected_tag[3],
 				tag_5_id=selected_tag[4],
 			)
-			print "Added new review"
+			'''
+			Review.objects.update_or_create(
+				author_id=request.user.myuser.pk,
+				entity_id=entity_id,
+				defaults={
+					'content': request.POST.get('content'),
+					'title': request.POST.get('title'),
+					'rating_1':request.POST.get('rating1'),
+					'rating_2':request.POST.get('rating2'),
+					'rating_3':request.POST.get('rating3'),
+					'rating_4':request.POST.get('rating4'),
+					'rating_5':request.POST.get('rating5'),
+					'tag_1_id':selected_tag[0],
+					'tag_2_id':selected_tag[1],
+					'tag_3_id':selected_tag[2],
+					'tag_4_id':selected_tag[3],
+					'tag_5_id':selected_tag[4],
+				}
+			)
+			print "Review updated/created"
 		except Exception, e:
 			print traceback.print_exc()
 
