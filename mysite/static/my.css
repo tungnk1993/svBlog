@@ -141,3 +141,11 @@ section h2 {
 .tag-btn {
 	margin-right: 5px;
 }
+
+.clickable {
+	cursor: pointer;
+}
+
+.well {
+	padding: 0.5em;
+}

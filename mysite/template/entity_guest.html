@@ -9,8 +9,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="{% static "my.css" %}">
-		<script src="{% static "entity.js" %}"></script>
 		<script src="{% static "jquery-scrollto.js" %}"></script>
+		<script src="{% static "bootbox.min.js" %}"></script>
+		<script src="{% static "entity.js" %}"></script>
 		<script>
 			$(function () {
 				$('.own-review').click(function() {
@@ -126,9 +127,9 @@
 			{% if not user.is_authenticated %}
 			<div class = "row div-buffer">
 				<div class="col-md-4">
-					<div class="well well-sm ">
-						Đăng nhập để đánh giá! (có thể ẩn danh) &nbsp;
-						<a href="#" class="btn btn-success btn-sm">Login</a>
+					<div class="well clearfix">
+						Đăng nhập để đánh giá! (có thể ẩn danh)
+						<a href="#" class="pull-right btn btn-success btn-sm">Login</a>
 					</div>
 				</div>
 			</div>
@@ -136,14 +137,24 @@
 				{% if have_own_review %}
 					<div class = "row div-buffer">
 						<div class="col-md-4">
-							<div class="well well-sm ">
+							<div class="well clearfix">
 								<i class="fa fa-check fa-2x"></i>
-								Bạn đã viết đánh giá.
-								<a class="btn btn-success own-review">Xem tại đây</a>
+								Bạn đã viết đánh giá !!
+								<a class="pull-right btn btn-success own-review ">Xem tại đây</a>
 							</div>
 						</div>
 					</div>
 				{% else %}
+					<div class = "row div-buffer">
+						<div class="col-md-4">
+							<div class="well clearfix">
+								<i class="fa fa-pencil fa-2x"></i>
+								Bạn đã viết đánh giá chưa?
+								<a href="{% url 'write_review' entity_info.id %}" class="pull-right btn btn-success own-review">Viết luôn!</a>
+							
+							</div>
+						</div>
+					</div>
 				{% endif %}
 			{% endif %}
 
@@ -254,11 +265,13 @@
 							<div class="col-md-3 no-padding-side">
 								<span class="pull-right">
 									<span class="fa-stack fa-lg">
+									  <a href="{% url 'write_review' entity_info.id %}">
 									  <i class="fa fa-circle fa-stack-2x"></i>
 									  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+									</a>
 									</span>
 
-									<span class="fa-stack fa-lg">
+									<span class="fa-stack fa-lg clickable" id="delete-review">
 									  <i class="fa fa-circle fa-stack-2x text-danger"></i>
 									  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 									</span>

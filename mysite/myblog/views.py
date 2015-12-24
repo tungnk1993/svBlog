@@ -357,3 +357,18 @@ def write_review(request, entity_id):
 			print traceback.print_exc()
 
 		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
+
+def delete_review(request, entity_id):
+	try:
+		if request.user.is_authenticated():
+			try:
+				review_to_delete = Review.objects.get(author_id=request.user.myuser.pk,entity_id=entity_id)
+				print "Found review to delete"
+				review_to_delete.delete()
+				return HttpResponse("OK")
+			except ObjectDoesNotExist:
+				return None
+
+		return None
+	except Exception, e:
+		print traceback.print_exc()

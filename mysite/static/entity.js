@@ -2,6 +2,7 @@ $(function() {
 	console.log("entity.js loaded");
 
 	handle_vote_change();
+	handle_delete_review();
 })
 
 function handle_vote_change() {
@@ -91,4 +92,42 @@ function handle_vote_change() {
 			}
 		});
 	})
+}
+
+function handle_delete_review()
+{
+	$('#delete-review').click(function() {
+		bootbox.dialog({
+		  message: "Bạn chắc muốn xóa đánh giá chứ?",
+		  title: "Bình tĩnh!",
+		  buttons: {
+			
+			danger: {
+			  label: "Yes!",
+			  className: "btn-danger",
+			  callback: function() {
+				var url = window.location.href + "delete-review/";
+				console.log("Call ajax ", url);
+				$.ajax({
+					url: url,
+					type: "GET",
+					success: function(result) {
+						location.reload();
+					},
+					error: function (request, error) {
+						console.log(error);
+					}
+				});
+			  }
+			},
+			main: {
+			  label: "Cancel",
+			  className: "btn-default",
+			  callback: function() {
+				console.log("Delete cancel");
+			  }
+			}
+		  }
+		});
+	});
 }

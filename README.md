@@ -18,7 +18,6 @@
 
 ## TODO (should be in order)
 
-* Delete review
 * Filter list of teacher/uni
 * Search box suggestion(vietnamese support if possible)
   * Create ascii version of entity's name
