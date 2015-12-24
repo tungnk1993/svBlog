@@ -101,7 +101,7 @@
 						<span tabindex="0" class="pull-right glyphicon glyphicon-question-sign" role="button" data-toggle="popover" data-html="true" aria-hidden="true" title="Gợi ý cách viết" data-content="Pointer 1<br>Pointer 2">
 							</span>
 						<textarea name="content" class="form-control" rows="10" id="review-content">{{content}}</textarea>
-						<span class="{% if error.content %}text-danger{% endif %} help-block">Content at least 100 characters</span>
+						<span class="{% if error.content %}text-danger{% endif %} help-block" id="textarea-feedback">Cố lên, 100 kí tự nữa thôi</span>
 					</div>
 				</div>
 				<div class = "col-md-5">
