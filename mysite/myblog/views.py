@@ -162,13 +162,21 @@ def show_entity(request, entity_id):
 	print 'Best tag', entity_best_tag
 
 	##### registered user section
-	# add own vote details
+	# add own vote details, add own_review if exists
+	have_own_review = False
+	own_review_id = None
 	if request.user.is_authenticated():
 		print "Logged in user", request.user.myuser.pk
 		my_vote_list = Vote.objects.filter(vote_user__id=request.user.myuser.pk).values_list('vote_review_id', 'vote_value')
 		print my_vote_list
 		review_list = add_my_vote_info(review_list, my_vote_list)
-
+		try:
+			own_review = Review.objects.get(author_id=request.user.myuser.pk, entity_id=entity_id)
+			print "Own Review exists"
+			have_own_review = True
+			own_review_id = own_review.id			
+		except ObjectDoesNotExist:
+			print "No existing review"			
 
 	##########################
 	return render(request, 'entity_guest.html', {
@@ -176,6 +184,8 @@ def show_entity(request, entity_id):
 												'review_list' : review_list,
 												'entity_criteria' : entity_criteria,
 												'entity_best_tag' : entity_best_tag,
+												'have_own_review' : have_own_review,
+												'own_review_id' : own_review_id,
 												})
  
 

@@ -18,13 +18,13 @@
 
 ## TODO (should be in order)
 
-* Show own review
 * Delete review
 * Filter list of teacher/uni
 * Search box suggestion(vietnamese support if possible)
   * Create ascii version of entity's name
   * Transform query to ascii
   * Match
+* Social account linking
 * Empty star
   
 ## Require

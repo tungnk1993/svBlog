@@ -10,6 +10,14 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="{% static "my.css" %}">
 		<script src="{% static "entity.js" %}"></script>
+		<script src="{% static "jquery-scrollto.js" %}"></script>
+		<script>
+			$(function () {
+				$('.own-review').click(function() {
+					$("#review{{own_review_id}}").ScrollTo();
+				});
+			});
+		</script>
 	</head>
 
 	<body>
@@ -126,6 +134,15 @@
 			</div>
 			{% else %}
 				{% if have_own_review %}
+					<div class = "row div-buffer">
+						<div class="col-md-4">
+							<div class="well well-sm ">
+								<i class="fa fa-check fa-2x"></i>
+								Bạn đã viết đánh giá.
+								<a class="btn btn-success own-review">Xem tại đây</a>
+							</div>
+						</div>
+					</div>
 				{% else %}
 				{% endif %}
 			{% endif %}
@@ -143,7 +160,7 @@
 			{% for each_review in review_list %}
 			<div class="row">
 				<div class="col-md-10">
-					<div class="panel panel-primary review-box">
+					<div class="panel panel-primary review-box" >
 						<div class="panel-heading">
 							<h6 class="panel-title" review-id-info="{{each_review.id}}"><span class="vote-up-info">{{each_review.vote_up}}</span> trong <span class="vote-total-info">{{each_review.vote_total}}</span> người (<span class="vote-percent-info">{{each_review.vote_percent}}</span>%) thấy đánh giá này hữu ích</h6>
 						</div>
@@ -166,37 +183,6 @@
 								<h4>{{each_review.title}}</h4>
 								<p class="small">Viết ngày: {{each_review.date_written|date:"d/m/Y"}}</p>
 								{{each_review.content|safe|linebreaks}}
-
-								{% if each_review.have_own_vote %}
-									{% if each_review.own_vote %}
-									<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-primary btn-sm">
-										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-										Hay
-									</button>
-									<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-										Không hay
-									</button>
-									{% else %}
-									<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
-										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-										Hay
-									</button>
-									<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-danger btn-sm">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-										Không hay
-									</button>
-									{% endif %}
-								{% else %}
-								<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-									Hay
-								</button>
-								<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									Không hay
-								</button>
-								{% endif %}
 							</div>
 
 							<div class = "col-md-3 no-padding-side">
@@ -229,7 +215,59 @@
 									</table>
 								</div>
 							</div>
+							
+							<div class="col-md-12 div-buffer"></div>
+							<div class="col-md-6 col-md-offset-3">
+								{% if each_review.have_own_vote %}
+								{% if each_review.own_vote %}
+								<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-primary btn-sm">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									Hay
+								</button>
+								<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									Không hay
+								</button>
+								{% else %}
+								<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									Hay
+								</button>
+								<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-danger btn-sm">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									Không hay
+								</button>
+								{% endif %}
+							{% else %}
+							<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+								Hay
+							</button>
+							<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								Không hay
+							</button>
+							{% endif %}
+							</div>
+
+							{% if each_review.id == own_review_id %}
+							<div class="col-md-3 no-padding-side">
+								<span class="pull-right">
+									<span class="fa-stack fa-lg">
+									  <i class="fa fa-circle fa-stack-2x"></i>
+									  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+									</span>
+
+									<span class="fa-stack fa-lg">
+									  <i class="fa fa-circle fa-stack-2x text-danger"></i>
+									  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+									</span>
+								</span>
+							</div>
+							{% endif %}
+							
 						</div>
+						<div id="review{{each_review.id}}"></div>
 					</div>
 				</div>
 			</div>
