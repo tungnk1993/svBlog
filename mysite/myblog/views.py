@@ -316,24 +316,6 @@ def write_review(request, entity_id):
 		try:
 			print "No error validating review"
 			print "Proceed to create or update review"
-			'''
-			Review.objects.update_or_create(
-				author_id=request.user.myuser.pk,
-				entity_id=entity_id,
-				content=request.POST.get('content'),
-				title=request.POST.get('title'),
-				rating_1=request.POST.get('rating1'),
-				rating_2=request.POST.get('rating2'),
-				rating_3=request.POST.get('rating3'),
-				rating_4=request.POST.get('rating4'),
-				rating_5=request.POST.get('rating5'),
-				tag_1_id=selected_tag[0],
-				tag_2_id=selected_tag[1],
-				tag_3_id=selected_tag[2],
-				tag_4_id=selected_tag[3],
-				tag_5_id=selected_tag[4],
-			)
-			'''
 			Review.objects.update_or_create(
 				author_id=request.user.myuser.pk,
 				entity_id=entity_id,
@@ -372,3 +354,61 @@ def delete_review(request, entity_id):
 		return None
 	except Exception, e:
 		print traceback.print_exc()
+
+def show_index(request):
+	return render(request, 'index.html')
+
+# dev register
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class UserForm(forms.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput())
+
+	class Meta:
+		model = User
+		fields = ('username', 'email', 'password')
+
+class MyUserForm(forms.ModelForm):
+	class Meta:
+		model = MyUser
+		fields = ('profile_pic', 'short_bio', 'name')
+
+
+def register(request):
+
+	# A boolean value for telling the template whether the registration was successful.
+	registered = False
+
+	if request.method == 'POST':
+		user_form = UserForm(data=request.POST)
+		myuser_form = MyUserForm(data=request.POST)
+
+		# If the two forms are valid...
+		if user_form.is_valid() and myuser_form.is_valid():
+			user = user_form.save()
+			user.set_password(user.password)
+			user.save()
+
+			myuser = myuser_form.save(commit=False)
+			myuser.user = user
+
+			if 'profile_pic' in request.FILES:
+				print 'Profile pic is transported'
+				myuser.profile_pic = request.FILES['profile_pic']
+
+			myuser.save()
+			registered = True
+
+		else:
+			print user_form.errors, myuser_form.errors
+
+	else:
+		user_form = UserForm()
+		myuser_form = MyUserForm()
+
+	# Render the template depending on the context.
+	return render(request,
+			'registration/register.html',
+			{'user_form': user_form, 'myuser_form': myuser_form, 'registered': registered} )

@@ -18,14 +18,18 @@
 
 ## TODO (should be in order)
 
-* Filter list of teacher/uni
+* Add basic register/login for internal testing
 * Search box suggestion(vietnamese support if possible)
   * Create ascii version of entity's name
   * Transform query to ascii
-  * Match
+  * When a new entity is created, update json file
+  * Page load, load json file, jquery autocomplete
 * Social account linking
+* Filter list of teacher/uni
 * Empty star
   
 ## Require
 * django-bleach
 * bootstrap-rating (https://github.com/dreyescat/bootstrap-rating)
+* jquery-scrollto
+* bootbox
