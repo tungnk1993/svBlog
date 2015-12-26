@@ -34,9 +34,9 @@ urlpatterns = [
     
 
     # basic-login
-    url(r'^accounts/login/$', login),
-    url(r'^accounts/logout/$', logout),
-    url(r'^accounts/register/$', views.register),
+    url(r'^accounts/login/$', login, name='login'),
+    url(r'^accounts/logout/$', logout, name='logout'),
+    url(r'^accounts/register/$', views.register, name='register'),
 ]
 
 from django.conf import settings
