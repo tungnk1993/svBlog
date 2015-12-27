@@ -3,51 +3,76 @@
 <head>
   <meta charset="utf-8">
   <title>jQuery UI Autocomplete - Accent folding</title>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+  <link rel="stylesheet" href="C:\Users\User\Documents\GitHub\svBlog\mysite\static\jquery-ui.css">
+  <link rel="stylesheet" href="C:\Users\User\Documents\GitHub\svBlog\mysite\static\style.css">
+
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script>
   $(function() {
-    var names = [ "Nguyễn Khắc Tùng", "Trương Tuấn Dũng", "Tô Ngọc Vân", "Ngô Quý Nhâm", "Trần Thị Kiều Minh" ];
+	var names = [ "Nguyễn Khắc Tùng", "Trương Tuấn Dũng", "Tô Ngọc Vân", "Ngô Quý Nhâm", "Trần Thị Kiều Minh" ];
  
-    var accentMap = {
-      "á": "a",
-      "ö": "o",
-      "à": "a",
-      "ắ": "a",
-      "ù": "u",
-      "ễ": "e",
-      "ô": "o",
-      "ầ": "a",
-    };
-    var normalize = function( term ) {
-      var ret = "";
-      for ( var i = 0; i < term.length; i++ ) {
-        ret += accentMap[ term.charAt(i) ] || term.charAt(i);
-      }
-      return ret;
-    };
+	var accentMap = {
+	  "á": "a", "ả": "a", "à": "a", "ạ": "a", "ã": "a", "ă" : "a", "â": "a",
+	  "ắ": "a", "ẳ": "a", "ằ": "a", "ặ": "a", "ẵ": "a",
+	  "ấ": "a", "ẩ": "a", "ầ": "a", "ậ": "a", "ẫ": "a",
+
+	  "é": "e", "ẻ": "e", "è": "e", "ẹ": "e", "ẽ": "e", "ê" : "e",
+	  "ế": "e", "ể": "e", "ề": "e", "ệ": "e", "ễ": "e",
+
+	  "í": "i", "ỉ": "i", "ì": "i", "ị": "i", "ĩ": "i",
+
+	  "ó": "o", "ỏ": "o", "ò": "o", "ọ": "o", "õ": "o", "ô": "o", "ơ": "o",
+	  "ố": "o", "ổ": "o", "ồ": "o", "ộ": "o", "ỗ": "o",
+	  "ớ": "o", "ở": "o", "ờ": "o", "ợ": "o", "ỡ": "o",
+
+	  "ú": "u", "ủ": "u", "ù": "u", "ụ": "u", "ũ": "u", "ư": "u",
+	  "ứ": "u", "ử": "u", "ừ": "u", "ự": "u", "ữ": "u",
+
+	  "ý": "y", "ỷ": "y", "ỳ": "y", "ỵ": "y", "ỹ": "y",
+	  
+	  "đ": "d"
+	};
+	var normalize = function( term ) {
+	  var ret = "";
+	  for ( var i = 0; i < term.length; i++ ) {
+		ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+	  }
+	  return ret;
+	};
  
-    $( "#developer" ).autocomplete({
-      source: function( request, response ) {
-        var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
-        response( $.grep( names, function( value ) {
-          value = value.label || value.value || value;
-          return matcher.test( value ) || matcher.test( normalize( value ) );
-        }) );
-      }
-    });
+	$( "#developer" ).autocomplete({
+	  source: function( request, response ) {
+		var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+		response( $.grep( names, function( value ) {
+		  value = value.label || value.value || value;
+		  return matcher.test( value ) || matcher.test( normalize( value ) );
+		}) );
+	  }
+	});
   });
   </script>
 </head>
 <body>
- 
-<div class="ui-widget">
-  <form>
-  <label for="developer">Developer: </label>
-  <input id="developer">
-  </form>
-</div>
+ <div class="container">
+	<div class="row">
+	  <div class="col-md-12">
+		
+		  <form>
+			<div class="form-group">
+			  <div class="ui-widget">
+		  <label for="developer">Developer: </label>
+		  <input class="form-control" id="developer">
+			</div>
+			</div>
+		  </form>
+		
+	  </div>
+	</div>
+ </div>
+
  
  
 </body>

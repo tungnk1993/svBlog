@@ -355,8 +355,18 @@ def delete_review(request, entity_id):
 	except Exception, e:
 		print traceback.print_exc()
 
+import json
+from django.conf import settings
 def show_index(request):
-	return render(request, 'index.html')
+	all_entity = Entity.objects.all().values('name', 'profile_pic', 'short_info')
+	for entity in all_entity:
+		entity["profile_pic"] = settings.MEDIA_URL + entity["profile_pic"]
+
+	all_entity = [json.dumps(entity) for entity in all_entity]
+	return render(request, 'index.html', {
+											'all_entity': all_entity,
+		})
+
 
 # dev register
 from django import forms

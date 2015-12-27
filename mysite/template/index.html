@@ -7,6 +7,19 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="{% static "my.css" %}">
+		<script>
+			var all_entity_raw = {{all_entity|safe}};
+			console.log(all_entity_raw);
+			var all_entity = [];
+			for (var i = 0; i < all_entity_raw.length; i++)
+			{
+				console.log(all_entity_raw[i]);
+				all_entity.push(JSON.parse(all_entity_raw[i]));
+			}
+			console.log(all_entity[0].name);
+			console.log(all_entity[0].profile_pic);
+			console.log(all_entity[0].short_info);
+		</script>
 	</head>
 
 	<body>
@@ -29,13 +42,12 @@
 							<a href="#">List university</a>
 						</li>
 					</ul>
+					{% if user.is_authenticated %}
 					<ul class="nav navbar-nav navbar-right">
-						
-
 						<li>
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<img src="face.jpg" width="20" height="20">
-								&nbsp; A random Name here
+								<img src="{{ user.myuser.profile_pic.url }}" width="20" height="20">
+								&nbsp; {{ user.myuser.name}}
 								<span class="caret"></span>
 							</a>
 
@@ -43,11 +55,17 @@
 								<li><a href="#">Action 1</a></li>
 								<li><a href="#">Action 2</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="#">Logout</a></li>
+								<li><a href="/accounts/logout">Logout</a></li>
 							</ul>
 						</li>
 						
 					</ul>
+					{% else %}
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					</ul>
+					{% endif %}
 				</div>
 			</div>
 		</div>

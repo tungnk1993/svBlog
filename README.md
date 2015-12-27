@@ -18,12 +18,9 @@
 
 ## TODO (should be in order)
 
-* Add basic register/login for internal testing
 * Search box suggestion(vietnamese support if possible)
-  * Create ascii version of entity's name
-  * Transform query to ascii
-  * When a new entity is created, update json file
-  * Page load, load json file, jquery autocomplete
+  * ~~Populate data from backend~~
+  * Test on index page
 * Social account linking
 * Filter list of teacher/uni
 * Empty star
@@ -33,4 +30,3 @@
 * bootstrap-rating (https://github.com/dreyescat/bootstrap-rating)
 * jquery-scrollto
 * bootbox
-* http://4rapiddev.com/javascript/javascript-remove-vietnamese-accents/
