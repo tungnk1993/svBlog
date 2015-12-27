@@ -33,3 +33,4 @@
 * bootstrap-rating (https://github.com/dreyescat/bootstrap-rating)
 * jquery-scrollto
 * bootbox
+* http://4rapiddev.com/javascript/javascript-remove-vietnamese-accents/
