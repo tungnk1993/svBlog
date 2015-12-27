@@ -38,7 +38,7 @@
   white-space: nowrap;
 }
 
-.ui-autocomplete .ui-menu-item.ui-state-focus {
+.ui-autocomplete .ui-menu-item.ui-state-focus{
   color: #ffffff;
   text-decoration: none;
   background-color: #0088cc;

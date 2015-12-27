@@ -149,3 +149,10 @@ section h2 {
 .well {
 	padding: 0.5em;
 }
+
+.search-suggest-item {
+	float: left;
+	height: 32px;
+	width: 32px;
+	margin: 2px 6px 0 0;
+}

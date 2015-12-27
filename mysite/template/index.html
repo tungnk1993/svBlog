@@ -3,12 +3,18 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
 		<link rel="stylesheet" href="{% static "my.css" %}">
+		<link rel="stylesheet" href="{% static "style.css" %}">
 		<script>
-			var all_entity_raw = {{all_entity|safe}};
+		$(function() {
+			//var names = [ "Nguyễn Khắc Tùng", "Trương Tuấn Dũng", "Tô Ngọc Vân", "Ngô Quý Nhâm", "Trần Thị Kiều Minh" ];
+ 			var all_entity_raw = {{all_entity|safe}};
 			console.log(all_entity_raw);
 			var all_entity = [];
 			for (var i = 0; i < all_entity_raw.length; i++)
@@ -19,6 +25,68 @@
 			console.log(all_entity[0].name);
 			console.log(all_entity[0].profile_pic);
 			console.log(all_entity[0].short_info);
+
+			var names = [{
+							"name": "nguyen khac tung",
+							"short_bio": "asdasd"
+						}, {
+							"name": "nguyen khac tung1",
+							"short_bio": "random"
+						}];
+			console.log(names[0].name);
+			var accentMap = {
+				"á": "a", "ả": "a", "à": "a", "ạ": "a", "ã": "a", "ă" : "a", "â": "a",
+				"ắ": "a", "ẳ": "a", "ằ": "a", "ặ": "a", "ẵ": "a",
+				"ấ": "a", "ẩ": "a", "ầ": "a", "ậ": "a", "ẫ": "a",
+
+				"é": "e", "ẻ": "e", "è": "e", "ẹ": "e", "ẽ": "e", "ê" : "e",
+				"ế": "e", "ể": "e", "ề": "e", "ệ": "e", "ễ": "e",
+
+				"í": "i", "ỉ": "i", "ì": "i", "ị": "i", "ĩ": "i",
+
+				"ó": "o", "ỏ": "o", "ò": "o", "ọ": "o", "õ": "o", "ô": "o", "ơ": "o",
+				"ố": "o", "ổ": "o", "ồ": "o", "ộ": "o", "ỗ": "o",
+				"ớ": "o", "ở": "o", "ờ": "o", "ợ": "o", "ỡ": "o",
+
+				"ú": "u", "ủ": "u", "ù": "u", "ụ": "u", "ũ": "u", "ư": "u",
+				"ứ": "u", "ử": "u", "ừ": "u", "ự": "u", "ữ": "u",
+
+				"ý": "y", "ỷ": "y", "ỳ": "y", "ỵ": "y", "ỹ": "y",
+
+				"đ": "d"
+			};
+			var normalize = function( term ) {
+				var ret = "";
+				for ( var i = 0; i < term.length; i++ ) {
+					ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+				}
+				return ret;
+			};
+
+			$( "#searchbox" ).autocomplete({
+				source: function( request, response ) {
+					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+					response( $.grep( all_entity, function( value ) {
+						value = value.name || value;
+						console.log(request.term, value, matcher.test( value ) || matcher.test(normalize(value )));
+						return matcher.test( value ) || matcher.test(normalize(value ));
+						}) 
+					);
+				},
+				focus: function( event, ui ) {
+					$( "#searchbox" ).val( ui.item.name);
+					return false;
+				},
+				select: function (event, ui) {
+					window.location = ui.item.url;
+				}
+			})
+			.autocomplete( "instance" )._renderItem = function( ul, item ) {
+				return $( "<li>" )
+				.append("<img class='search-suggest-item' src='" + item.profile_pic + "'>"+"<b>" + item.name + "</b><br>" + item.short_info)
+				.appendTo( ul );
+			};
+		});
 		</script>
 	</head>
 
@@ -80,15 +148,28 @@
 
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Search" >
+					<div id="imaginary_container">
+						<!--
+						<div class="ui-widget input-group stylish-input-group form-group ">
+							
+							<input id="searchbox" type="text" class="form-control"  placeholder="Search" >
 							<span class="input-group-addon">
 								<button type="submit">
 									<span class="glyphicon glyphicon-search"></span>
 								</button>  
 							</span>
+							
 						</div>
+						-->
+						<form class="">
+        <div class="input-group">
+            <input id="searchbox" type="text" class="form-control search-query" placeholder="Search..." /> 
+            <span class="input-group-btn">
+            	<button type="submit" class="btn btn-primary">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+            </span>
+
+        </div>
+    </form>
 					</div>
 				</div>
 			</div>

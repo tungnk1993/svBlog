@@ -358,9 +358,10 @@ def delete_review(request, entity_id):
 import json
 from django.conf import settings
 def show_index(request):
-	all_entity = Entity.objects.all().values('name', 'profile_pic', 'short_info')
+	all_entity = Entity.objects.all().values('id', 'name', 'profile_pic', 'short_info')
 	for entity in all_entity:
 		entity["profile_pic"] = settings.MEDIA_URL + entity["profile_pic"]
+		entity["url"] = reverse('show_entity', args=(entity["id"],))
 
 	all_entity = [json.dumps(entity) for entity in all_entity]
 	return render(request, 'index.html', {

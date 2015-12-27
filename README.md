@@ -18,10 +18,8 @@
 
 ## TODO (should be in order)
 
-* Search box suggestion(vietnamese support if possible)
-  * ~~Populate data from backend~~
-  * Test on index page
-* Social account linking
+* ~~Search box suggestion(vietnamese support if possible)~~
+* Social account linking and testing
 * Filter list of teacher/uni
 * Empty star
   
