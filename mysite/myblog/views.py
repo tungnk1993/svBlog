@@ -130,6 +130,7 @@ def add_my_vote_info(review_list, my_vote_list):
 
 
 def show_entity(request, entity_id):
+	all_entity = get_all_entity_json()
 	print "Fetch entity", entity_id
 
 	entity_info = get_object_or_404(Entity, pk=entity_id)
@@ -186,6 +187,7 @@ def show_entity(request, entity_id):
 												'entity_best_tag' : entity_best_tag,
 												'have_own_review' : have_own_review,
 												'own_review_id' : own_review_id,
+												'all_entity' : all_entity,
 												})
  
 
@@ -221,6 +223,7 @@ def write_review(request, entity_id):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
 
+	all_entity = get_all_entity_json()
 	if request.method == 'GET':
 		entity_info = get_object_or_404(Entity, pk=entity_id)
 		criteria_list = get_criteria_list(entity_info.is_teacher)
@@ -254,12 +257,14 @@ def write_review(request, entity_id):
 				'rating4': my_review.rating_4,
 				'rating5': my_review.rating_5,
 				'selected_tag_list' : selected_tag_list,
+				'all_entity' : all_entity,
 			})
 		except ObjectDoesNotExist:
 			return render(request, 'write_review.html', {
 				'entity_info' : entity_info,
 				'criteria_list' : criteria_list,
 				'tag_list' : tag_list,
+				'all_entity' : all_entity,
 			})
 	elif request.method == 'POST':
 		# TODO: validate
@@ -311,6 +316,7 @@ def write_review(request, entity_id):
 				'rating4': request.POST.get('rating4', 0),
 				'rating5': request.POST.get('rating5', 0),
 				'selected_tag_list' : form_selected_tag,
+				'all_entity' : all_entity,
 			})
 
 		try:
@@ -332,6 +338,7 @@ def write_review(request, entity_id):
 					'tag_3_id':selected_tag[2],
 					'tag_4_id':selected_tag[3],
 					'tag_5_id':selected_tag[4],
+					'all_entity' : all_entity,
 				}
 			)
 			print "Review updated/created"
@@ -357,13 +364,19 @@ def delete_review(request, entity_id):
 
 import json
 from django.conf import settings
-def show_index(request):
+
+def get_all_entity_json():
 	all_entity = Entity.objects.all().values('id', 'name', 'profile_pic', 'short_info')
 	for entity in all_entity:
 		entity["profile_pic"] = settings.MEDIA_URL + entity["profile_pic"]
 		entity["url"] = reverse('show_entity', args=(entity["id"],))
 
 	all_entity = [json.dumps(entity) for entity in all_entity]
+	return all_entity
+
+
+def show_index(request):
+	all_entity = get_all_entity_json()
 	return render(request, 'index.html', {
 											'all_entity': all_entity,
 		})

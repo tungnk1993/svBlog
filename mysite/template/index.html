@@ -22,18 +22,6 @@
 				console.log(all_entity_raw[i]);
 				all_entity.push(JSON.parse(all_entity_raw[i]));
 			}
-			console.log(all_entity[0].name);
-			console.log(all_entity[0].profile_pic);
-			console.log(all_entity[0].short_info);
-
-			var names = [{
-							"name": "nguyen khac tung",
-							"short_bio": "asdasd"
-						}, {
-							"name": "nguyen khac tung1",
-							"short_bio": "random"
-						}];
-			console.log(names[0].name);
 			var accentMap = {
 				"á": "a", "ả": "a", "à": "a", "ạ": "a", "ã": "a", "ă" : "a", "â": "a",
 				"ắ": "a", "ẳ": "a", "ằ": "a", "ặ": "a", "ẵ": "a",
@@ -53,7 +41,7 @@
 
 				"ý": "y", "ỷ": "y", "ỳ": "y", "ỵ": "y", "ỹ": "y",
 
-				"đ": "d"
+				"đ": "d", "Đ": "D",
 			};
 			var normalize = function( term ) {
 				var ret = "";
@@ -67,8 +55,9 @@
 				source: function( request, response ) {
 					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
 					response( $.grep( all_entity, function( value ) {
+						console.log(value.name, value.short_info);
 						value = value.name || value;
-						console.log(request.term, value, matcher.test( value ) || matcher.test(normalize(value )));
+						
 						return matcher.test( value ) || matcher.test(normalize(value ));
 						}) 
 					);
@@ -86,6 +75,8 @@
 				.append("<img class='search-suggest-item' src='" + item.profile_pic + "'>"+"<b>" + item.name + "</b><br>" + item.short_info)
 				.appendTo( ul );
 			};
+
+			$("#searchbox").focus();
 		});
 		</script>
 	</head>
@@ -94,7 +85,7 @@
 		<div class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">svBlog - Teacher/University Rating Website</a>
+					<a class="navbar-brand" href="{% url 'show_index' %}">svBlog</a>
 				</div>
 
 				<div class="navbar-collapse collapse">
@@ -161,15 +152,12 @@
 							
 						</div>
 						-->
-						<form class="">
-        <div class="input-group">
-            <input id="searchbox" type="text" class="form-control search-query" placeholder="Search..." /> 
-            <span class="input-group-btn">
-            	<button type="submit" class="btn btn-primary">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
-            </span>
-
-        </div>
-    </form>
+						<div class="input-group">
+							<input id="searchbox" type="text" class="form-control search-query" placeholder="Search..." /> 
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-primary">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>

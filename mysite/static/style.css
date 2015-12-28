@@ -2,7 +2,8 @@
   position: absolute;
   
   left: 0;
-  z-index: 1000;
+  z-index: 1050;
+  /* default: 1000*/
   float: left;
   display: none;
   min-width: 160px;
@@ -47,3 +48,5 @@
   -moz-border-radius: 0px;
   background-image: none;
 }
+
+.ui-helper-hidden-accessible { display:none; }

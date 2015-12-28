@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^test_entity/(\d+)/$', views.test_entity),
 
     # dev
-    url(r'^$', views.show_index),
+    url(r'^$', views.show_index, name='show_index'),
     url(r'^e/(?P<entity_id>\d+)/$', views.show_entity, name='show_entity'),
     url(r'^e/(?P<entity_id>\d+)/write/$', views.write_review, name='write_review'),
     url(r'^e/(?P<entity_id>\d+)/delete-review/$', views.delete_review),

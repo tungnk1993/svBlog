@@ -106,3 +106,14 @@ section h2 {
 	background-color: #217dbb;
 	border-color: #2077b2;
 }
+
+.search-suggest-item {
+	float: left;
+	height: 32px;
+	width: 32px;
+	margin: 2px 6px 0 0;
+}
+
+.navbar-form > .form-group > .input-group > .form-control:focus {
+	border-color: rgb(220, 228, 236);
+}
