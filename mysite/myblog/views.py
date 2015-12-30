@@ -338,7 +338,6 @@ def write_review(request, entity_id):
 					'tag_3_id':selected_tag[2],
 					'tag_4_id':selected_tag[3],
 					'tag_5_id':selected_tag[4],
-					'all_entity' : all_entity,
 				}
 			)
 			print "Review updated/created"

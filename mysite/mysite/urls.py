@@ -32,7 +32,10 @@ urlpatterns = [
     url(r'^e/(?P<entity_id>\d+)/delete-review/$', views.delete_review),
     url(r'^vote/(?P<review_id>\d+)/(?P<vote_value>\d+)/$', views.change_vote),
     
-
+    # social login
+    url('', include('social.apps.django_app.urls', namespace='social')),
+    url('', include('django.contrib.auth.urls', namespace='auth')),
+    
     # basic-login
     url(r'^accounts/login/$', login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),

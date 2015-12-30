@@ -4,7 +4,8 @@ from django_bleach.models import BleachField
 # User Model
 class MyUser(models.Model):
 	user = models.OneToOneField(User)
-	profile_pic = models.ImageField(default='default-user-image.png')
+	profile_pic = models.ImageField(default='default_user_image.jpg')
+	profile_icon = models.ImageField(default='default_user_icon.jpg')
 	short_bio = models.CharField(max_length=100)
 	name = models.CharField(max_length=100, default='Test User Display Name')
 	

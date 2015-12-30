@@ -8,9 +8,11 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
 		<link rel="stylesheet" href="{% static "my.css" %}">
 		<link rel="stylesheet" href="{% static "style.css" %}">
+		<link rel="stylesheet" href="{% static "bootstrap-social.css" %}">
 		<script>
 		$(function() {
 			//var names = [ "Nguyễn Khắc Tùng", "Trương Tuấn Dũng", "Tô Ngọc Vân", "Ngô Quý Nhâm", "Trần Thị Kiều Minh" ];
@@ -105,7 +107,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<img src="{{ user.myuser.profile_pic.url }}" width="20" height="20">
+								<img src="{{ user.myuser.profile_icon.url }}" width="20" height="20">
 								&nbsp; {{ user.myuser.name}}
 								<span class="caret"></span>
 							</a>
@@ -114,15 +116,15 @@
 								<li><a href="#">Action 1</a></li>
 								<li><a href="#">Action 2</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="/accounts/logout">Logout</a></li>
+								<li><a href="/accounts/logout?next={{ request.path }}">Logout</a></li>
 							</ul>
 						</li>
 						
 					</ul>
 					{% else %}
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-						<li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a></p></li>
+						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-google"><span class="fa fa-google"></span></a></p></li>
 					</ul>
 					{% endif %}
 				</div>

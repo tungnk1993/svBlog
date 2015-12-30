@@ -19,8 +19,7 @@
 ## TODO (should be in order)
 
 * ~~Search box suggestion(vietnamese support if possible)~~
-* Social account linking and testing
-  * Tested profile_pic and email on test site
+* ~~Social account linking and testing~~
 * Filter list of teacher/uni
 * Empty star
   

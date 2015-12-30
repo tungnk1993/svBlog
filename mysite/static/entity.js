@@ -1,6 +1,5 @@
 $(function() {
 	console.log("entity.js loaded");
-
 	handle_vote_change();
 	handle_delete_review();
 })
