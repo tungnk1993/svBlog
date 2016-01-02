@@ -101,6 +101,31 @@
 				.append("<img class='search-suggest-item' src='" + item.profile_pic + "'>"+"<b>" + item.name + "</b><br>" + item.short_info)
 				.appendTo( ul );
 			};
+
+			// subject box
+			var all_subject = {{subject_list|safe}};
+			/*
+			var all_subject = [];
+			for (var i = 0; i < all_subject_raw.length; i++)
+			{
+				console.log(all_subject_raw[i]);
+				all_subject.push(JSON.parse(all_subject_raw[i]));
+			}
+			*/
+			$( "#subjectbox" ).autocomplete({
+				source: function( request, response ) {
+					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+					response( $.grep( all_subject, function( value ) {
+						//value = value.name || value;
+						return matcher.test( value ) || matcher.test(normalize(value ));
+						}) 
+					);
+				},
+				focus: function( event, ui ) {
+					$( "#subjectbox" ).val( ui.item.value);
+					return false;
+				},
+			});
 		});
 		</script>
 	</head>
@@ -143,8 +168,7 @@
 							</a>
 
 							<ul class="dropdown-menu">
-								<li><a href="#">Action 1</a></li>
-								<li><a href="#">Action 2</a></li>
+								<li><a href="{% url 'write_profile' %}">Cá nhân</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="/accounts/logout?next={{ request.path }}">Logout</a></li>
 							</ul>
@@ -173,11 +197,7 @@
 					{% if entity_info.is_teacher %}
 					<div class = "form-group">
 						<label for="review-subject">Môn dạy</label>
-						<select name="selected_subject" class="form-control" id="review-subject">
-							{% for subject in subject_list %}
-							<option value="{{subject.id}}" {% if subject.id == selected_subject %}selected{% endif %}>{{subject.name}}</option>
-							{% endfor %}
-						</select>
+						<input id="subjectbox" class="form-control" name="subject" autocomplete="off" type="text" value="{{subject}}">
 					</div>
 					{% endif %}
 					

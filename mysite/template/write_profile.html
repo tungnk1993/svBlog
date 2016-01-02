@@ -3,14 +3,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
-		<link rel="stylesheet" href="{% static "my.css" %}">
+		<script type="text/javascript" src="{% static "bootstrap-rating.min.js" %}"></script>
+		<link rel="stylesheet" href="{% static "write-review.css" %}">
 		<link rel="stylesheet" href="{% static "style.css" %}">
 		<link rel="stylesheet" href="{% static "bootstrap-social.css" %}">
 		<script>
@@ -57,9 +55,7 @@
 				source: function( request, response ) {
 					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
 					response( $.grep( all_entity, function( value ) {
-						console.log(value.name, value.short_info);
 						value = value.name || value;
-						
 						return matcher.test( value ) || matcher.test(normalize(value ));
 						}) 
 					);
@@ -77,8 +73,6 @@
 				.append("<img class='search-suggest-item' src='" + item.profile_pic + "'>"+"<b>" + item.name + "</b><br>" + item.short_info)
 				.appendTo( ul );
 			};
-
-			$("#searchbox").focus();
 		});
 		</script>
 	</head>
@@ -91,11 +85,19 @@
 				</div>
 
 				<div class="navbar-collapse collapse">
+					<div class="col-md-5">
+						<form class="navbar-form" style="margin-top: 0.8em">
+							<div class="form-group" style="display:inline;">
+								<div class="input-group" style="display:table;">
+									<input id="searchbox" class="form-control input-sm" name="search" placeholder="Search Here" autocomplete="off" type="text">
+									<span class="input-group-btn" style="width:1%">
+										<button type="submit" class="btn btn-info btn-sm">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
 					<ul class="nav navbar-nav">
-						<li>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</li>
-
 						<li>
 							<a href="#">List teacher</a>
 						</li>
@@ -129,122 +131,34 @@
 				</div>
 			</div>
 		</div>
-		<div class="container row-buffer">
-			<div class="page-header ">
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<img src="{% static "logo.jpg" %}" width="30%">
+		<div class="container entity-buffer">
+			<form action="" method="post">
+			{% csrf_token %}
+			<div class = "row">
+				<div class = "col-md-6 col-md-offset-1">
+					<h3>Thông tin cá nhân</h3>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container">
-						<!--
-						<div class="ui-widget input-group stylish-input-group form-group ">
-							
-							<input id="searchbox" type="text" class="form-control"  placeholder="Search" >
-							<span class="input-group-addon">
-								<button type="submit">
-									<span class="glyphicon glyphicon-search"></span>
-								</button>  
-							</span>
-							
-						</div>
-						-->
-						<div class="input-group">
-							<input id="searchbox" type="text" class="form-control search-query" placeholder="Search..." /> 
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-primary">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
-							</span>
-						</div>
+			<div class = "row">
+				<div class = "col-md-6 col-md-offset-1">	
+					<div class = "form-group">
+						<label>Chút về bản thân</label>
+						<input type="text" class="form-control" name="short_bio" placeholder="Trường, năm học, ..." value="{{short_bio}}">
+						<span class="help-block">Bạn học ở đâu, năm nào, ...</span>
 					</div>
 				</div>
 			</div>
+			<div class = "row">
+				<div class = "col-md-7 ">
+					<button type="submit" class="btn btn-success pull-right">Submit</button>
+				</div>
+			</div>
+			</form>
 		</div>
 
-		<section class="success row-buffer">
-			<div class="container">
-				<div class="row ">
-					<div class="col-md-12 text-center">
-						<h2>About</h2>
 
-					</div>
-				</div>
-				<div class="col-md-4 col-md-offset-2">
-					<p>
-						Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction 
-					</p>
-				</div>
-				<div class="col-md-4">
-					<p>
-						Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction 
-					</p>
-				</div>
-			</div>
-		</section>
 
-		<section id="feature">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 text-center">
-						<h2>Featured Teacher/University</h2>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="col-md-3">
-							<img class="img-responsive" src="face.jpg">
-						</div>
-						<div class="col-md-9">
-							<h4>Thầy Trương Tuấn Dũng</h4>
-							<div>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star-empty"></span>
-
-							</div>
-							<div>
-								<span class="glyphicon glyphicon-user"></span>1,000 reviews
-							</div>
-							<div class="tag-button">
-								<a href="#" class="btn btn-primary btn-xs">Mặt Ngu</a>
-								<a href="#" class="btn btn-primary btn-xs">Nói lắm</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="col-md-3">
-							<img class="img-responsive" src="ftu.jpg">
-						</div>
-						<div class="col-md-9">
-						
-							<h4>Đại học Ngoại Thương FTU</h4>
-							<div>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star-empty"></span>
-
-							</div>
-							<div>
-								<span class="glyphicon glyphicon-user"></span>1,000 reviews
-							</div>
-							<div class="tag-button">
-								<a href="#" class="btn btn-primary btn-xs">Chất lượng giảng dạy</a>
-								<a href="#" class="btn btn-primary btn-xs">Cơ hội việc làm</a>
-							</div>
-						</div>
-					</div>
-
-			
-				</div>
-			</div>
-		</section>
+		
 
 	</body>
 </html>

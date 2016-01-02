@@ -221,8 +221,8 @@ def change_vote(request, review_id, vote_value):
 
 def get_subject_list(entity_info):
 	if entity_info.is_teacher:
-		extra = list(Subject.objects.filter(name="Khác").values())
-		return list(entity_info.subjects.all().values()) + extra
+		extra = ["Khác ()"]
+		return json.dumps(list(entity_info.subjects.all().values_list('name', flat=True)) + extra)
 	else:
 		return None
 
@@ -267,7 +267,7 @@ def write_review(request, entity_id):
 				'selected_tag_list' : selected_tag_list,
 				'all_entity' : all_entity,
 				'subject_list' : subject_list,
-				'selected_subject' : my_review.entity_subject.id,
+				'subject' : my_review.subject,
 			})
 		except ObjectDoesNotExist:
 			return render(request, 'write_review.html', {
@@ -329,7 +329,7 @@ def write_review(request, entity_id):
 				'rating5': request.POST.get('rating5', 0),
 				'selected_tag_list' : form_selected_tag,
 				'all_entity' : all_entity,
-				'selected_subject' : int(request.POST.get('selected_subject')),
+				'subject' : request.POST.get('subject'),
 			})
 
 		try:
@@ -350,7 +350,7 @@ def write_review(request, entity_id):
 					'tag_3_id':selected_tag[2],
 					'tag_4_id':selected_tag[3],
 					'tag_5_id':selected_tag[4],
-					'entity_subject_id' : int(request.POST.get('selected_subject')),
+					'subject' : request.POST.get('subject'),
 				}
 			)
 			print "Review updated/created"
@@ -392,6 +392,32 @@ def show_index(request):
 	return render(request, 'index.html', {
 											'all_entity': all_entity,
 		})
+
+def write_profile(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
+
+	all_entity = get_all_entity_json()
+	if request.method == 'GET':
+		# check if the user already have a profile, edit mode
+		# very ugly code, i know
+		short_bio = MyUser.objects.get(id=request.user.myuser.pk).short_bio
+		return render(request, 'write_profile.html', {
+				'all_entity' : all_entity,
+				'short_bio' : short_bio,
+				})
+	elif request.method == 'POST':
+		# TODO: validate
+		# populate data, currently ugly
+		try:
+			user_obj = MyUser.objects.get(id=request.user.myuser.pk)
+			user_obj.short_bio = request.POST.get('short_bio')
+			user_obj.save()
+			print "Profile updated"
+		except Exception, e:
+			print traceback.print_exc()
+
+		return HttpResponseRedirect(reverse(('write_profile'), args=()))
 
 
 # dev register

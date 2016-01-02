@@ -47,8 +47,8 @@ class Review(models.Model):
 	author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='author')
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, related_name='entity')
 	date_written = models.DateField(auto_now_add=True)
-	entity_subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='entity_subject',
-										default=Subject.objects.get(name="Khác").pk)
+	subject = models.TextField()
+	
 	#content = models.TextField()
 	content = BleachField(allowed_tags=[
 		'b'])

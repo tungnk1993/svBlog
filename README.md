@@ -18,10 +18,10 @@
 
 * ~~Search box suggestion(vietnamese support if possible)~~
 * ~~Social account linking and testing~~
-* User profile settings (only short_bio currently)
-* Adjust subject field for review form
-	* Change to simple TextField
-	* Autocomplete jquery with teacher's subject
+* ~~User profile settings (only short_bio currently)~~
+* ~~Adjust subject field for review form~~
+	* ~~Change to simple TextField~~
+	* ~~Autocomplete jquery with teacher's subject~~
 * Anonymous option
 * Filter list of teacher/uni
 	* Name, subject, school first

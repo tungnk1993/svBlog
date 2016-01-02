@@ -126,8 +126,7 @@
 							</a>
 
 							<ul class="dropdown-menu">
-								<li><a href="#">Action 1</a></li>
-								<li><a href="#">Action 2</a></li>
+								<li><a href="{% url 'write_profile' %}">Cá nhân</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="/accounts/logout?next={{ request.path }}">Logout</a></li>
 							</ul>
@@ -276,7 +275,7 @@
 							</div>
 							{% if entity_info.is_teacher %}
 							<div class = "col-md-6">
-								<p class="small"><b>Môn dạy: {{each_review.entity_subject.name}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
+								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
 
 								{{each_review.content|safe|linebreaks}}
 							</div>
