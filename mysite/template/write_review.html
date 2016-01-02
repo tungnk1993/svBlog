@@ -170,11 +170,16 @@
 			</div>
 			<div class = "row">
 				<div class = "col-md-6 col-md-offset-1">
+					{% if entity_info.is_teacher %}
 					<div class = "form-group">
-						<label for="review-title">Title</label>
-						<input name="title" type="text" class="form-control" id="review-title" placeholder="Title" value="{{title}}">
-						<span class="{% if error.title %}text-danger{% endif %} help-block">Title cannot be empty</span>
+						<label for="review-subject">Môn dạy</label>
+						<select name="selected_subject" class="form-control" id="review-subject">
+							{% for subject in subject_list %}
+							<option value="{{subject.id}}" {% if subject.id == selected_subject %}selected{% endif %}>{{subject.name}}</option>
+							{% endfor %}
+						</select>
 					</div>
+					{% endif %}
 					
 					<div class = "form-group">
 						<label for="review-content">Content</label>

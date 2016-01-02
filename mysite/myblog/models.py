@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 from django_bleach.models import BleachField
+
+from django.db.models import signals
+
+
 # User Model
 class MyUser(models.Model):
 	user = models.OneToOneField(User)
@@ -19,27 +24,34 @@ class Tag(models.Model):
 	def __unicode__(self):
 		return self.tag_name
 
+class Subject(models.Model):
+	name = models.CharField(max_length=100)
+	def __unicode__(self):
+		return self.name
+		
 # Entity Model
 class Entity(models.Model):
 	name = models.CharField(max_length=200)
 	short_info = models.TextField()
-	long_info = models.TextField()
-	profile_pic = models.ImageField(default='default-user-image.png')
+	#long_info = models.TextField()
+	subjects = models.ManyToManyField(Subject)
+	profile_pic = models.ImageField(default='default-user-image.jpg')
 	is_teacher = models.BooleanField(default=True)
 	
 	def __unicode__(self):
 		return self.name
+
 
 # Review Model
 class Review(models.Model):
 	author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='author')
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, related_name='entity')
 	date_written = models.DateField(auto_now_add=True)
+	entity_subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='entity_subject',
+										default=Subject.objects.get(name="Khác").pk)
 	#content = models.TextField()
 	content = BleachField(allowed_tags=[
 		'b'])
-	title = models.CharField(max_length=200, default='NoTitle')
-	
 
 	rating_1 = models.IntegerField()
 	rating_2 = models.IntegerField()
@@ -83,3 +95,4 @@ class Criteria_Uni(models.Model):
 
 	def __unicode__(self):
 		return self.name
+

@@ -7,8 +7,8 @@ def save_profile(backend, user, response, *args, **kwargs):
     print "Saving profile is called"
     if backend.name == 'facebook':
         (profile, created) = MyUser.objects.get_or_create(user_id=user.id)
-        print "User instance", user.__dict__
-        print "Response instance", response
+        #print "User instance", user.__dict__
+        #print "Response instance", response
 
         profile.name = response['name']
         profile.user.email = response['email']
@@ -26,8 +26,9 @@ def save_profile(backend, user, response, *args, **kwargs):
             # delete previous image
             import os
             from django.conf import settings
+            os.remove(os.path.join(settings.MEDIA_ROOT, str(profile.profile_icon.name)))
             os.remove(os.path.join(settings.MEDIA_ROOT, str(profile.profile_pic.name)))
-            print "Deleted previous profile image"
+            print "Deleted previous profile image and icon"
 
         profile.profile_pic.save('{0}_social.jpg'.format(user.username),
                                    ContentFile(response_large.content))

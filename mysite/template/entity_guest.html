@@ -151,9 +151,12 @@
 
 				<div class="col-md-6">
 					<h3>{{entity_info.name}}</h3>
-					<p class="lead">
-						{{entity_info.long_info}}
-					</p>
+					{% if entity_info.is_teacher %}
+						{% for subject in entity_info.subjects.all %}
+							<h4>{{subject.name}} </h4>
+						{% endfor %}
+					{% endif %}
+					<h4>{{entity_info.short_info}}</h4>
 					
 				</div>
 
@@ -271,13 +274,13 @@
 									</div>
 								</div>
 							</div>
-
+							{% if entity_info.is_teacher %}
 							<div class = "col-md-6">
-								<h4>{{each_review.title}}</h4>
-								<p class="small">Viết ngày: {{each_review.date_written|date:"d/m/Y"}}</p>
+								<p class="small"><b>Môn dạy: {{each_review.entity_subject.name}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
+
 								{{each_review.content|safe|linebreaks}}
 							</div>
-
+							{% endif %}
 							<div class = "col-md-3 no-padding-side">
 								<div>
 									{% for each_tag in each_review.tag_list %}

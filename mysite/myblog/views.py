@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni
+from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni, Subject
 from collections import defaultdict
 from django.core.exceptions import ObjectDoesNotExist
 import traceback
@@ -218,6 +219,13 @@ def change_vote(request, review_id, vote_value):
 		return HttpResponse("Error AJAX", request.path)		
 	return HttpResponse("OK")
 
+def get_subject_list(entity_info):
+	if entity_info.is_teacher:
+		extra = list(Subject.objects.filter(name="Khác").values())
+		return list(entity_info.subjects.all().values()) + extra
+	else:
+		return None
+
 
 def write_review(request, entity_id):
 	if not request.user.is_authenticated():
@@ -228,7 +236,8 @@ def write_review(request, entity_id):
 		entity_info = get_object_or_404(Entity, pk=entity_id)
 		criteria_list = get_criteria_list(entity_info.is_teacher)
 		tag_list = get_list_or_404(Tag)
-
+		subject_list = get_subject_list(entity_info)
+		print subject_list
 		# check if the user already have a review?, edit mode
 		# very ugly code, i know
 		try:
@@ -249,7 +258,6 @@ def write_review(request, entity_id):
 				'entity_info' : entity_info,
 				'criteria_list' : criteria_list,
 				'tag_list' : tag_list,
-				'title' : my_review.title,
 				'content' : my_review.content,
 				'rating1': my_review.rating_1,
 				'rating2': my_review.rating_2,
@@ -258,6 +266,8 @@ def write_review(request, entity_id):
 				'rating5': my_review.rating_5,
 				'selected_tag_list' : selected_tag_list,
 				'all_entity' : all_entity,
+				'subject_list' : subject_list,
+				'selected_subject' : my_review.entity_subject.id,
 			})
 		except ObjectDoesNotExist:
 			return render(request, 'write_review.html', {
@@ -265,6 +275,7 @@ def write_review(request, entity_id):
 				'criteria_list' : criteria_list,
 				'tag_list' : tag_list,
 				'all_entity' : all_entity,
+				'subject_list' : subject_list,
 			})
 	elif request.method == 'POST':
 		# TODO: validate
@@ -287,8 +298,6 @@ def write_review(request, entity_id):
 			error["content"] = True
 		elif len(request.POST.get('content')) < 100:
 			error["content"] = True
-		if not request.POST.get('title'):
-			error["title"] = True
 		if not (request.POST.get('rating1') and request.POST.get('rating2') \
 				and request.POST.get('rating3') and request.POST.get('rating4') \
 				and request.POST.get('rating5')):
@@ -298,17 +307,20 @@ def write_review(request, entity_id):
 			entity_info = get_object_or_404(Entity, pk=entity_id)
 			criteria_list = get_criteria_list(entity_info.is_teacher)
 			tag_list = get_list_or_404(Tag)
+			subject_list = get_subject_list(entity_info)
 			form_selected_tag = []
 			for tag_id in tag_id_list:
 				if request.POST.get(''.join(['tag',str(tag_id)])):
 					form_selected_tag.append(''.join(['tag',str(tag_id)]))
 
+			print "Debug", request.POST.get('selected_subject')
+
 			return render(request, 'write_review.html', {
 				'entity_info' : entity_info,
 				'criteria_list' : criteria_list,
 				'tag_list' : tag_list,
+				'subject_list' : subject_list,
 				'error' : error,
-				'title' : request.POST.get('title'),
 				'content' : request.POST.get('content'),
 				'rating1': request.POST.get('rating1', 0),
 				'rating2': request.POST.get('rating2', 0),
@@ -317,6 +329,7 @@ def write_review(request, entity_id):
 				'rating5': request.POST.get('rating5', 0),
 				'selected_tag_list' : form_selected_tag,
 				'all_entity' : all_entity,
+				'selected_subject' : int(request.POST.get('selected_subject')),
 			})
 
 		try:
@@ -327,7 +340,6 @@ def write_review(request, entity_id):
 				entity_id=entity_id,
 				defaults={
 					'content': request.POST.get('content'),
-					'title': request.POST.get('title'),
 					'rating_1':request.POST.get('rating1'),
 					'rating_2':request.POST.get('rating2'),
 					'rating_3':request.POST.get('rating3'),
@@ -338,6 +350,7 @@ def write_review(request, entity_id):
 					'tag_3_id':selected_tag[2],
 					'tag_4_id':selected_tag[3],
 					'tag_5_id':selected_tag[4],
+					'entity_subject_id' : int(request.POST.get('selected_subject')),
 				}
 			)
 			print "Review updated/created"
