@@ -19,16 +19,17 @@
 * ~~Search box suggestion(vietnamese support if possible)~~
 * ~~Social account linking and testing~~
 * User profile settings (only short_bio currently)
-* Update search box to query more info (teacher name + school)
 * Adjust subject field for review form
 	* Change to simple TextField
 	* Autocomplete jquery with teacher's subject
+* Anonymous option
+* Filter list of teacher/uni
+	* Name, subject, school first
+* Add option for user to add teacher's info
+* Update search box to query more info (teacher name + school)
 * Feedback feature
 	* Simple one-way feedback form
 	* Admin can get user's email, able to reply
-* Filter list of teacher/uni
-* Anonymous option
-* Add option for user to add teacher's info
 * Mobile design (Important!)
 * Empty star
   
