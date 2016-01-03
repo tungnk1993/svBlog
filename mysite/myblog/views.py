@@ -258,7 +258,8 @@ def write_review(request, entity_id):
 				'entity_info' : entity_info,
 				'criteria_list' : criteria_list,
 				'tag_list' : tag_list,
-				'content' : my_review.content,
+				'content_study' : my_review.content_study,
+				'content_teacher' : my_review.content_teacher,
 				'rating1': my_review.rating_1,
 				'rating2': my_review.rating_2,
 				'rating3': my_review.rating_3,
@@ -295,9 +296,10 @@ def write_review(request, entity_id):
 
 		if tag_count < 3:
 			error["tag"] = True
-		if not request.POST.get('content'):
-			error["content"] = True
-		elif len(request.POST.get('content')) < 100:
+		if not request.POST.get('subject'):
+			error["subject"] = True
+		joined_content = ''.join([request.POST.get('content_study'), request.POST.get('content_teacher')])
+		if len(joined_content.split()) < 80:
 			error["content"] = True
 		if not (request.POST.get('rating1') and request.POST.get('rating2') \
 				and request.POST.get('rating3') and request.POST.get('rating4') \
@@ -322,7 +324,8 @@ def write_review(request, entity_id):
 				'tag_list' : tag_list,
 				'subject_list' : subject_list,
 				'error' : error,
-				'content' : request.POST.get('content'),
+				'content_study' : request.POST.get('content_study'),
+				'content_teacher' : request.POST.get('content_teacher'),
 				'rating1': request.POST.get('rating1', 0),
 				'rating2': request.POST.get('rating2', 0),
 				'rating3': request.POST.get('rating3', 0),
@@ -342,7 +345,8 @@ def write_review(request, entity_id):
 				author_id=request.user.myuser.pk,
 				entity_id=entity_id,
 				defaults={
-					'content': request.POST.get('content'),
+					'content_study': request.POST.get('content_study'),
+					'content_teacher': request.POST.get('content_teacher'),
 					'rating_1':request.POST.get('rating1'),
 					'rating_2':request.POST.get('rating2'),
 					'rating_3':request.POST.get('rating3'),

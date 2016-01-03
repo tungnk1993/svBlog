@@ -25,6 +25,9 @@
 * ~~Fake account option~~
 * ~~Anonymous option~~
 	* Think of some fun names to randomize
+* ~~Two write review boxes~~
+	* ~~Study~~
+	* ~~Teacher~~
 * Filter list of teacher/uni
 	* Name, subject, school first
 * Add option for user to add teacher's info

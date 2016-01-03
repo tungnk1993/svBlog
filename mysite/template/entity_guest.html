@@ -303,7 +303,17 @@
 							<div class = "col-md-6">
 								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
 
-								{{each_review.content|safe|linebreaks}}
+								{% if each_review.content_study %}
+								<b>&lt;Về môn học &amp; thi cử&gt;</b>
+								<br>
+								{{each_review.content_study|safe|linebreaks}}
+								{% endif %}
+
+								{% if each_review.content_study %}
+								<b>&lt;Về giáo viên&gt;</b>
+								<br>
+								{{each_review.content_teacher|safe|linebreaks}}
+								{% endif %}
 							</div>
 							{% endif %}
 							<div class = "col-md-3 no-padding-side">

@@ -50,8 +50,8 @@ class Review(models.Model):
 	subject = models.TextField()
 	
 	#content = models.TextField()
-	content = BleachField(allowed_tags=[
-		'b'])
+	content_study = BleachField(allowed_tags=['b'])
+	content_teacher = BleachField(allowed_tags=['b'])
 
 	rating_1 = models.IntegerField()
 	rating_2 = models.IntegerField()
