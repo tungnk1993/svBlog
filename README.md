@@ -13,6 +13,7 @@
 * Add report option
 * Add function to insert/modify/suggest profile pic
 * Add share button
+* Adjust spacing for review display
 
 ## TODO (should be in order)
 
@@ -28,6 +29,7 @@
 * ~~Two write review boxes~~
 	* ~~Study~~
 	* ~~Teacher~~
+* Facebook sharing
 * Filter list of teacher/uni
 	* Name, subject, school first
 * Add option for user to add teacher's info
@@ -35,6 +37,8 @@
 * Feedback feature
 	* Simple one-way feedback form
 	* Admin can get user's email, able to reply
+	* https://github.com/girasquid/django-feedback
+	* https://github.com/SpreadBand/django-backcap
 * Mobile design (Important!)
 * Empty star
   
