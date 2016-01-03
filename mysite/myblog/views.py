@@ -268,6 +268,7 @@ def write_review(request, entity_id):
 				'all_entity' : all_entity,
 				'subject_list' : subject_list,
 				'subject' : my_review.subject,
+				'is_anonymous' : my_review.is_anonymous,
 			})
 		except ObjectDoesNotExist:
 			return render(request, 'write_review.html', {
@@ -330,8 +331,10 @@ def write_review(request, entity_id):
 				'selected_tag_list' : form_selected_tag,
 				'all_entity' : all_entity,
 				'subject' : request.POST.get('subject'),
+				'is_anonymous' : request.POST.get('is_anonymous'),
 			})
 
+		print "Checkbox value", request.POST.get('is_anonymous')
 		try:
 			print "No error validating review"
 			print "Proceed to create or update review"
@@ -351,6 +354,7 @@ def write_review(request, entity_id):
 					'tag_4_id':selected_tag[3],
 					'tag_5_id':selected_tag[4],
 					'subject' : request.POST.get('subject'),
+					'is_anonymous' : request.POST.get('is_anonymous', False),
 				}
 			)
 			print "Review updated/created"

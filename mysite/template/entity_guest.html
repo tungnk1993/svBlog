@@ -261,6 +261,31 @@
 						</div>
 						<div class="panel-body">
 							<div class = "col-md-3 no-padding-side">
+								{% if each_review.is_anonymous %}
+								<div class="col-md-12 no-padding-side">
+									<h4>Vô danh</h4>
+								</div>
+								<div class="col-md-6 no-padding-side">
+									<img class="img-responsive" src="{% static 'images/default_user_image.jpg' %}">
+								</div>
+								<div class="col-md-12 no-padding-side">
+									<div>
+										<h5>Biệt đội tàng hình</h5>
+									</div>
+								</div>
+								{% elif each_review.is_fake %}
+								<div class="col-md-12 no-padding-side">
+									<h4>{{each_review.hidden_name}}</h4>
+								</div>
+								<div class="col-md-6 no-padding-side">
+									<img class="img-responsive" src="{{each_review.hidden_profile.url}}">
+								</div>
+								<div class="col-md-12 no-padding-side">
+									<div>
+										<h5>{{each_review.hidden_bio}}</h5>
+									</div>
+								</div>
+								{% else %}
 								<div class="col-md-12 no-padding-side">
 									<h4>{{each_review.author.name}}</h4>
 								</div>
@@ -272,6 +297,7 @@
 										<h5>{{each_review.author.short_bio}}</h5>
 									</div>
 								</div>
+								{% endif %}
 							</div>
 							{% if entity_info.is_teacher %}
 							<div class = "col-md-6">

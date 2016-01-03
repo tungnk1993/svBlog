@@ -22,7 +22,9 @@
 * ~~Adjust subject field for review form~~
 	* ~~Change to simple TextField~~
 	* ~~Autocomplete jquery with teacher's subject~~
-* Anonymous option
+* ~~Fake account option~~
+* ~~Anonymous option~~
+	* Think of some fun names to randomize
 * Filter list of teacher/uni
 	* Name, subject, school first
 * Add option for user to add teacher's info

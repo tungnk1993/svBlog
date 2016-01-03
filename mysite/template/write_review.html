@@ -207,6 +207,11 @@
 							</span>
 						<textarea name="content" class="form-control" rows="10" id="review-content">{{content}}</textarea>
 						<span class="{% if error.content %}text-danger{% endif %} help-block" id="textarea-feedback">Cố lên, 100 kí tự nữa thôi</span>
+						<div class="checkbox">
+							<label>
+								<input name="is_anonymous" type="checkbox" {% if is_anonymous %}checked{% endif %}>Ẩn danh
+							</label>
+						</div>
 					</div>
 				</div>
 				<div class = "col-md-5">

@@ -65,6 +65,15 @@ class Review(models.Model):
 	tag_4 = models.ForeignKey(Tag, related_name='tag4', blank=True, null=True)
 	tag_5 = models.ForeignKey(Tag, related_name='tag5', blank=True, null=True)
 
+	# anonymous option
+	is_anonymous = models.BooleanField(default=False)
+
+	# hidden stuff
+	is_fake = models.BooleanField(default=False)
+	hidden_name = models.CharField(max_length=100, blank=True, null=True)
+	hidden_profile = models.ImageField(blank=True, null=True)
+	hidden_bio = models.CharField(max_length=100, blank=True, null=True)
+
 	def __unicode__(self):
 		return ' - by '.join([self.entity.name, self.author.user.username])
 
