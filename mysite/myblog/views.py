@@ -57,15 +57,8 @@ def add_vote_info(review_list):
 	# add vote_up, vote_total, vote_percentage to each review
 	for each_review in review_list:
 		new_dict = {}
-		up = Vote.objects.filter(vote_review__id=each_review.id, vote_value=True).count()
-		down = Vote.objects.filter(vote_review__id=each_review.id, vote_value=False).count()
-		if (up+down) == 0:
-			percent = 0
-		else:
-			percent = int(100.0 * up / float(up+down))
-		new_dict["vote_up"] = up
-		new_dict["vote_total"] = up + down
-		new_dict["vote_percent"] = percent
+		up = Vote.objects.filter(vote_review__id=each_review.id).count()
+		new_dict["vote_total"] = up
 		each_review = merge_dict(each_review, new_dict)
 
 	return review_list
@@ -125,7 +118,6 @@ def add_my_vote_info(review_list, my_vote_list):
 		for vote_info in my_vote_list:
 			if vote_info[0] == each_review.id:
 				each_review.have_own_vote = True
-				each_review.own_vote = vote_info[1]
 				break
 	return review_list
 
@@ -169,7 +161,7 @@ def show_entity(request, entity_id):
 	own_review_id = None
 	if request.user.is_authenticated():
 		print "Logged in user", request.user.myuser.pk
-		my_vote_list = Vote.objects.filter(vote_user__id=request.user.myuser.pk).values_list('vote_review_id', 'vote_value')
+		my_vote_list = Vote.objects.filter(vote_user__id=request.user.myuser.pk).values_list('vote_review_id')
 		print my_vote_list
 		review_list = add_my_vote_info(review_list, my_vote_list)
 		try:
@@ -193,29 +185,24 @@ def show_entity(request, entity_id):
  
 
 def change_vote(request, review_id, vote_value):
-	# vote_value = 0(false), 1(true), 2(cancel)
+	# vote_value = 0(cancel), 1(vote)
 	# check user logged in, user own this vote
-	valid_vote = [0, 1, 2]
+	valid_vote = [0, 1]
 	try:
 		vote_value = int(vote_value)
 		review_id = int(review_id)
 		print request.path, request.user.id, request.user.myuser.id
 		print "Receive ajax", review_id, vote_value
 		if request.user.is_authenticated():
-			if vote_value == 2:
+			if vote_value == 0:
 				print "Delete vote"
 				target_vote = get_object_or_404(Vote, vote_user_id=request.user.myuser.id, vote_review_id=review_id)
 				target_vote.delete()
 			else:
-				try:
-					target_vote = Vote.objects.get(vote_user__id=request.user.myuser.id, vote_review__id=review_id)
-					target_vote.vote_value = vote_value
-					target_vote.save()
-					print "Update vote"
-				except ObjectDoesNotExist:
-					print "Create vote"
-					target_vote = Vote.objects.create(vote_user_id=request.user.myuser.id, vote_review_id=review_id, vote_value=vote_value)
+				target_vote, _ = Vote.objects.get_or_create(vote_user_id=request.user.myuser.id, vote_review_id=review_id)
+				print "Vote created or updated"				
 	except Exception, e:
+		print traceback.print_exc()
 		return HttpResponse("Error AJAX", request.path)		
 	return HttpResponse("OK")
 

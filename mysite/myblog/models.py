@@ -84,10 +84,9 @@ class Review(models.Model):
 class Vote(models.Model):
 	vote_user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='vote_up_user')
 	vote_review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='vote_down_review')
-	vote_value = models.BooleanField()
 	
 	def __unicode__(self):
-		return ' | '.join([self.vote_user.user.username, self.vote_review.__unicode__(), str(self.vote_value)])
+		return ' | '.join([self.vote_user.user.username, self.vote_review.__unicode__()])
 
 	class Meta:
 		unique_together = ('vote_user', 'vote_review')

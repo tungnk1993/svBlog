@@ -12,6 +12,7 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="{% static "my.css" %}">
 		<link rel="stylesheet" href="{% static "style.css" %}">
+		<link rel="stylesheet" href="{% static "social_sharing.css" %}">
 		<script src="{% static "jquery-scrollto.js" %}"></script>
 		<script src="{% static "bootbox.min.js" %}"></script>
 		<script src="{% static "entity.js" %}"></script>
@@ -89,6 +90,34 @@
 	</head>
 
 	<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1075921342441582";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.my-share-button').click(function(e){
+      e.preventDefault();
+      var base_url = window.location.origin;
+      var profile_pic_url = base_url + '{{entity_info.profile_pic.url}}';
+      console.log(base_url);
+         FB.ui(
+    {
+        method: 'feed',
+        name: 'Facebook Dialogs',
+        link: base_url,
+        picture: 'http://img.f32.vnecdn.net/2016/01/07/1-3553-1452139447_490x294.jpg',
+        caption: 'Reference Documentation',
+        description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+     });
+    });
+  });
+</script>
 		<div class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -257,7 +286,7 @@
 				<div class="col-md-10">
 					<div class="panel panel-primary review-box" >
 						<div class="panel-heading">
-							<h6 class="panel-title" review-id-info="{{each_review.id}}"><span class="vote-up-info">{{each_review.vote_up}}</span> trong <span class="vote-total-info">{{each_review.vote_total}}</span> người (<span class="vote-percent-info">{{each_review.vote_percent}}</span>%) thấy đánh giá này hữu ích</h6>
+							<h6 class="panel-title" review-id-info="{{each_review.id}}"></h6>
 						</div>
 						<div class="panel-body">
 							<div class = "col-md-3 no-padding-side">
@@ -348,38 +377,48 @@
 							</div>
 							
 							<div class="col-md-12 div-buffer"></div>
+							
 							<div class="col-md-6 col-md-offset-3">
+								
+								<span class="">
 								{% if each_review.have_own_vote %}
-								{% if each_review.own_vote %}
-								<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-primary btn-sm">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-									Hay
-								</button>
-								<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									Không hay
-								</button>
+								<div class="btn-group">
+									<button type="button" review-id="{{each_review.id}}" class="btn-secondary vote-btn btn-smaller-border btn btn-pink btn-sm">
+									<i class="fa fa-heart"></i>
+									Hữu ích
+									</button>
+									<button type="button" review-total-id="{{each_review.id}}" class="btn-left-border btn-secondary btn-smaller-border vote-btn btn btn-pink btn-sm">
+									{{each_review.vote_total}}
+									</button>
+									</button>	
+								</div>
 								{% else %}
-								<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-									Hay
+								<div class="btn-group">
+									<button type="button" review-id="{{each_review.id}}" class="btn-secondary vote-btn btn btn-default-my btn-smaller-border btn-sm">
+									<i class="fa fa-heart"></i>
+									Hữu ích
+									</button>
+									<button type="button" review-total-id="{{each_review.id}}" class="btn-secondary vote-btn btn btn-smaller-border btn-default-my btn-sm">
+									{{each_review.vote_total}}
+									</button>
+									</button>	
+								</div>
+								<!---
+								<button type="button" review-id="{{each_review.id}}" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
+									<i class="fa fa-heart"></i>
+									Hữu ích <span class="badge" review-id="{{each_review.id}}">{{each_review.vote_total}}</span>
 								</button>
-								<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-danger btn-sm">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									Không hay
-								</button>
+								-->
 								{% endif %}
-							{% else %}
-							<button type="button" review-id="{{each_review.id}}" vote-value="1" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
-								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-								Hay
-							</button>
-							<button type="button" review-id="{{each_review.id}}" vote-value="0" class="vote-btn vote-btn-down btn btn-smaller-border btn-default-my btn-sm">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								Không hay
-							</button>
-							{% endif %}
+
+								</span>
+							<button title="Share on Facebook" class="my-share-button btn btn-smaller-border btn-facebook btn-sm"><i class="fa fa-facebook"></i> Chia sẻ</button>
 							</div>
+							
+							
+								
+  							
+							
 
 							{% if each_review.id == own_review_id %}
 							<div class="col-md-3 no-padding-side">
@@ -398,8 +437,11 @@
 								</span>
 							</div>
 							{% endif %}
-							
+						<div class="col-md-6 col-md-offset-3 div-buffer">
+						
+					</div>	
 						</div>
+
 						<div id="review{{each_review.id}}"></div>
 					</div>
 				</div>

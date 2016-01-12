@@ -8,12 +8,12 @@
 
 ## Rating Page UI improve
 
-* Tag below basic info, more attractive, but may run into displaying problem
 * Make log-in more recognizable
 * Add report option
-* Add function to insert/modify/suggest profile pic
-* Add share button
+* ~~Add function to insert/modify/suggest profile pic~~
+* ~~Add share button~~
 * Adjust spacing for review display
+* Use mobile design
 
 ## TODO (should be in order)
 
@@ -29,7 +29,13 @@
 * ~~Two write review boxes~~
 	* ~~Study~~
 	* ~~Teacher~~
-* Facebook sharing
+* ~~Facebook sharing~~
+	* Link URL to correct review
+	* Teacher share
+	* ~~Review share~~
+* ~~Change voting to upvote only~~
+	* ~~Update UI of vote~~
+* Add edit info function
 * Filter list of teacher/uni
 	* Name, subject, school first
 * Add option for user to add teacher's info

@@ -160,3 +160,20 @@ section h2 {
 .navbar-form > .form-group > .input-group > .form-control:focus {
 	border-color: rgb(220, 228, 236);
 }
+
+.btn-pink {
+	color: #FFFFFF;
+	background-color: #F62459;
+	border-color: #F62459;
+}
+
+.btn-pink:hover {
+	border-right-color: #FFFFFF;
+}
+
+.btn-left-border {
+	border-left-color: #FFFFFF;
+}
+.btn-left-border:hover {
+	border-right-color: #F62459 !important ;
+}
