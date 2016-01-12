@@ -33,7 +33,9 @@
 	* ~~Teacher Info~~
 	* Review List
 	* Index page
+	* ~~Navbar~~
 	* Form page
+* Login notice when trying to vote
 * ~~Facebook sharing~~
 	* Link URL to correct review
 	* Teacher share

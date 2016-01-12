@@ -120,12 +120,21 @@ fjs.parentNode.insertBefore(js, fjs);
 </script>
 		<div class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
+				<!---
+				<img class="pull-left" style="width:60px" src="{% static 'images/logo.png' %}" />
+				-->
 				<div class="navbar-header">
 					<a class="navbar-brand" href="{% url 'show_index' %}">svBlog</a>
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      				</button>
 				</div>
 
-				<div class="navbar-collapse collapse">
-					<div class="col-sm-5 col-xs-5">
+				<div class="navbar-collapse collapse" id="navbar-collapse">
+					<div class="col-sm-5">
 						<form class="navbar-form" style="margin-top: 0.8em">
 							<div class="form-group" style="display:inline;">
 								<div class="input-group" style="display:table;">
@@ -164,7 +173,7 @@ fjs.parentNode.insertBefore(js, fjs);
 					</ul>
 					{% else %}
 					<ul class="nav navbar-nav navbar-right">
-						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a></p></li>
+						<li><div class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a></div></li>
 						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-google"><span class="fa fa-google"></span></a></p></li>
 					</ul>
 					{% endif %}
@@ -406,7 +415,6 @@ fjs.parentNode.insertBefore(js, fjs);
 							{% if entity_info.is_teacher %}
 							<div class = "col-md-6">
 								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
-
 								{% if each_review.content_study %}
 								<b>&lt;Về môn học &amp; thi cử&gt;</b>
 								<br>
