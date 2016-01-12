@@ -177,3 +177,7 @@ section h2 {
 .btn-left-border:hover {
 	border-right-color: #F62459 !important ;
 }
+
+.btn-group-margin-right {
+	margin-right: 10px;
+}

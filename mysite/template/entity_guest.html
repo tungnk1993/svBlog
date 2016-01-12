@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static "bootstrap-social.css" %}">
@@ -125,7 +125,7 @@ fjs.parentNode.insertBefore(js, fjs);
 				</div>
 
 				<div class="navbar-collapse collapse">
-					<div class="col-md-5">
+					<div class="col-sm-5 col-xs-5">
 						<form class="navbar-form" style="margin-top: 0.8em">
 							<div class="form-group" style="display:inline;">
 								<div class="input-group" style="display:table;">
@@ -173,76 +173,134 @@ fjs.parentNode.insertBefore(js, fjs);
 		</div>
 		<div class="container entity-buffer">
 			<div class = "row" id="entity">
-				<div class = "col-md-2">
+				<div class = "col-sm-2 col-xs-4">
 					<img class="img-responsive" src="{{MEDIA_URL}}{{entity_info.profile_pic.url}}">
 				</div>
 
-				<div class="col-md-6">
-					<h3>{{entity_info.name}}</h3>
-					{% if entity_info.is_teacher %}
-						{% for subject in entity_info.subjects.all %}
-							<h4>{{subject.name}} </h4>
-						{% endfor %}
-					{% endif %}
-					<h4>{{entity_info.short_info}}</h4>
-					
+				<div class="col-sm-10 hidden-xs">
+					<div class="col-sm-7">
+						<h3>{{entity_info.name}}</h3>
+						<div id = "large-star">
+							{% for star in entity_info.score_full|get_range %}
+								<i class="fa fa-star fa-2x"></i>
+							{% endfor %}
+							
+							{% for half_star in entity_info.score_half|get_range %}
+								<i class="fa fa-star-half-full fa-2x"></i>
+							{% endfor %}
+							(Theo {{entity_info.review_count}} đánh giá)
+						</div>
+							
+						{% if entity_info.is_teacher %}
+							{% for subject in entity_info.subjects.all %}
+								<h4>{{subject.name}} </h4>
+							{% endfor %}
+						{% endif %}
+						<h4>{{entity_info.short_info}}</h4>
+						
+					</div>
+
+					<div class="col-sm-5">
+						<div class="tag-button" id="entity-tag">
+							{% for each_tag in entity_best_tag %}
+								<a href="#" class="btn btn-default btn-info entity-tag">{{each_tag.0}}</a>
+							{% endfor %}
+						</div>
+						
+						<div class="div-buffer"></div>
+						<div class="col-sm-12 no-padding-side">
+							<table class="table-table-striped table-hover col-sm-12 rating-table">
+								<tbody>
+									{% for each_entity_criteria in entity_criteria %}
+									<tr>
+										<td class="col-sm-7 no-padding-side">
+											<b>{{each_entity_criteria.name}}</b>
+										</td>
+										<td class="col-sm-5 no-padding-side text-left">
+											{% for star in each_entity_criteria.score_full|get_range %}
+											<i class="fa fa-star fa-x"></i>
+											{% endfor %}
+
+											{% for half-star in each_entity_criteria.score_half|get_range %}
+											<i class="fa fa-star-half-full fa-x"></i>
+											{% endfor %}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 
-				<div class="col-md-4">
+				<div class="col-xs-8 visible-xs  no-padding-side">
+					<h4>{{entity_info.name}}</h4>
 					<div id = "large-star">
 						{% for star in entity_info.score_full|get_range %}
-							<i class="fa fa-star fa-2x"></i>
+							<i class="fa fa-star"></i>
 						{% endfor %}
 						
 						{% for half_star in entity_info.score_half|get_range %}
-							<i class="fa fa-star-half-full fa-2x"></i>
+							<i class="fa fa-star-half-full"></i>
 						{% endfor %}
-					</div>
-
-					<div>
 						(Theo {{entity_info.review_count}} đánh giá)
 					</div>
-
+						
+					{% if entity_info.is_teacher %}
+						{% for subject in entity_info.subjects.all %}
+							<h5>{{subject.name}} </h5>
+						{% endfor %}
+					{% endif %}
+					<h5>{{entity_info.short_info}}</h5>
+				</div>
+				<div class="col-xs-12 visible-xs">
 					<div class="tag-button" id="entity-tag">
 						{% for each_tag in entity_best_tag %}
-							<a href="#" class="btn btn-default btn-info entity-tag">{{each_tag.0}}</a>
+							<a href="#" class="btn-xs btn btn-default btn-info entity-tag">{{each_tag.0}}</a>
 						{% endfor %}
 					</div>
-					
-					<div class="div-buffer"></div>
-					<div class="col-md-12 no-padding-side">
-						<table class="table-table-striped table-hover col-md-12 rating-table">
-							<tbody>
-								{% for each_entity_criteria in entity_criteria %}
-								<tr>
-									<td class="col-md-7 no-padding-side">
-										<b>{{each_entity_criteria.name}}</b>
-									</td>
-									<td class="col-md-5 no-padding-side text-left">
-										{% for star in each_entity_criteria.score_full|get_range %}
-										<i class="fa fa-star fa-x"></i>
-										{% endfor %}
+				</div>	
+				<div class="col-xs-12 div-buffer visible-xs "></div>
+				<div class="col-xs-12 visible-xs table-responsive">
+					<table class="table-table-striped table-hover col-xs-12 rating-table">
+						<tbody>
+							{% for each_entity_criteria in entity_criteria %}
+							<tr>
+								<td class="col-xs-7 no-padding-side">
+									<b>{{each_entity_criteria.name}}</b>
+								</td>
+								<td class="col-xs-5 no-padding-side text-left">
+									{% for star in each_entity_criteria.score_full|get_range %}
+									<i class="fa fa-star fa-x"></i>
+									{% endfor %}
 
-										{% for half-star in each_entity_criteria.score_half|get_range %}
-										<i class="fa fa-star-half-full fa-x"></i>
-										{% endfor %}
-									</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
-
-					
+									{% for half-star in each_entity_criteria.score_half|get_range %}
+									<i class="fa fa-star-half-full fa-x"></i>
+									{% endfor %}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 				</div>
 			</div>
 
 			{% if not user.is_authenticated %}
 			<div class = "row div-buffer">
-				<div class="col-md-4">
+				<div class="col-md-4 col-xs-12">
 					<div class="well clearfix">
+						<div class="visible-xs">
+							<div class="col-xs-9">
+							Đăng nhập để đánh giá! (có thể ẩn danh)
+							</div>
+							<div class="col-xs-3">
+							<a href="#" class="pull-right btn btn-success btn-sm">Login</a>
+							</div>
+						</div>
+						<div class="hidden-xs">
 						Đăng nhập để đánh giá! (có thể ẩn danh)
-						<a href="#" class="pull-right btn btn-success btn-sm">Login</a>
+						<a href="#" class="btn btn-success btn-sm">Login</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -251,9 +309,19 @@ fjs.parentNode.insertBefore(js, fjs);
 					<div class = "row div-buffer">
 						<div class="col-md-4">
 							<div class="well clearfix">
-								<i class="fa fa-check fa-2x"></i>
-								Bạn đã viết đánh giá !!
-								<a class="pull-right btn btn-success own-review ">Xem tại đây</a>
+								<div class="hidden-xs">
+									<i class="fa fa-check fa-2x"></i>
+									Bạn đã viết đánh giá !!
+									<a class="pull-right btn btn-success own-review ">Xem tại đây</a>
+								</div>
+								<div class="visible-xs">
+									<div class="col-xs-8">
+									Bạn đã viết đánh giá !!
+									</div>
+									<div class="col-xs-4">
+									<a href="#" class="pull-right btn btn-success btn-sm">Xem tại đây</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -262,8 +330,18 @@ fjs.parentNode.insertBefore(js, fjs);
 						<div class="col-md-4">
 							<div class="well clearfix">
 								<i class="fa fa-pencil fa-2x"></i>
+								<div class="hidden-xs">
 								Bạn đã viết đánh giá chưa?
 								<a href="{% url 'write_review' entity_info.id %}" class="pull-right btn btn-success own-review">Viết luôn!</a>
+								</div>
+								<div class="visible-xs">
+									<div class="col-xs-8">
+									Bạn đã viết đánh giá chưa?
+									</div>
+									<div class="col-xs-4">
+										<a href="{% url 'write_review' entity_info.id %}" class="pull-right btn btn-success own-review">Viết luôn!</a>
+									</div>
+								</div>
 							
 							</div>
 						</div>
@@ -272,18 +350,15 @@ fjs.parentNode.insertBefore(js, fjs);
 			{% endif %}
 
 			<div class="row div-buffer">
-				<div class="col-md-10">
-					<h2 class="review-section-title">
-						Bình luận/cảm nhận/đánh giá
-						<span class="sort-text col-md-offset-4">
-							&nbsp;&nbsp;&nbsp;<span class="text-danger"><u><b>Hữu ích</b></u> </span>| Mới nhất
-						</span>
-					</h2>
+				<div class="col-md-10 col-xs-12">
+					<h3 class="review-section-title">
+						Đánh giá ({{review_list|length}})
+					</h3>
 				</div>
 			</div>
 			{% for each_review in review_list %}
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-10 col-xs-12">
 					<div class="panel panel-primary review-box" >
 						<div class="panel-heading">
 							<h6 class="panel-title" review-id-info="{{each_review.id}}"></h6>
@@ -348,7 +423,7 @@ fjs.parentNode.insertBefore(js, fjs);
 							<div class = "col-md-3 no-padding-side">
 								<div>
 									{% for each_tag in each_review.tag_list %}
-									<a href="#" class="btn btn-default btn-info entity-tag btn-sm">{{each_tag}}</a>
+									<a href="#" class="btn btn-default btn-info entity-tag btn-xs">{{each_tag}}</a>
 									{% endfor %}
 								</div>
 
@@ -382,7 +457,7 @@ fjs.parentNode.insertBefore(js, fjs);
 								
 								<span class="">
 								{% if each_review.have_own_vote %}
-								<div class="btn-group">
+								<div class="btn-group btn-group-margin-right">
 									<button type="button" review-id="{{each_review.id}}" class="btn-secondary vote-btn btn-smaller-border btn btn-pink btn-sm">
 									<i class="fa fa-heart"></i>
 									Hữu ích
@@ -393,7 +468,7 @@ fjs.parentNode.insertBefore(js, fjs);
 									</button>	
 								</div>
 								{% else %}
-								<div class="btn-group">
+								<div class="btn-group btn-group-margin-right">
 									<button type="button" review-id="{{each_review.id}}" class="btn-secondary vote-btn btn btn-default-my btn-smaller-border btn-sm">
 									<i class="fa fa-heart"></i>
 									Hữu ích
@@ -403,12 +478,6 @@ fjs.parentNode.insertBefore(js, fjs);
 									</button>
 									</button>	
 								</div>
-								<!---
-								<button type="button" review-id="{{each_review.id}}" class="vote-btn vote-btn-up btn btn-smaller-border btn-default-my btn-sm">
-									<i class="fa fa-heart"></i>
-									Hữu ích <span class="badge" review-id="{{each_review.id}}">{{each_review.vote_total}}</span>
-								</button>
-								-->
 								{% endif %}
 
 								</span>
@@ -437,9 +506,6 @@ fjs.parentNode.insertBefore(js, fjs);
 								</span>
 							</div>
 							{% endif %}
-						<div class="col-md-6 col-md-offset-3 div-buffer">
-						
-					</div>	
 						</div>
 
 						<div id="review{{each_review.id}}"></div>

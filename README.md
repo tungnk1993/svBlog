@@ -29,6 +29,11 @@
 * ~~Two write review boxes~~
 	* ~~Study~~
 	* ~~Teacher~~
+* Mobile design (Important!)
+	* ~~Teacher Info~~
+	* Review List
+	* Index page
+	* Form page
 * ~~Facebook sharing~~
 	* Link URL to correct review
 	* Teacher share
@@ -45,7 +50,6 @@
 	* Admin can get user's email, able to reply
 	* https://github.com/girasquid/django-feedback
 	* https://github.com/SpreadBand/django-backcap
-* Mobile design (Important!)
 * Empty star
   
 ## Require
