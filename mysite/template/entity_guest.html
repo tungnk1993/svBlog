@@ -366,7 +366,7 @@ fjs.parentNode.insertBefore(js, fjs);
 				</div>
 			</div>
 			{% for each_review in review_list %}
-			<div class="row">
+			<div class="row hidden-xs">
 				<div class="col-md-10 col-xs-12">
 					<div class="panel panel-primary review-box" >
 						<div class="panel-heading">
@@ -412,6 +412,7 @@ fjs.parentNode.insertBefore(js, fjs);
 								</div>
 								{% endif %}
 							</div>
+
 							{% if entity_info.is_teacher %}
 							<div class = "col-md-6">
 								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
@@ -492,13 +493,161 @@ fjs.parentNode.insertBefore(js, fjs);
 							<button title="Share on Facebook" class="my-share-button btn btn-smaller-border btn-facebook btn-sm"><i class="fa fa-facebook"></i> Chia sẻ</button>
 							</div>
 							
-							
-								
-  							
-							
-
 							{% if each_review.id == own_review_id %}
 							<div class="col-md-3 no-padding-side">
+								<span class="pull-right">
+									<span class="fa-stack fa-lg">
+									  <a href="{% url 'write_review' entity_info.id %}">
+									  <i class="fa fa-circle fa-stack-2x"></i>
+									  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+									</a>
+									</span>
+
+									<span class="fa-stack fa-lg clickable" id="delete-review">
+									  <i class="fa fa-circle fa-stack-2x text-danger"></i>
+									  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+									</span>
+								</span>
+							</div>
+							{% endif %}
+						</div>
+
+						<div id="review{{each_review.id}}"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row visible-xs">
+				<div class="col-xs-12">
+					<div class="panel panel-primary review-box" >
+						<div class="panel-heading">
+							<h6 class="panel-title" review-id-info="{{each_review.id}}"></h6>
+						</div>
+						<div class="panel-body no-padding-side">
+							{% if entity_info.is_teacher %}
+							<div class="col-xs-12">
+								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
+							</div>
+							{% endif %}
+							<div class="col-xs-12">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{each_review.id}}">
+								</a><i class="indicator glyphicon glyphicon-chevron-down"></i><b>Tổng thể</b> 
+								{% for star in each_review.score_full|get_range %}
+									<i class="fa fa-star fa-x"></i>
+								{% endfor %}
+
+								{% for half_star in each_review.score_half|get_range %}
+									<i class="fa fa-star-half-full fa-x"></i>
+								{% endfor %}
+        						
+								<div id="collapse-{{each_review.id}}" class="collapse in">
+									<table class="table-table-striped table-hover col-md-12 rating-table-review">
+									<tbody>
+										{% for each_rating in each_review.rating %}
+										<tr>
+											<td class="col-xs-8 no-padding-side">
+												<b>{{each_rating.name}}</b>
+											</td>
+											<td class="col-xs-4 no-padding-side text-left">
+												{% for star in each_rating.score_full|get_range %}
+												<i class="fa fa-star fa-x"></i>
+												{% endfor %}
+
+												{% for half_star in each_rating.score_half|get_range %}
+												<i class="fa fa-star-half-full fa-x"></i>
+												{% endfor %}
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+									</table>
+								</div>
+							</div>
+							<div class = "col-xs-12">
+								{% if each_review.is_anonymous %}
+								<div class="col-xs-4">
+									<img class="img-responsive" src="{% static 'images/default_user_image.jpg' %}">
+								</div>
+								<div class="col-xs-8">
+									<h4>Vô danh</h4>
+									<h5>Biệt đội tàng hình</h5>
+								</div>
+								{% elif each_review.is_fake %}
+								<div class="col-xs-4">
+									<img class="img-responsive" src="{{each_review.hidden_profile.url}}">
+								</div>
+								<div class="col-xs-8">
+									<h4>{{each_review.hidden_name}}</h4>
+									<h5>{{each_review.hidden_bio}}</h5>
+								</div>
+								{% else %}
+								<div class="col-xs-4">
+									<img class="img-responsive" src="{{each_review.author.profile_pic.url}}">
+								</div>
+								<div class="col-xs-8">
+									<h4>{{each_review.author.name}}</h4>
+									<h5>{{each_review.author.short_bio}}</h5>
+								</div>
+								
+								{% endif %}
+							</div>
+							{% if entity_info.is_teacher %}
+							<div class = "col-xs-12">
+								{% if each_review.content_study %}
+								<b>&lt;Về môn học &amp; thi cử&gt;</b>
+								<br>
+								{{each_review.content_study|safe|linebreaks}}
+								{% endif %}
+
+								{% if each_review.content_study %}
+								<b>&lt;Về giáo viên&gt;</b>
+								<br>
+								{{each_review.content_teacher|safe|linebreaks}}
+								{% endif %}
+							</div>
+							{% endif %}
+							<div class = "col-xs-12">
+								<div>
+									{% for each_tag in each_review.tag_list %}
+									<a href="#" class="btn btn-default btn-info entity-tag btn-xs">{{each_tag}}</a>
+									{% endfor %}
+								</div>
+							</div>
+							
+							<div class="col-xs-12 div-buffer"></div>
+							
+							<div class="col-xs-12">
+								<span class="">
+								{% if each_review.have_own_vote %}
+								<div class="btn-group btn-group-margin-right">
+									<button type="button" review-id="{{each_review.id}}" class="btn-secondary vote-btn btn-smaller-border btn btn-pink btn-sm">
+									<i class="fa fa-heart"></i>
+									Hữu ích
+									</button>
+									<button type="button" review-total-id="{{each_review.id}}" class="btn-left-border btn-secondary btn-smaller-border vote-btn btn btn-pink btn-sm">
+									{{each_review.vote_total}}
+									</button>
+									</button>	
+								</div>
+								{% else %}
+								<div class="btn-group btn-group-margin-right">
+									<button type="button" review-id="{{each_review.id}}" class="btn-secondary vote-btn btn btn-default-my btn-smaller-border btn-sm">
+									<i class="fa fa-heart"></i>
+									Hữu ích
+									</button>
+									<button type="button" review-total-id="{{each_review.id}}" class="btn-secondary vote-btn btn btn-smaller-border btn-default-my btn-sm">
+									{{each_review.vote_total}}
+									</button>
+									</button>	
+								</div>
+								{% endif %}
+
+								</span>
+							<button title="Share on Facebook" class="my-share-button btn btn-smaller-border btn-facebook btn-sm"><i class="fa fa-facebook"></i> Chia sẻ</button>
+							</div>
+							
+							{% if each_review.id == own_review_id %}
+							<div class="col-xs-3">
 								<span class="pull-right">
 									<span class="fa-stack fa-lg">
 									  <a href="{% url 'write_review' entity_info.id %}">

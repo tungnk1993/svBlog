@@ -90,6 +90,9 @@ def add_rating_info(review_list, criteria_list):
 		score_list = [each_review.rating_1, each_review.rating_2, each_review.rating_3, each_review.rating_4, each_review.rating_5]
 		rating_list = convert_rating_many(score_list, criteria_list)
 		each_review.rating = rating_list
+		overall_rating = convert_rating_single(sum(score_list) / 5)
+		each_review.score_full = overall_rating["score_full"]
+		each_review.score_half = overall_rating["score_half"]
 	return review_list
 
 def add_tag_info(review_list, tag_list):

@@ -29,12 +29,16 @@
 * ~~Two write review boxes~~
 	* ~~Study~~
 	* ~~Teacher~~
+* Optional voting
+	* Dropdown, some values
+	* Show majority
 * Mobile design (Important!)
 	* ~~Teacher Info~~
 	* Review List
 	* Index page
 	* ~~Navbar~~
 	* Form page
+	* Multiple small fixes
 * Login notice when trying to vote
 * ~~Facebook sharing~~
 	* Link URL to correct review
