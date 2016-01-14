@@ -36,10 +36,10 @@
 * Mobile design (Important!) (16-17)
 	* ~~Teacher Info~~
 	* Review List
-	* Index page
 	* ~~Navbar~~
 	* Form page
 	* Multiple small fixes
+* Landing page (18)
 * Login notice when trying to vote
 * ~~Facebook sharing~~
 	* Link URL to correct review
