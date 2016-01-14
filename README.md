@@ -29,10 +29,11 @@
 * ~~Two write review boxes~~
 	* ~~Study~~
 	* ~~Teacher~~
-* Optional voting
-	* Dropdown, some values
-	* Show majority
-* Mobile design (Important!)
+* Optional voting (14-15)
+	* Dropdown, some values, optional
+	* Show majority percentage
+	* Select in form
+* Mobile design (Important!) (16-17)
 	* ~~Teacher Info~~
 	* Review List
 	* Index page
