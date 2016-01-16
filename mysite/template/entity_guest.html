@@ -612,10 +612,11 @@ fjs.parentNode.insertBefore(js, fjs);
 							<div class="col-xs-12 div-buffer"></div>
 							<div class="col-xs-12">
 								<div class="col-xs-8 no-padding-side">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{each_review.id}}">
-								</a><i class="indicator glyphicon glyphicon-chevron-down">&nbsp;</i><b>Tổng thể </b> 
+								<a class="accordion-toggle" data-toggle="collapse" href="#collapse-{{each_review.id}}">
+								<i class="indicator glyphicon glyphicon-chevron-right"></i><b>&nbsp;Tổng thể </b> 
+								</a>
 							</div>
-								<div class="col-xs-4 no-padding-side">
+							<div class="col-xs-4 no-padding-side">
 								{% for star in each_review.score_full|get_range %}
 									<i class="fa fa-star fa-x"></i>
 								{% endfor %}
@@ -624,8 +625,8 @@ fjs.parentNode.insertBefore(js, fjs);
 									<i class="fa fa-star-half-full fa-x"></i>
 								{% endfor %}
 							</div>
-								<div id="collapse-{{each_review.id}}" class="collapse in">
-									<table class="table table-condensed table-striped table-hover col-xs-12 rating-table-review">
+								<div id="collapse-{{each_review.id}}" class="collapse">
+									<table class="table-condensed table-striped table-hover col-xs-12 rating-table-review">
 									<tbody>
 										{% for each_rating in each_review.rating %}
 										<tr>
@@ -657,6 +658,7 @@ fjs.parentNode.insertBefore(js, fjs);
 									</tbody>
 									</table>
 								</div>
+								<div class="col-xs-12 div-buffer"></div>
 							</div>
 							
 							{% if entity_info.is_teacher %}

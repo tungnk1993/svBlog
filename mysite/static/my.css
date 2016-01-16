@@ -184,3 +184,12 @@ section h2 {
 .btn-group-margin-right {
 	margin-right: 10px;
 }
+
+.accordion-toggle {
+	color: #2c3e50;	
+}
+
+.accordion-toggle:hover, .accordion-toggle:focus {
+	color: #2c3e50;
+	text-decoration: none;
+}
