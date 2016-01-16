@@ -30,9 +30,9 @@
 	* ~~Study~~
 	* ~~Teacher~~
 * Optional voting (14-15)
-	* Dropdown, some values, optional
-	* Show majority percentage
-	* Select in form
+	* ~~Dropdown, some values, optional~~
+	* ~~Show majority percentage~~
+	* ~~Select in form~~
 * Mobile design (Important!) (16-17)
 	* ~~Teacher Info~~
 	* Review List

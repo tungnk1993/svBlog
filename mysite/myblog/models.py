@@ -56,8 +56,10 @@ class Review(models.Model):
 	rating_1 = models.IntegerField()
 	rating_2 = models.IntegerField()
 	rating_3 = models.IntegerField()
-	rating_4 = models.IntegerField()
-	rating_5 = models.IntegerField()
+
+	orating_1 = models.IntegerField(default=0)
+	orating_2 = models.IntegerField(default=0)
+	orating_3 = models.IntegerField(default=0)
 
 	tag_1 = models.ForeignKey(Tag, related_name='tag1', blank=True, null=True)
 	tag_2 = models.ForeignKey(Tag, related_name='tag2', blank=True, null=True)
@@ -92,6 +94,12 @@ class Vote(models.Model):
 		unique_together = ('vote_user', 'vote_review')
 
 # Criteria Name
+class Criteria_Optional(models.Model):
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.name
+
 class Criteria_Teacher(models.Model):
 	name = models.CharField(max_length=100)
 

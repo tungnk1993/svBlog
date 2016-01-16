@@ -236,13 +236,31 @@ fjs.parentNode.insertBefore(js, fjs);
 										</td>
 									</tr>
 									{% endfor %}
+									<tr>
+										<td>
+											<br />
+										</td>
+									</tr>
+									{% for each_entity_optional_criteria in entity_optional_criteria %}
+									<tr>
+										<td class="col-sm-7 no-padding-side">
+											<b>{{each_entity_optional_criteria.name}}</b>
+										</td>
+										<td class="col-sm-5 no-padding-side text-left">
+											{{each_entity_optional_criteria.value}}
+											{% if each_entity_optional_criteria.percent > 0 %}
+												({{each_entity_optional_criteria.percent}}%)
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 
-				<div class="col-xs-8 visible-xs  no-padding-side">
+				<div class="col-xs-8 visible-xs no-padding-side">
 					<h4>{{entity_info.name}}</h4>
 					<div id = "large-star">
 						{% for star in entity_info.score_full|get_range %}
@@ -269,16 +287,16 @@ fjs.parentNode.insertBefore(js, fjs);
 						{% endfor %}
 					</div>
 				</div>	
-				<div class="col-xs-12 div-buffer visible-xs "></div>
+				<div class="col-xs-12 div-buffer visible-xs"></div>
 				<div class="col-xs-12 visible-xs table-responsive">
-					<table class="table-table-striped table-hover col-xs-12 rating-table">
+					<table class="table table-condensed table-striped table-hover col-xs-12 rating-table">
 						<tbody>
 							{% for each_entity_criteria in entity_criteria %}
 							<tr>
-								<td class="col-xs-7 no-padding-side">
+								<td class="col-xs-8 no-padding-side rating-table-smaller">
 									<b>{{each_entity_criteria.name}}</b>
 								</td>
-								<td class="col-xs-5 no-padding-side text-left">
+								<td class="col-xs-4 no-padding-side text-left">
 									{% for star in each_entity_criteria.score_full|get_range %}
 									<i class="fa fa-star fa-x"></i>
 									{% endfor %}
@@ -286,6 +304,22 @@ fjs.parentNode.insertBefore(js, fjs);
 									{% for half-star in each_entity_criteria.score_half|get_range %}
 									<i class="fa fa-star-half-full fa-x"></i>
 									{% endfor %}
+								</td>
+							</tr>
+							{% endfor %}
+
+							{% for each_entity_optional_criteria in entity_optional_criteria %}
+							<tr>
+								<td class="col-xs-8 no-padding-side rating-table-smaller">
+									<b>{{each_entity_optional_criteria.name}}</b>
+								</td>
+								<td class="col-xs-4 no-padding-side ">
+									<small>
+									{{each_entity_optional_criteria.value}}
+									{% if each_entity_optional_criteria.percent > 0 %}
+										({{each_entity_optional_criteria.percent}}%)
+									{% endif %}
+								</small>
 								</td>
 							</tr>
 							{% endfor %}
@@ -437,7 +471,7 @@ fjs.parentNode.insertBefore(js, fjs);
 								</div>
 
 								<div class="div-buffer">
-									<table class="table-table-striped table-hover col-md-12 rating-table-review">
+									<table class="table-striped table-hover col-md-12 rating-table-review">
 									<tbody>
 										{% for each_rating in each_review.rating %}
 										<tr>
@@ -452,6 +486,21 @@ fjs.parentNode.insertBefore(js, fjs);
 												{% for half_star in each_rating.score_half|get_range %}
 												<i class="fa fa-star-half-full fa-x"></i>
 												{% endfor %}
+											</td>
+										</tr>
+										{% endfor %}
+										<tr>
+											<td>
+												<br />
+											</td>
+										</tr>
+										{% for each_rating in each_review.optional_rating %}
+										<tr>
+											<td class="col-md-8 no-padding-side">
+												<b>{{each_rating.name}}</b>
+											</td>
+											<td class="col-md-4 no-padding-side text-left">
+												{{each_rating.value}}</b>
 											</td>
 										</tr>
 										{% endfor %}
@@ -523,46 +572,15 @@ fjs.parentNode.insertBefore(js, fjs);
 						<div class="panel-heading">
 							<h6 class="panel-title" review-id-info="{{each_review.id}}"></h6>
 						</div>
-						<div class="panel-body no-padding-side">
+						<div class="panel-body no-padding-side" style="padding-top:5px">
 							{% if entity_info.is_teacher %}
 							<div class="col-xs-12">
-								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
+								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> 
+									<br />
+								<small>(Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</small>
+								</p>
 							</div>
 							{% endif %}
-							<div class="col-xs-12">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{each_review.id}}">
-								</a><i class="indicator glyphicon glyphicon-chevron-down"></i><b>Tổng thể</b> 
-								{% for star in each_review.score_full|get_range %}
-									<i class="fa fa-star fa-x"></i>
-								{% endfor %}
-
-								{% for half_star in each_review.score_half|get_range %}
-									<i class="fa fa-star-half-full fa-x"></i>
-								{% endfor %}
-        						
-								<div id="collapse-{{each_review.id}}" class="collapse in">
-									<table class="table-table-striped table-hover col-md-12 rating-table-review">
-									<tbody>
-										{% for each_rating in each_review.rating %}
-										<tr>
-											<td class="col-xs-8 no-padding-side">
-												<b>{{each_rating.name}}</b>
-											</td>
-											<td class="col-xs-4 no-padding-side text-left">
-												{% for star in each_rating.score_full|get_range %}
-												<i class="fa fa-star fa-x"></i>
-												{% endfor %}
-
-												{% for half_star in each_rating.score_half|get_range %}
-												<i class="fa fa-star-half-full fa-x"></i>
-												{% endfor %}
-											</td>
-										</tr>
-										{% endfor %}
-									</tbody>
-									</table>
-								</div>
-							</div>
 							<div class = "col-xs-12">
 								{% if each_review.is_anonymous %}
 								<div class="col-xs-4">
@@ -581,16 +599,66 @@ fjs.parentNode.insertBefore(js, fjs);
 									<h5>{{each_review.hidden_bio}}</h5>
 								</div>
 								{% else %}
-								<div class="col-xs-4">
+								<div class="col-xs-3 no-padding-side">
 									<img class="img-responsive" src="{{each_review.author.profile_pic.url}}">
 								</div>
-								<div class="col-xs-8">
+								<div class="col-xs-9">
 									<h4>{{each_review.author.name}}</h4>
-									<h5>{{each_review.author.short_bio}}</h5>
+									<h6>{{each_review.author.short_bio}}</h6>
 								</div>
 								
 								{% endif %}
 							</div>
+							<div class="col-xs-12 div-buffer"></div>
+							<div class="col-xs-12">
+								<div class="col-xs-8 no-padding-side">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{each_review.id}}">
+								</a><i class="indicator glyphicon glyphicon-chevron-down">&nbsp;</i><b>Tổng thể </b> 
+							</div>
+								<div class="col-xs-4 no-padding-side">
+								{% for star in each_review.score_full|get_range %}
+									<i class="fa fa-star fa-x"></i>
+								{% endfor %}
+
+								{% for half_star in each_review.score_half|get_range %}
+									<i class="fa fa-star-half-full fa-x"></i>
+								{% endfor %}
+							</div>
+								<div id="collapse-{{each_review.id}}" class="collapse in">
+									<table class="table table-condensed table-striped table-hover col-xs-12 rating-table-review">
+									<tbody>
+										{% for each_rating in each_review.rating %}
+										<tr>
+											<td class="col-xs-8 no-padding-side">
+												<b>{{each_rating.name}}</b>
+											</td>
+											<td class="col-xs-4 no-padding-side text-left">
+												{% for star in each_rating.score_full|get_range %}
+												<i class="fa fa-star fa-x"></i>
+												{% endfor %}
+
+												{% for half_star in each_rating.score_half|get_range %}
+												<i class="fa fa-star-half-full fa-x"></i>
+												{% endfor %}
+											</td>
+										</tr>
+										{% endfor %}
+
+										{% for each_rating in each_review.optional_rating %}
+										<tr>
+											<td class="col-xs-8 no-padding-side">
+												<b>{{each_rating.name}}</b>
+											</td>
+											<td class="col-xs-4 no-padding-side">
+												<b>{{each_rating.value}}</b>
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+									</table>
+								</div>
+							</div>
+							
 							{% if entity_info.is_teacher %}
 							<div class = "col-xs-12">
 								{% if each_review.content_study %}

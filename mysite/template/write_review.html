@@ -26,12 +26,6 @@
 				{% if rating3 %}
 					$('input[name="rating3"]').rating('rate', {{rating3}});
 				{% endif %}
-				{% if rating4 %}
-					$('input[name="rating4"]').rating('rate', {{rating4}});
-				{% endif %}
-				{% if rating5 %}
-					$('input[name="rating5"]').rating('rate', {{rating5}});
-				{% endif %}
 
 				{% for tag in selected_tag_list %}
 					$('[name={{tag}}]').attr('checked', 'checked');
@@ -211,6 +205,49 @@
 						<label for="review-content-teacher">Về giáo viên</label>
 						<textarea name="content_teacher" class="form-control" rows="6" id="review-content-teacher">{{content_teacher|safe}}</textarea>
 						<span class="{% if error.content %}text-danger{% endif %} help-block" id="textarea-feedback">Cố lên, 80 từ nữa thôi</span>
+					</div>
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-6 ">
+								<label class="control-label">Tài liệu học tập</label>
+							</div>
+							<div class="col-md-6">
+								<select class="form-control" name="orating1">
+									<option value="0">--</option>
+									<option value="1" {% if orating1 == 1 %}selected{% endif %}>Khá ít</option>
+									<option value="2" {% if orating1 == 2 %}selected{% endif %}>Đầy đủ</option>
+									<option value="3" {% if orating1 == 3 %}selected{% endif %}>Tuyệt vời</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-6">
+								<label class="control-label">Định hướng nghề</label>
+							</div>
+							<div class="col-md-6">
+								<select class="form-control" name="orating2">
+									<option value="0">--</option>
+									<option value="1" {% if orating2 == 1 %}selected{% endif %}>Nhầm hướng</option>
+									<option value="2" {% if orating2 == 2 %}selected{% endif %}>Hữu ích</option>
+									<option value="3" {% if orating2 == 3 %}selected{% endif %}>Tuyệt vời</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-6">
+								<label class="control-label">Năng lức nghiên cứu</label>
+							</div>
+							<div class="col-md-6">
+								<select class="form-control" name="orating3">
+									<option value="0">--</option>
+									<option value="1" {% if orating3 == 1 %}selected{% endif %}>Hmm..</option>
+									<option value="2" {% if orating3 == 2 %}selected{% endif %}>Tốt</option>
+									<option value="3" {% if orating3 == 3 %}selected{% endif %}>Tuyệt vời</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
 						<div class="checkbox">
 							<label>
 								<input name="is_anonymous" type="checkbox" {% if is_anonymous %}checked{% endif %}>Ẩn danh

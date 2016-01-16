@@ -2,10 +2,18 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni, Subject
+from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni, Criteria_Optional, Subject
 from collections import defaultdict
 from django.core.exceptions import ObjectDoesNotExist
 import traceback
+
+# global const
+optional_map = [
+					["--", "Khá ít", "Đầy đủ", "Tuyệt vời"],
+					["--", "Nhầm hướng", "Hữu ích", "Tuyệt vời"],
+					["--", "Hmm....", "Tốt", "Tuyệt vời"] 
+				]
+####################
 
 def test_tag(request):
 	tag_list = Tag.objects.all().values()
@@ -34,17 +42,64 @@ def calculate_overall(review_list, review_length):
 	# Calculate the overall rating of an entity, supplied by review_list
 	# Currently very ugly, will try to re-model later
 	if review_length == 0:
-		return [0.0, 0.0, 0.0, 0.0, 0.0]
-	s = [0.0, 0.0, 0.0, 0.0, 0.0]
+		return [0.0, 0.0, 0.0]
+	s = [0.0, 0.0, 0.0]
 	for item in review_list:
 		s[0] += item.rating_1
 		s[1] += item.rating_2
 		s[2] += item.rating_3
-		s[3] += item.rating_4
-		s[4] += item.rating_5
 	
 	s = [(item/review_length) for item in s]
 	return s
+
+def calculate_majority(review_list, review_length):
+	# Calculate the majority of each criteria
+	o1 = defaultdict(int)
+	o2 = defaultdict(int)
+	o3 = defaultdict(int)
+	c = [0, 0, 0]
+	for item in review_list:
+		if item.orating_1:
+			o1[item.orating_1] += 1
+			c[0] += 1
+		if item.orating_2:
+			o2[item.orating_2] += 1
+			c[1] += 1
+		if item.orating_3:
+			o3[item.orating_3] += 1
+			c[2] += 1
+
+	major = [(0, 0), (0, 0), (0, 0)]
+	m1 = m2 = m3 = 0
+	
+	for key, value in o1.iteritems():
+		if value > m1:
+			m1 = value
+			major[0] = (key, value)
+	for key, value in o2.iteritems():
+		if value > m2:
+			m2 = value
+			major[1] = (key, value)
+	for key, value in o3.iteritems():
+		if value > m3:
+			m3 = value
+			major[2] = (key, value)
+
+	major = [(optional_map[idx][item[0]], item[1]*100/c[idx]) if c[idx] else (optional_map[idx][item[0]], 0) for idx, item in enumerate(major)]
+	return major
+
+def faster_overall_optional(name, score):
+	d = {}
+	d["name"] = name
+	d["value"] = score[0]
+	d["percent"] = score[1]
+	return d
+
+def convert_optional_overall_rating(optional_score, optional_list):
+	# {name, value, percent}
+	d = [faster_overall_optional(optional_list[idx], score) for idx, score in enumerate(optional_score)]
+	return d
+
 
 def get_criteria_list(is_teacher):
 	# return the list of criteria depending whether entity is teacher or uni
@@ -52,6 +107,9 @@ def get_criteria_list(is_teacher):
 		return get_list_or_404(Criteria_Teacher)
 	else:
 		return get_list_or_404(Criteria_Uni)
+
+def get_optional_criteria_list():
+	return get_list_or_404(Criteria_Optional)
 
 def add_vote_info(review_list):
 	# add vote_up, vote_total, vote_percentage to each review
@@ -85,31 +143,49 @@ def convert_rating_many(score_list, criteria_list):
 	res = [faster_convert(each_score, criteria_list[idx]) for idx, each_score in enumerate(score_list)]
 	return res
 
-def add_rating_info(review_list, criteria_list):
+def optional_rating_convert(each_score, criteria_name, idx):
+	d = {
+		"name": criteria_name,
+		"value": optional_map[idx][each_score]
+	}
+	return d
+
+
+def convert_optional_rating_many(score_list, criteria_list):
+	res = [optional_rating_convert(each_score, criteria_list[idx], idx) for idx, each_score in enumerate(score_list)]
+	return res
+
+def add_rating_info(review_list, criteria_list, optional_criteria_list):
 	for each_review in review_list:
-		score_list = [each_review.rating_1, each_review.rating_2, each_review.rating_3, each_review.rating_4, each_review.rating_5]
+		# compulsory rating
+		score_list = [each_review.rating_1, each_review.rating_2, each_review.rating_3]
 		rating_list = convert_rating_many(score_list, criteria_list)
 		each_review.rating = rating_list
-		overall_rating = convert_rating_single(sum(score_list) / 5)
+		overall_rating = convert_rating_single(sum(score_list) / 3)
 		each_review.score_full = overall_rating["score_full"]
 		each_review.score_half = overall_rating["score_half"]
+
+		# optional rating
+		optional_score_list = [each_review.orating_1, each_review.orating_2, each_review.orating_3]
+		optional_rating_list = convert_optional_rating_many(optional_score_list, optional_criteria_list)
+		each_review.optional_rating = optional_rating_list
 	return review_list
 
 def add_tag_info(review_list, tag_list):
 	tag_count = defaultdict(int)
 	for each_review in review_list:
 		review_tag_list = [each_review.tag_1, each_review.tag_2, each_review.tag_3, each_review.tag_4, each_review.tag_5]
-		print review_tag_list
+		#print review_tag_list
 		review_tag_list = [item.id for item in review_tag_list if item]	
-		print review_tag_list
+		#print review_tag_list
 		review_tag_list = [tag_list[item-1] for item in review_tag_list]
-		print review_tag_list
+		#print review_tag_list
 		each_review.tag_list = review_tag_list
 		for item in review_tag_list:
 			tag_count[item] += 1
 
 	tag_list_with_count = tag_count.items()
-	print tag_list_with_count
+	#print tag_list_with_count
 	tag_list_with_count = sorted(tag_list_with_count, key=lambda item: -item[1])	
 	print tag_list_with_count
 	return (review_list, tag_list_with_count[:5])
@@ -145,14 +221,26 @@ def show_entity(request, entity_id):
 	entity_avg_score = sum(entity_score) / len(entity_score)
 	entity_info = merge_dict(entity_info, convert_rating_single(entity_avg_score))
 
+	# optional_rating # [(value, percent), (value, percent), (value, percent)]
+	
+	#####################
 	print 'Entity rating', entity_score
 	print 'Entity Avg', entity_avg_score
 
 	criteria_list = get_criteria_list(entity_info.is_teacher)
+	optional_criteria_list = get_optional_criteria_list()
 	print 'Criteria List', criteria_list
 
 	entity_criteria = convert_rating_many(entity_score, criteria_list)
-	review_list = add_rating_info(review_list, criteria_list)
+	entity_optional_score = calculate_majority(review_list, len(review_list))
+	entity_optional_criteria = convert_optional_overall_rating(entity_optional_score, optional_criteria_list)
+	
+	print "Optional"
+	print optional_criteria_list
+	print entity_optional_score
+	print entity_optional_criteria
+
+	review_list = add_rating_info(review_list, criteria_list, optional_criteria_list)
 	# TODO: sort review list
 
 	(review_list, entity_best_tag) = add_tag_info(review_list, tag_list)
@@ -180,6 +268,7 @@ def show_entity(request, entity_id):
 												'entity_info': entity_info,
 												'review_list' : review_list,
 												'entity_criteria' : entity_criteria,
+												'entity_optional_criteria' : entity_optional_criteria,
 												'entity_best_tag' : entity_best_tag,
 												'have_own_review' : have_own_review,
 												'own_review_id' : own_review_id,
@@ -253,8 +342,9 @@ def write_review(request, entity_id):
 				'rating1': my_review.rating_1,
 				'rating2': my_review.rating_2,
 				'rating3': my_review.rating_3,
-				'rating4': my_review.rating_4,
-				'rating5': my_review.rating_5,
+				'orating1': my_review.orating_1,
+				'orating2': my_review.orating_2,
+				'orating3': my_review.orating_3,
 				'selected_tag_list' : selected_tag_list,
 				'all_entity' : all_entity,
 				'subject_list' : subject_list,
@@ -292,8 +382,7 @@ def write_review(request, entity_id):
 		if len(joined_content.split()) < 80:
 			error["content"] = True
 		if not (request.POST.get('rating1') and request.POST.get('rating2') \
-				and request.POST.get('rating3') and request.POST.get('rating4') \
-				and request.POST.get('rating5')):
+				and request.POST.get('rating3')):
 			error["rating"] = True
 
 		if error:
@@ -319,8 +408,9 @@ def write_review(request, entity_id):
 				'rating1': request.POST.get('rating1', 0),
 				'rating2': request.POST.get('rating2', 0),
 				'rating3': request.POST.get('rating3', 0),
-				'rating4': request.POST.get('rating4', 0),
-				'rating5': request.POST.get('rating5', 0),
+				'orating1': int(request.POST.get('orating1')),
+				'orating2': int(request.POST.get('orating2')),
+				'orating3': int(request.POST.get('orating3')),
 				'selected_tag_list' : form_selected_tag,
 				'all_entity' : all_entity,
 				'subject' : request.POST.get('subject'),
@@ -340,8 +430,9 @@ def write_review(request, entity_id):
 					'rating_1':request.POST.get('rating1'),
 					'rating_2':request.POST.get('rating2'),
 					'rating_3':request.POST.get('rating3'),
-					'rating_4':request.POST.get('rating4'),
-					'rating_5':request.POST.get('rating5'),
+					'orating_1': int(request.POST.get('orating1')),
+					'orating_2': int(request.POST.get('orating2')),
+					'orating_3': int(request.POST.get('orating3')),
 					'tag_1_id':selected_tag[0],
 					'tag_2_id':selected_tag[1],
 					'tag_3_id':selected_tag[2],
