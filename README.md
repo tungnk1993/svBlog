@@ -37,14 +37,21 @@
 	* ~~Teacher Info~~
 	* Review List
 		* Minor fix for edit/delete function
+		* Readmore
 	* ~~Navbar~~
-	* Form page
-		* Use chrome devtools to check
+	* ~~Form page~~
+		* ~~Use chrome devtools to check~~
 	* Multiple small fixes
-* Add option for user to add/modify teacher's info
+		* ~~Add overall rating to desktop~~
+		* Change star to smile
+		* Change login position
+		* Image padding on mobile
+* Add option for user to add/modify teacher's info (18)
 	* Admin will personally verify
-* Landing page (18)
-* Login notice when trying to vote
+	* Use simple model
+* Landing page (18-19)
+* Login notice when trying to vote (19)
+* COLOR COLOR COLOR
 * ~~Facebook sharing~~
 	* Link URL to correct review
 	* Teacher share

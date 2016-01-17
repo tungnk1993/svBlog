@@ -469,7 +469,20 @@ fjs.parentNode.insertBefore(js, fjs);
 									<a href="#" class="btn btn-default btn-info entity-tag btn-xs">{{each_tag}}</a>
 									{% endfor %}
 								</div>
+								<div class="col-md-12 div-buffer no-padding-side" style="font-size:0.85em; margin-bottom: 0.25em">
+									<div class="col-md-8 no-padding-side">
+										<b>Tổng thể</b>
+									</div>
+									<div class="col-md-4 no-padding-side">
+										{% for star in each_review.score_full|get_range %}
+										<i class="fa fa-star fa-x"></i>
+										{% endfor %}
 
+										{% for half_star in each_review.score_half|get_range %}
+											<i class="fa fa-star-half-full fa-x"></i>
+										{% endfor %}
+									</div>
+								</div>
 								<div class="div-buffer">
 									<table class="table-striped table-hover col-md-12 rating-table-review">
 									<tbody>
