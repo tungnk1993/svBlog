@@ -29,16 +29,20 @@
 * ~~Two write review boxes~~
 	* ~~Study~~
 	* ~~Teacher~~
-* Optional voting (14-15)
+* ~~Optional voting (14-15)~~
 	* ~~Dropdown, some values, optional~~
 	* ~~Show majority percentage~~
 	* ~~Select in form~~
 * Mobile design (Important!) (16-17)
 	* ~~Teacher Info~~
 	* Review List
+		* Minor fix for edit/delete function
 	* ~~Navbar~~
 	* Form page
+		* Use chrome devtools to check
 	* Multiple small fixes
+* Add option for user to add/modify teacher's info
+	* Admin will personally verify
 * Landing page (18)
 * Login notice when trying to vote
 * ~~Facebook sharing~~
@@ -50,7 +54,6 @@
 * Add edit info function
 * Filter list of teacher/uni
 	* Name, subject, school first
-* Add option for user to add teacher's info
 * Update search box to query more info (teacher name + school)
 * Feedback feature
 	* Simple one-way feedback form
