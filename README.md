@@ -36,17 +36,19 @@
 * Mobile design (Important!) (16-17)
 	* ~~Teacher Info~~
 	* Review List
-		* Minor fix for edit/delete function
+		* ~~Minor fix for edit/delete function~~
 		* Readmore
 	* ~~Navbar~~
 	* ~~Form page~~
 		* ~~Use chrome devtools to check~~
 	* Multiple small fixes
 		* ~~Add overall rating to desktop~~
-		* Change star to smile
-		* Change login position
-		* Image padding on mobile
-* Add option for user to add/modify teacher's info (18)
+		* Change star to smile (maybe)
+		* Change login position (maybe)
+		* ~~Image padding on mobile~~
+		* ~~Smaller tags~~
+* Add embed link/hyperlink option to copy direct link to review (maybe)
+* review option for user to add/modify teacher's info (18)
 	* Admin will personally verify
 	* Use simple model
 * Landing page (18-19)
@@ -58,9 +60,10 @@
 	* ~~Review share~~
 * ~~Change voting to upvote only~~
 	* ~~Update UI of vote~~
-* Add edit info function
-* Filter list of teacher/uni
+* Filter list of teacher/uni (20)
 	* Name, subject, school first
+
+## Later
 * Update search box to query more info (teacher name + school)
 * Feedback feature
 	* Simple one-way feedback form

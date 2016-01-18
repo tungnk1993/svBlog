@@ -125,7 +125,7 @@
 	</head>
 
 	<body>
-		<div class="navbar navbar-default navbar-fixed-top">
+		<div class="navbar navbar-default">
 			<div class="container">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="{% url 'show_index' %}">svBlog</a>
@@ -187,7 +187,7 @@
 				</div>
 			</div>
 			<div class = "row">
-				<div class = "col-md-6 col-md-offset-1">
+				<div class = "col-xs-12">
 					{% if entity_info.is_teacher %}
 					<div class = "form-group">
 						<label for="review-subject" {% if error.subject %}class="text-danger" {% endif %}>Môn dạy</label>
@@ -206,12 +206,28 @@
 						<textarea name="content_teacher" class="form-control" rows="6" id="review-content-teacher">{{content_teacher|safe}}</textarea>
 						<span class="{% if error.content %}text-danger{% endif %} help-block" id="textarea-feedback">Cố lên, 80 từ nữa thôi</span>
 					</div>
+					<div class="form-group">
+						<table class="table table-striped table-hover col-xs-12 rating-table-write no-padding-side">
+							<tbody>
+								{% for criteria in criteria_list %}
+								<tr>
+									<td class="{% if error.rating %}text-danger{% endif %} no-padding-side col-xs-7">
+										<b>{{criteria.name}}</b>
+									</td>
+									<td class="col-xs-5 text-left">
+										<input type="hidden" name="rating{{criteria.id}}" class="rating-tooltip" data-filled="fa fa-star fa-x" data-empty="fa fa-star-o fa-x"/>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
 					<div class="form-horizontal">
 						<div class="form-group">
-							<div class="col-md-6 ">
+							<div class="col-xs-12 ">
 								<label class="control-label">Tài liệu học tập</label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-xs-12">
 								<select class="form-control" name="orating1">
 									<option value="0">--</option>
 									<option value="1" {% if orating1 == 1 %}selected{% endif %}>Khá ít</option>
@@ -221,10 +237,10 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-md-6">
+							<div class="col-xs-12">
 								<label class="control-label">Định hướng nghề</label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-xs-12">
 								<select class="form-control" name="orating2">
 									<option value="0">--</option>
 									<option value="1" {% if orating2 == 1 %}selected{% endif %}>Nhầm hướng</option>
@@ -234,10 +250,10 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-md-6">
+							<div class="col-xs-12">
 								<label class="control-label">Năng lức nghiên cứu</label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-xs-12">
 								<select class="form-control" name="orating3">
 									<option value="0">--</option>
 									<option value="1" {% if orating3 == 1 %}selected{% endif %}>Hmm..</option>
@@ -247,48 +263,32 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="checkbox">
-							<label>
-								<input name="is_anonymous" type="checkbox" {% if is_anonymous %}checked{% endif %}>Ẩn danh
-							</label>
-						</div>
-					</div>
+					
 				</div>
-				<div class = "col-md-5">
-					<div class="col-md-12">
-						<table class="table-table-striped table-hover col-md-12 rating-table-write">
-							<tbody>
-								{% for criteria in criteria_list %}
-								<tr>
-									<td class="{% if error.rating %}text-danger{% endif %} no-padding-side col-md-6">
-										<b>{{criteria.name}}</b>
-									</td>
-									<td class="col-md-6 text-left">
-										<input type="hidden" name="rating{{criteria.id}}" class="rating-tooltip" data-filled="fa fa-star fa-x" data-empty="fa fa-star-o fa-x"/>
-									</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
-
-					<div class = "{% if error.tag %}text-danger{% endif %} col-md-12 row-buffer">
+				<div class = "col-xs-12 no-padding-side">
+					<div class = "{% if error.tag %}text-danger{% endif %} col-xs-12">
 						<b>Choose 3-5 tags that describes teacher/uni</b>
 					</div>
-					<div class = "col-md-12">
+					<div class = "col-xs-12">
 						<div class="btn-group" data-toggle="buttons">
 						{% for tag in tag_list %}
-						  <label class="btn btn-default-my tag-btn ">
+						  <label class="btn btn-default-my tag-btn btn-sm">
 							<input name="tag{{tag.id}}" id="tag{{tag.id}}" tag-id="{{tag.id}}" type="checkbox" autocomplete="off">{{tag.tag_name}}
 						  </label>
 						{% endfor %}
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="checkbox text-right col-xs-12">
+						<label>
+							<input name="is_anonymous" type="checkbox" {% if is_anonymous %}checked{% endif %}>Ẩn danh
+						</label>
+					</div>
+				</div>
 			</div>
-			<div class = "row">
-				<div class = "col-md-7 ">
+			<div class = "row div-buffer">
+				<div class = "col-xs-12">
 					<button type="submit" class="btn btn-success pull-right">Submit</button>
 				</div>
 			</div>
