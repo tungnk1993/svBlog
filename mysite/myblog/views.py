@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from models import MyUser, Tag, Entity, Review, Vote, Criteria_Teacher, Criteria_Uni, Criteria_Optional, Subject
+from models import Entity_Edit_Info, Entity_Add_Info
+
 from collections import defaultdict
 from django.core.exceptions import ObjectDoesNotExist
 import traceback
@@ -562,7 +564,55 @@ def write_profile(request):
 
 		return HttpResponseRedirect(reverse(('write_profile'), args=()))
 
+#################### edit/add info ############################
+def edit_info(request, entity_id):
+	all_entity = get_all_entity_json()
+	entity_info = get_object_or_404(Entity, pk=entity_id)
+	if request.method == 'GET':
+		# show_form
+		return render(request, "edit_info.html", {
+			'entity_info': entity_info,
+			'all_entity' : all_entity,
+		})
+	elif request.method == 'POST':
+		try:
+			Entity_Edit_Info.objects.create(
+				entity_id=entity_id,
+				new_name=request.POST.get('new_name'),
+				new_subject=request.POST.get('new_subject'),
+				new_info=request.POST.get('new_info'),
+				new_profile_pic=request.POST.get('new_profile_pic'),
+				user_contact=request.POST.get('user_contact'),
+			)
+			print "Edit Info added to db"
+		except Exception, e:
+			print traceback.print_exc()
 
+		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
+
+def add_info(request, entity_id):
+	all_entity = get_all_entity_json()
+	if request.method == 'GET':
+		# show_form
+		return render(request, "add_info.html", {
+			'all_entity' : all_entity,
+		})
+	elif request.method == 'POST':
+		try:
+			Entity_Add_Info.objects.create(
+				name=request.POST.get('name'),
+				subject=request.POST.get('subject'),
+				info=request.POST.get('info'),
+				profile_pic=request.POST.get('profile_pic'),
+				user_contact=request.POST.get('user_contact'),
+			)
+			print "Added Info added to db"
+		except Exception, e:
+			print traceback.print_exc()
+
+		return HttpResponseRedirect(reverse(('show_entity'), args=(entity_id,)))
+
+#####################################################################
 # dev register
 from django import forms
 from django.contrib.auth.forms import UserCreationForm

@@ -5,7 +5,6 @@ from django_bleach.models import BleachField
 
 from django.db.models import signals
 
-
 # User Model
 class MyUser(models.Model):
 	user = models.OneToOneField(User)
@@ -111,4 +110,31 @@ class Criteria_Uni(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+class Entity_Edit_Info(models.Model):
+	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, related_name='edit_entity')
+	date_added = models.DateTimeField(auto_now_add=True)
+
+	new_name = models.TextField(blank=True, null=True)
+	new_subject = models.TextField(blank=True, null=True)
+	new_info = models.TextField(blank=True, null=True)
+	new_profile_pic = models.TextField(blank=True, null=True)
+
+	user_contact = models.TextField(blank=True, null=True)
+
+	def __unicode__(self):
+		return ' | '.join([self.entity.name, str(self.entity.id), self.date_added.strftime("%d-%m-%Y %H:%M")])
+
+class Entity_Add_Info(models.Model):
+	date_added = models.DateTimeField(auto_now_add=True)
+
+	name = models.TextField(blank=True, null=True)
+	subject = models.TextField(blank=True, null=True)
+	info = models.TextField(blank=True, null=True)
+	profile_pic = models.TextField(blank=True, null=True)
+
+	user_contact = models.TextField(blank=True, null=True)
+
+	def __unicode__(self):
+		return ' | '.join([self.name, self.date_added.strftime("%d-%m-%Y %H:%M")])
 

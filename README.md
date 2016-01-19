@@ -26,23 +26,14 @@
 		* Alignment problem
 	* ~~Form page~~
 		* ~~Use chrome devtools to check~~
-		* Reorder star rating up
+		* ~~Reorder star rating up~~
 	* ~~Multiple small fixes~~
 		* ~~Add overall rating to desktop~~
 		* ~~Image padding on mobile~~
 		* ~~Smaller tags~~
-* Option for user to add/modify teacher's info (18-19)
-	* Link to image only, no direct upload
-	* To add, you have to login
-		* Option will be on menu bar or collapsed
-		* Admin will personally verify
-		* Link to image only
-	* To modify, you have to login
-		* Option will be under image
-	* Use simple model, view in admin dashboard
-* Heart and share button under teacher image 
+* Login notice when trying to vote
+* Heart button under teacher image 
 * Landing page (18-19)
-* Login notice when trying to vote (19)
 * ~~Facebook sharing~~
 	* Link URL to correct review
 	* Teacher share
@@ -51,6 +42,7 @@
 	* ~~Update UI of vote~~
 * Filter list of teacher/uni (20)
 	* Name, subject, school first
+* Modularize navbar, breakdown template
 * COLOR COLOR COLOR
 
 ## Later
@@ -75,6 +67,11 @@
 * readmore.js
 
 ## Completed
+* ~~Option for user to add/modify teacher's info (18-19)~~
+	* ~~Link to image only, no direct upload~~
+	* ~~To add:~~
+		* ~~Option will be on menu bar or collapsed~~
+	* ~~Use simple model, view in admin dashboard~~
 * ~~Search box suggestion(vietnamese support if possible)~~
 * ~~Social account linking and testing~~
 * ~~User profile settings (only short_bio currently)~~

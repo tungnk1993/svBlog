@@ -1,0 +1,183 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="{% static "write-review.css" %}">
+		<link rel="stylesheet" href="{% static "style.css" %}">
+		<link rel="stylesheet" href="{% static "bootstrap-social.css" %}">
+		<script>
+		$(function() {
+			//var names = [ "Nguyễn Khắc Tùng", "Trương Tuấn Dũng", "Tô Ngọc Vân", "Ngô Quý Nhâm", "Trần Thị Kiều Minh" ];
+ 			var all_entity_raw = {{all_entity|safe}};
+			console.log(all_entity_raw);
+			var all_entity = [];
+			for (var i = 0; i < all_entity_raw.length; i++)
+			{
+				console.log(all_entity_raw[i]);
+				all_entity.push(JSON.parse(all_entity_raw[i]));
+			}
+			var accentMap = {
+				"á": "a", "ả": "a", "à": "a", "ạ": "a", "ã": "a", "ă" : "a", "â": "a",
+				"ắ": "a", "ẳ": "a", "ằ": "a", "ặ": "a", "ẵ": "a",
+				"ấ": "a", "ẩ": "a", "ầ": "a", "ậ": "a", "ẫ": "a",
+
+				"é": "e", "ẻ": "e", "è": "e", "ẹ": "e", "ẽ": "e", "ê" : "e",
+				"ế": "e", "ể": "e", "ề": "e", "ệ": "e", "ễ": "e",
+
+				"í": "i", "ỉ": "i", "ì": "i", "ị": "i", "ĩ": "i",
+
+				"ó": "o", "ỏ": "o", "ò": "o", "ọ": "o", "õ": "o", "ô": "o", "ơ": "o",
+				"ố": "o", "ổ": "o", "ồ": "o", "ộ": "o", "ỗ": "o",
+				"ớ": "o", "ở": "o", "ờ": "o", "ợ": "o", "ỡ": "o",
+
+				"ú": "u", "ủ": "u", "ù": "u", "ụ": "u", "ũ": "u", "ư": "u",
+				"ứ": "u", "ử": "u", "ừ": "u", "ự": "u", "ữ": "u",
+
+				"ý": "y", "ỷ": "y", "ỳ": "y", "ỵ": "y", "ỹ": "y",
+
+				"đ": "d", "Đ": "D",
+			};
+			var normalize = function( term ) {
+				var ret = "";
+				for ( var i = 0; i < term.length; i++ ) {
+					ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+				}
+				return ret;
+			};
+
+			$( "#searchbox" ).autocomplete({
+				source: function( request, response ) {
+					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+					response( $.grep( all_entity, function( value ) {
+						value = value.name || value;
+						return matcher.test( value ) || matcher.test(normalize(value ));
+						}) 
+					);
+				},
+				focus: function( event, ui ) {
+					$( "#searchbox" ).val( ui.item.name);
+					return false;
+				},
+				select: function (event, ui) {
+					window.location = ui.item.url;
+				}
+			})
+			.autocomplete( "instance" )._renderItem = function( ul, item ) {
+				return $( "<li>" )
+				.append("<img class='search-suggest-item' src='" + item.profile_pic + "'>"+"<b>" + item.name + "</b><br>" + item.short_info)
+				.appendTo( ul );
+			};
+		});
+		</script>
+	</head>
+
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="{% url 'show_index' %}">svBlog</a>
+				</div>
+
+				<div class="navbar-collapse collapse">
+					<div class="col-md-5">
+						<form class="navbar-form" style="margin-top: 0.8em">
+							<div class="form-group" style="display:inline;">
+								<div class="input-group" style="display:table;">
+									<input id="searchbox" class="form-control input-sm" name="search" placeholder="Search Here" autocomplete="off" type="text">
+									<span class="input-group-btn" style="width:1%">
+										<button type="submit" class="btn btn-info btn-sm">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#">List teacher</a>
+						</li>
+						<li>
+							<a href="#">List university</a>
+						</li>
+					</ul>
+					{% if user.is_authenticated %}
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								<img src="{{ user.myuser.profile_icon.url }}" width="20" height="20">
+								&nbsp; {{ user.myuser.name}}
+								<span class="caret"></span>
+							</a>
+
+							<ul class="dropdown-menu">
+								<li><a href="{% url 'write_profile' %}">Cá nhân</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/accounts/logout?next={{ request.path }}">Logout</a></li>
+							</ul>
+						</li>
+						
+					</ul>
+					{% else %}
+					<ul class="nav navbar-nav navbar-right">
+						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a></p></li>
+						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-google"><span class="fa fa-google"></span></a></p></li>
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="container entity-buffer">
+			<form action="" method="post">
+			{% csrf_token %}
+			<div class = "row">
+				<div class = "col-md-6 col-md-offset-1 col-xs-12" >
+					<h3>Sửa thông tin giáo viên {{entity_info.name}}</h3>
+				</div>
+			</div>
+			<div class = "row">
+				<div class = "col-md-6 col-md-offset-1 col-xs-12">	
+					<div class = "form-group">
+						<label>Tên giáo viên</label>
+						<input type="text" class="form-control" name="new_name">
+					</div>
+					<div class = "form-group">
+						<label>Bộ môn</label>
+						<input type="text" class="form-control" name="new_subject">
+					</div>
+					<div class = "form-group">
+						<label>Thông tin phụ</label>
+						<input type="text" class="form-control" name="new_info">
+						<span class="help-block">Nơi dạy, thông tin hữu ích khác, ...</span>
+					</div>
+					<div class = "form-group">
+						<label>Hình ảnh</label>
+						<input type="text" class="form-control" name="new_profile_pic">
+						<span class="help-block">Chỉ chấp nhận link tới ảnh</span>
+					</div>
+					<div class = "form-group">
+						<label>Thông tin liên hệ</label>
+						<input type="text" class="form-control" name="user_contact" placeholder="Để cảm ơn ý mà :)">
+					</div>
+					<p class="text-info">
+						<span class="glyphicon glyphicon-education"></span>&nbsp;svBlog xin cảm ơn đóng góp của bạn!
+					</p>
+				</div>
+			</div>
+			<div class = "row">
+				<div class = "col-md-7 col-xs-12">
+					<button type="submit" class="btn btn-success pull-right">Submit</button>
+				</div>
+			</div>
+			</form>
+		</div>
+
+
+
+		
+
+	</body>
+</html>

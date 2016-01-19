@@ -194,18 +194,6 @@
 						<input id="subjectbox" class="form-control" name="subject" autocomplete="off" type="text" value="{{subject}}">
 					</div>
 					{% endif %}
-					
-					<div class = "form-group">
-						<label for="review-content-study">Về môn học &amp; thi cử</label>
-						<span tabindex="0" class="pull-right glyphicon glyphicon-question-sign" role="button" data-toggle="popover" data-html="true" aria-hidden="true" title="Gợi ý cách viết" data-content="Pointer 1<br>Pointer 2">
-							</span>
-						<textarea name="content_study" class="form-control" rows="6" id="review-content-study">{{content_study|safe}}</textarea>
-					</div>
-					<div class = "form-group">
-						<label for="review-content-teacher">Về giáo viên</label>
-						<textarea name="content_teacher" class="form-control" rows="6" id="review-content-teacher">{{content_teacher|safe}}</textarea>
-						<span class="{% if error.content %}text-danger{% endif %} help-block" id="textarea-feedback">Cố lên, 80 từ nữa thôi</span>
-					</div>
 					<div class="form-group">
 						<table class="table table-striped table-hover col-xs-12 rating-table-write no-padding-side">
 							<tbody>
@@ -222,6 +210,18 @@
 							</tbody>
 						</table>
 					</div>
+					<div class = "form-group">
+						<label for="review-content-study">Về môn học &amp; thi cử</label>
+						<span tabindex="0" class="pull-right glyphicon glyphicon-question-sign" role="button" data-toggle="popover" data-html="true" aria-hidden="true" title="Gợi ý cách viết" data-content="Pointer 1<br>Pointer 2">
+							</span>
+						<textarea name="content_study" class="form-control" rows="6" id="review-content-study">{{content_study|safe}}</textarea>
+					</div>
+					<div class = "form-group">
+						<label for="review-content-teacher">Về giáo viên</label>
+						<textarea name="content_teacher" class="form-control" rows="6" id="review-content-teacher">{{content_teacher|safe}}</textarea>
+						<span class="{% if error.content %}text-danger{% endif %} help-block" id="textarea-feedback">Cố lên, 80 từ nữa thôi</span>
+					</div>
+					
 					<div class="form-horizontal">
 						<div class="form-group">
 							<div class="col-xs-12 ">

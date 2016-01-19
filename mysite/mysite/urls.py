@@ -25,13 +25,18 @@ urlpatterns = [
     url(r'^test_tag/$', views.test_tag),
     url(r'^test_entity/(\d+)/$', views.test_entity),
 
-    # dev
+    # main function
     url(r'^$', views.show_index, name='show_index'),
     url(r'^e/(?P<entity_id>\d+)/$', views.show_entity, name='show_entity'),
     url(r'^e/(?P<entity_id>\d+)/write/$', views.write_review, name='write_review'),
     url(r'^e/(?P<entity_id>\d+)/delete-review/$', views.delete_review),
     url(r'^vote/(?P<review_id>\d+)/(?P<vote_value>\d+)/$', views.change_vote),
     url(r'^profile/$', views.write_profile, name='write_profile'),
+
+    # add, modify entity info
+    url(r'^e/(?P<entity_id>\d+)/edit/$', views.edit_info, name='edit_info'),
+    url(r'^e/(?P<entity_id>\d+)/add_info/$', views.add_info, name='add_info'),
+
 
     # social login
     url('', include('social.apps.django_app.urls', namespace='social')),

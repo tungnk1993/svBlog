@@ -210,3 +210,12 @@ section h2 {
 		max-height: 25em;
 	}
 }
+
+.edit-info {
+	color: #999999;
+	text-decoration: none;
+}
+
+.edit-info:hover {
+	text-decoration: none;
+}
