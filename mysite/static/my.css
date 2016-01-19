@@ -193,3 +193,20 @@ section h2 {
 	color: #2c3e50;
 	text-decoration: none;
 }
+
+.more-link {
+	text-decoration: none;
+	color: #2b6dad;
+}
+
+@media screen and (min-width: 320px) {
+	.review-content {
+		max-height: 13em;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	.review-content {
+		max-height: 25em;
+	}
+}

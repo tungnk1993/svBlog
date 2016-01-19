@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="{% static "social_sharing.css" %}">
 		<script src="{% static "jquery-scrollto.js" %}"></script>
 		<script src="{% static "bootbox.min.js" %}"></script>
+		<script src="{% static "readmore.min.js" %}"></script>
 		<script src="{% static "entity.js" %}"></script>
 		<script>
 			$(function () {
@@ -451,6 +452,7 @@ fjs.parentNode.insertBefore(js, fjs);
 
 							{% if entity_info.is_teacher %}
 							<div class = "col-md-6">
+								<div class="review-content">
 								<p class="small"><b>Môn dạy: {{each_review.subject}}</b> (Viết ngày: {{each_review.date_written|date:"d/m/Y"}})</p>
 								{% if each_review.content_study %}
 								<b>&lt;Về môn học &amp; thi cử&gt;</b>
@@ -463,6 +465,7 @@ fjs.parentNode.insertBefore(js, fjs);
 								<br>
 								{{each_review.content_teacher|safe|linebreaks}}
 								{% endif %}
+								</div>
 							</div>
 							{% endif %}
 							<div class = "col-md-3 no-padding-side">
@@ -680,6 +683,7 @@ fjs.parentNode.insertBefore(js, fjs);
 							
 							{% if entity_info.is_teacher %}
 							<div class = "col-xs-12">
+								<div class="review-content">
 								{% if each_review.content_study %}
 								<b>&lt;Về môn học &amp; thi cử&gt;</b>
 								<br>
@@ -691,6 +695,7 @@ fjs.parentNode.insertBefore(js, fjs);
 								<br>
 								{{each_review.content_teacher|safe|linebreaks}}
 								{% endif %}
+								</div>
 							</div>
 							{% endif %}
 							<div class = "col-xs-12">

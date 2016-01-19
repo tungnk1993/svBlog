@@ -18,10 +18,12 @@
 ## TODO (should be in order)
 * Mobile design (Important!) (16-17)
 	* ~~Teacher Info~~
-	* Review List
+	* ~~Review List~~
 		* ~~Minor fix for edit/delete function~~
-		* Readmore
-	* ~~Navbar~~
+		* ~~Readmore~~
+	* Navbar
+		* Fix search bar
+		* Small alignment
 	* ~~Form page~~
 		* ~~Use chrome devtools to check~~
 		* Reorder star rating up
@@ -63,6 +65,7 @@
 * jquery-scrollto
 * bootbox
 * python-social-auth
+* readmore.js
 
 ## Completed
 * ~~Search box suggestion(vietnamese support if possible)~~

@@ -2,6 +2,7 @@ $(function() {
 	console.log("entity.js loaded");
 	handle_vote_change();
 	handle_delete_review();
+	read_more();
 })
 
 function handle_vote_change() {
@@ -94,5 +95,13 @@ function handle_delete_review()
 			}
 		  }
 		});
+	});
+}
+
+function read_more()
+{
+	$('.review-content').readmore({
+		moreLink: '<span href="#" class="more-link clickable">(Đọc tiếp...)</span>',
+		lessLink: '',
 	});
 }
