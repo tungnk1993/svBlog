@@ -22,8 +22,8 @@
 		* ~~Minor fix for edit/delete function~~
 		* ~~Readmore~~
 	* Navbar
-		* Fix search bar
-		* Small alignment
+		* Fix search bar (Zooming problem, can copy google-style)
+		* Alignment problem
 	* ~~Form page~~
 		* ~~Use chrome devtools to check~~
 		* Reorder star rating up
@@ -32,11 +32,17 @@
 		* ~~Image padding on mobile~~
 		* ~~Smaller tags~~
 * Option for user to add/modify teacher's info (18-19)
-	* Admin will personally verify
-	* Use simple model
+	* Link to image only, no direct upload
+	* To add, you have to login
+		* Option will be on menu bar or collapsed
+		* Admin will personally verify
+		* Link to image only
+	* To modify, you have to login
+		* Option will be under image
+	* Use simple model, view in admin dashboard
+* Heart and share button under teacher image 
 * Landing page (18-19)
 * Login notice when trying to vote (19)
-* Heart and share button under teacher image 
 * ~~Facebook sharing~~
 	* Link URL to correct review
 	* Teacher share
@@ -48,6 +54,7 @@
 * COLOR COLOR COLOR
 
 ## Later
+* Captcha (maybe)
 * Change login position (maybe)
 * Change star to smile (maybe)
 * Add embed link/hyperlink option to copy direct link to review (maybe)
