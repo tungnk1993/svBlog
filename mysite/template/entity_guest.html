@@ -132,26 +132,31 @@ fjs.parentNode.insertBefore(js, fjs);
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       				</button>
+					
 				</div>
-
+				
+				<!--
+				
+				-->
 				<div class="navbar-collapse collapse" id="navbar-collapse">
-					<div class="col-sm-5">
-						<form class="navbar-form" style="margin-top: 0.8em">
-							<div class="form-group" style="display:inline;">
-								<div class="input-group" style="display:table;">
-									<input id="searchbox" class="form-control input-sm" name="search" placeholder="Search Here" autocomplete="off" type="text">
-									<span class="input-group-btn" style="width:1%">
-										<button type="submit" class="btn btn-info btn-sm">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
-									</span>
-								</div>
+					<div class="col-sm-5 col-xs-12 no-padding-side">
+					<form class="navbar-form search-form">
+						<div class="form-group" style="display:inline;">
+							<div class="input-group" style="display:table;">
+								<input id="searchbox" class="form-control input-sm search-bar search-bar-ios" name="search" placeholder="Tìm kiếm..." autocomplete="off" type="text">
+								<span class="input-group-btn" style="width:1%">
+									<button class="btn btn-info btn-sm">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+								</span>
 							</div>
-						</form>
+						</div>
+						
+					</form>
 					</div>
-					<ul class="nav navbar-nav">
-						<li>
+					<ul class="nav navbar-nav" >
+						<li class="extra-margin-sm">
 							<a href="#">Danh sách giáo viên</a>
 						</li>
-						<li>
+						<li class="extra-margin-sm">
 							<a href="{% url "add_info" entity_info.id %}">Thêm thông tin</a>
 						</li>
 					</ul>
@@ -174,8 +179,17 @@ fjs.parentNode.insertBefore(js, fjs);
 					</ul>
 					{% else %}
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<div>
+							<a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-facebook navbar-btn navbar-btn-left">
+								<i class="fa fa-facebook"></i>
+								&nbsp;Đăng nhập
+							</a>
+							</div>
+						</li>
+						<!--
 						<li><div class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a></div></li>
-						<li><p class="navbar-btn"><a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-social-icon btn-google"><span class="fa fa-google"></span></a></p></li>
+						-->
 					</ul>
 					{% endif %}
 				</div>

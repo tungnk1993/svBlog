@@ -219,3 +219,36 @@ section h2 {
 .edit-info:hover {
 	text-decoration: none;
 }
+
+.input-xs {
+    height: 22px;
+    padding: 5px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.search-form {
+	margin-top: 0.8em;
+	box-shadow: none !important;
+}
+.search-bar {
+	border: 0 !important;
+
+}
+
+.navbar-btn-left {
+	margin-left: 15px;
+}
+
+@media screen and (min-width: 1025px) {
+	.extra-margin-sm {
+		margin-left: 3em;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.search-bar-ios {
+		font-size: 16px;
+	}
+}

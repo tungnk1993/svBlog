@@ -202,8 +202,8 @@
 									<td class="{% if error.rating %}text-danger{% endif %} no-padding-side col-xs-7">
 										<b>{{criteria.name}}</b>
 									</td>
-									<td class="col-xs-5 text-left">
-										<input type="hidden" name="rating{{criteria.id}}" class="rating-tooltip" data-filled="fa fa-star fa-x" data-empty="fa fa-star-o fa-x"/>
+									<td class="col-xs-5 text-left no-padding-side">
+										<input type="hidden" name="rating{{criteria.id}}" class="rating-tooltip" data-filled="fa fa-star star-slightly-bigger" data-empty="fa fa-star-o star-slightly-bigger"/>
 									</td>
 								</tr>
 								{% endfor %}

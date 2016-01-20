@@ -16,21 +16,11 @@
 * Use mobile design
 
 ## TODO (should be in order)
-* Mobile design (Important!) (16-17)
-	* ~~Teacher Info~~
-	* ~~Review List~~
-		* ~~Minor fix for edit/delete function~~
-		* ~~Readmore~~
-	* Navbar
-		* Fix search bar (Zooming problem, can copy google-style)
-		* Alignment problem
-	* ~~Form page~~
-		* ~~Use chrome devtools to check~~
-		* ~~Reorder star rating up~~
-	* ~~Multiple small fixes~~
-		* ~~Add overall rating to desktop~~
-		* ~~Image padding on mobile~~
-		* ~~Smaller tags~~
+* Small UI Fixes
+	* Write_review_mobile
+		* ~~Bigger star on write review mobile~~
+		* Suggestion block
+		* Countdown?
 * Login notice when trying to vote
 * Heart button under teacher image 
 * Landing page (18-19)
@@ -44,6 +34,15 @@
 	* Name, subject, school first
 * Modularize navbar, breakdown template
 * COLOR COLOR COLOR
+* Ipad Portrait mode problem.....
+
+## Deployment
+* Gitignore setup
+	* Sqlite
+* uWsgi, nginx setup
+* Static files configure
+* Setup logging
+* Test domain ns
 
 ## Later
 * Captcha (maybe)
@@ -67,6 +66,21 @@
 * readmore.js
 
 ## Completed
+* Mobile design (Important!) (16-17)
+	* ~~Teacher Info~~
+	* ~~Review List~~
+		* ~~Minor fix for edit/delete function~~
+		* ~~Readmore~~
+	* Navbar
+		* ~~Fix search bar (Zooming problem, can copy google-style)~~
+		* ~~Alignment problem~~
+	* ~~Form page~~
+		* ~~Use chrome devtools to check~~
+		* ~~Reorder star rating up~~
+	* ~~Multiple small fixes~~
+		* ~~Add overall rating to desktop~~
+		* ~~Image padding on mobile~~
+		* ~~Smaller tags~~
 * ~~Option for user to add/modify teacher's info (18-19)~~
 	* ~~Link to image only, no direct upload~~
 	* ~~To add:~~

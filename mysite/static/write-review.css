@@ -117,3 +117,8 @@ section h2 {
 .navbar-form > .form-group > .input-group > .form-control:focus {
 	border-color: rgb(220, 228, 236);
 }
+
+.star-slightly-bigger {
+	font-size: 1.3em;
+	margin-right: 3px;
+}
