@@ -16,14 +16,14 @@
 * Use mobile design
 
 ## TODO (should be in order)
+
+* Login notice when trying to vote
+* Landing page (18-19)
 * Small UI Fixes
 	* Write_review_mobile
 		* ~~Bigger star on write review mobile~~
 		* Suggestion block
 		* Countdown?
-* Login notice when trying to vote
-* Heart button under teacher image 
-* Landing page (18-19)
 * ~~Facebook sharing~~
 	* Link URL to correct review
 	* Teacher share
@@ -32,9 +32,11 @@
 	* ~~Update UI of vote~~
 * Filter list of teacher/uni (20)
 	* Name, subject, school first
+* Add embed link/hyperlink option to copy direct link to review
 * Modularize navbar, breakdown template
 * COLOR COLOR COLOR
 * Ipad Portrait mode problem.....
+* Heart button under teacher image 
 
 ## Deployment
 * Gitignore setup
@@ -48,7 +50,6 @@
 * Captcha (maybe)
 * Change login position (maybe)
 * Change star to smile (maybe)
-* Add embed link/hyperlink option to copy direct link to review (maybe)
 * Update search box to query more info (teacher name + school)
 * Feedback feature
 	* Simple one-way feedback form

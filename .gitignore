@@ -1,0 +1,8 @@
+# Byte-compile
+*.py[cod]
+
+# Log
+*.log
+
+# db
+*.sqlite3
