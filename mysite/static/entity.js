@@ -62,7 +62,7 @@ function handle_vote_change() {
 
 function handle_delete_review()
 {
-	$('#delete-review').click(function() {
+	$('.delete-review').click(function() {
 		bootbox.dialog({
 		  message: "Bạn chắc muốn xóa đánh giá chứ?",
 		  title: "Bình tĩnh!",

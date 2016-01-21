@@ -1,0 +1,260 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Roboto&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
+		<link rel="stylesheet" href="{% static "my.css" %}">
+		<link rel="stylesheet" href="{% static "style.css" %}">
+		<link rel="stylesheet" href="{% static "bootstrap-social.css" %}">
+		<script>
+		$(function() {
+ 			var all_entity_raw = {{all_entity|safe}};
+			console.log(all_entity_raw);
+			var all_entity = [];
+			for (var i = 0; i < all_entity_raw.length; i++)
+			{
+				console.log(all_entity_raw[i]);
+				all_entity.push(JSON.parse(all_entity_raw[i]));
+			}
+			var accentMap = {
+				"á": "a", "ả": "a", "à": "a", "ạ": "a", "ã": "a", "ă" : "a", "â": "a",
+				"ắ": "a", "ẳ": "a", "ằ": "a", "ặ": "a", "ẵ": "a",
+				"ấ": "a", "ẩ": "a", "ầ": "a", "ậ": "a", "ẫ": "a",
+
+				"é": "e", "ẻ": "e", "è": "e", "ẹ": "e", "ẽ": "e", "ê" : "e",
+				"ế": "e", "ể": "e", "ề": "e", "ệ": "e", "ễ": "e",
+
+				"í": "i", "ỉ": "i", "ì": "i", "ị": "i", "ĩ": "i",
+
+				"ó": "o", "ỏ": "o", "ò": "o", "ọ": "o", "õ": "o", "ô": "o", "ơ": "o",
+				"ố": "o", "ổ": "o", "ồ": "o", "ộ": "o", "ỗ": "o",
+				"ớ": "o", "ở": "o", "ờ": "o", "ợ": "o", "ỡ": "o",
+
+				"ú": "u", "ủ": "u", "ù": "u", "ụ": "u", "ũ": "u", "ư": "u",
+				"ứ": "u", "ử": "u", "ừ": "u", "ự": "u", "ữ": "u",
+
+				"ý": "y", "ỷ": "y", "ỳ": "y", "ỵ": "y", "ỹ": "y",
+
+				"đ": "d", "Đ": "D",
+			};
+			var normalize = function( term ) {
+				var ret = "";
+				for ( var i = 0; i < term.length; i++ ) {
+					ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+				}
+				return ret;
+			};
+
+			$( "#searchbox" ).autocomplete({
+				source: function( request, response ) {
+					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+					response( $.grep( all_entity, function( value ) {
+						console.log(value.name, value.short_info);
+						value = value.name || value;
+						
+						return matcher.test( value ) || matcher.test(normalize(value ));
+						}) 
+					);
+				},
+				focus: function( event, ui ) {
+					$( "#searchbox" ).val( ui.item.name);
+					return false;
+				},
+				select: function (event, ui) {
+					window.location = ui.item.url;
+				}
+			})
+			.autocomplete( "instance" )._renderItem = function( ul, item ) {
+				return $( "<li>" )
+				.append("<img class='search-suggest-item' src='" + item.profile_pic + "'>"+"<b>" + item.name + "</b><br>" + item.short_info)
+				.appendTo( ul );
+			};
+
+			$("#searchbox").focus();
+		});
+		</script>
+	</head>
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top my-nav-bar">
+			<div class="container">
+				<div class="navbar-header">
+					<img src="{% static "images/logo_1.png" %}" class="">
+
+					<button type="button" class="navbar-toggle collapsed landing-collapse-button" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+      				</button>
+				</div>
+
+				<div class="navbar-collapse collapse" id="navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#" class="landing-li">DS GIÁO VIÊN</a>
+						</li>
+						<li>
+							<a href="#" class="landing-li">VỀ CHÚNG TÔI</a>
+						</li>
+
+						{% if user.is_authenticated %}
+						<li>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								<img src="{{ user.myuser.profile_icon.url }}" width="20" height="20">
+								&nbsp; {{ user.myuser.name}}
+								<span class="caret"></span>
+							</a>
+
+							<ul class="dropdown-menu">
+								<li><a href="{% url 'write_profile' %}">Cá nhân</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/accounts/logout?next={{ request.path }}">Logout</a></li>
+							</ul>
+						</li>
+						{% else %}
+						<li>
+							<div>
+								<a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}" class="btn btn-facebook navbar-btn navbar-btn-left">
+									<i class="fa fa-facebook"></i>
+									&nbsp;Đăng nhập
+								</a>
+							</div>
+						</li>
+						{% endif %}
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row landing-bg">
+				<div class="col-sm-12 landing-header-space"></div>
+				<div class="col-sm-12 landing-header-bg no-padding-side">
+					</div>
+				<div class="col-sm-12 no-padding-side">
+					
+					<div class="col-sm-12 text-center landing-header">
+						VOICES OF FTU
+					</div>
+
+					<div class="col-sm-6 col-sm-offset-3">
+						<div id="imaginary_container">
+							<!--
+							<div class="ui-widget input-group stylish-input-group form-group ">
+								
+								<input id="searchbox" type="text" class="form-control"  placeholder="Search" >
+								<span class="input-group-addon">
+									<button type="submit">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>  
+								</span>
+								
+							</div>
+							-->
+							<div class="input-group">
+								<input id="searchbox" type="text" class="form-control search-query landing-search" placeholder="Tên giáo viên..." /> 
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-primary">&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section class="">
+			<div class="container">
+				<div class="row ">
+					<div class="col-sm-12 text-center landing-welcome">
+						CHÀO MỪNG TỚI SVBLOG !<br />
+						<i class="fa fa-star text-pink"></i><br />
+					</div>
+					<div class="col-sm-8 col-sm-offset-2 text-center landing-welcome-small">
+						Chia sẻ và nói lên suy nghĩ của bạn<br/> về chất lượng giảng dạy tại Đại Học Ngoại Thương
+					</div>
+					<div class="col-sm-12 text-center div-buffer">
+						<button class="btn btn-lg landing-start-now" href="#">Start now</button>
+					</div>
+
+
+				</div>
+				
+			</div>
+			<hr />
+		</section>
+
+		<section id="feature">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h2>Featured Teacher/University</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-md-3">
+							<img class="img-responsive" src="face.jpg">
+						</div>
+						<div class="col-md-9">
+							<h4>Thầy Trương Tuấn Dũng</h4>
+							<div>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star-empty"></span>
+
+							</div>
+							<div>
+								<span class="glyphicon glyphicon-user"></span>1,000 reviews
+							</div>
+							<div class="tag-button">
+								<a href="#" class="btn btn-primary btn-xs">Mặt Ngu</a>
+								<a href="#" class="btn btn-primary btn-xs">Nói lắm</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-md-3">
+							<img class="img-responsive" src="ftu.jpg">
+						</div>
+						<div class="col-md-9">
+						
+							<h4>Đại học Ngoại Thương FTU</h4>
+							<div>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star"></span>
+								<span class="glyphicon glyphicon-star-empty"></span>
+
+							</div>
+							<div>
+								<span class="glyphicon glyphicon-user"></span>1,000 reviews
+							</div>
+							<div class="tag-button">
+								<a href="#" class="btn btn-primary btn-xs">Chất lượng giảng dạy</a>
+								<a href="#" class="btn btn-primary btn-xs">Cơ hội việc làm</a>
+							</div>
+						</div>
+					</div>
+
+			
+				</div>
+			</div>
+		</section>
+
+	</body>
+</html>

@@ -534,7 +534,7 @@ def get_all_entity_json():
 
 def show_index(request):
 	all_entity = get_all_entity_json()
-	return render(request, 'index.html', {
+	return render(request, 'landing.html', {
 											'all_entity': all_entity,
 		})
 

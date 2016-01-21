@@ -601,7 +601,7 @@ fjs.parentNode.insertBefore(js, fjs);
 									</a>
 									</span>
 
-									<span class="fa-stack fa-lg clickable" id="delete-review">
+									<span class="fa-stack fa-lg clickable delete-review">
 									  <i class="fa fa-circle fa-stack-2x text-danger"></i>
 									  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 									</span>
@@ -770,14 +770,14 @@ fjs.parentNode.insertBefore(js, fjs);
 							{% if each_review.id == own_review_id %}
 							<div class="col-xs-12 div-buffer">
 								<span class="pull-right">
-									<span class="fa-stack">
+									<span class="fa-stack fa-lg">
 									  <a href="{% url 'write_review' entity_info.id %}">
 									  <i class="fa fa-circle fa-stack-2x"></i>
 									  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
 									</a>
 									</span>
 
-									<span class="fa-stack clickable" id="delete-review">
+									<span class="fa-stack fa-lg clickable delete-review">
 									  <i class="fa fa-circle fa-stack-2x text-danger"></i>
 									  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 									</span>
