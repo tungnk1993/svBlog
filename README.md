@@ -34,8 +34,12 @@
 	* Name, subject, school first
 * Add embed link/hyperlink option to copy direct link to review
 * Modularize navbar, breakdown template
+	* ~~Change limit to navbar autocomplete~~
+	* ~~Add jquery ui css~~
 * COLOR COLOR COLOR
 * Ipad Portrait mode problem.....
+	* Media queries 768 -> 769
+* Bootstrap-select
 * Heart button under teacher image 
 
 ## Deployment

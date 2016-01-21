@@ -10,6 +10,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
 		<link rel="stylesheet" href="{% static "my.css" %}">
 		<link rel="stylesheet" href="{% static "style.css" %}">
 		<link rel="stylesheet" href="{% static "social_sharing.css" %}">
@@ -64,14 +65,25 @@
 				return ret;
 			};
 
+			var limit = 10;
 			$( "#searchbox" ).autocomplete({
 				source: function( request, response ) {
 					var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+					
+					var result = $.grep( all_entity, function( value ) {
+						value = value.name || value;
+						return matcher.test( value ) || matcher.test(normalize(value ));
+						}).slice(0, limit); 
+					response(result);
+					
+					/*
 					response( $.grep( all_entity, function( value ) {
 						value = value.name || value;
 						return matcher.test( value ) || matcher.test(normalize(value ));
 						}) 
 					);
+					*/
+					
 				},
 				focus: function( event, ui ) {
 					$( "#searchbox" ).val( ui.item.name);

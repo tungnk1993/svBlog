@@ -25,8 +25,12 @@ class Tag(models.Model):
 
 class Subject(models.Model):
 	name = models.CharField(max_length=100)
+
 	def __unicode__(self):
 		return self.name
+
+	class Meta:
+		unique_together = ('name',)
 		
 # Entity Model
 class Entity(models.Model):
