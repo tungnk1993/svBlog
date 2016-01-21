@@ -6,3 +6,6 @@
 
 # db
 *.sqlite3
+
+# Testing settings
+mysite/mysite/settings.py
