@@ -9,3 +9,6 @@
 
 # Testing settings
 mysite/mysite/settings.py
+
+# user media files
+mysite/media/*
