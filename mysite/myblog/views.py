@@ -221,14 +221,21 @@ def add_rating_info(review_list, criteria_list, optional_criteria_list):
 		each_review.optional_rating = optional_rating_list
 	return review_list
 
+def find_tag_in_taglist(tag_id, tag_list):
+	for item in tag_list:
+		if item.id == tag_id:
+			return item
+
+
 def add_tag_info(review_list, tag_list):
 	tag_count = defaultdict(int)
 	for each_review in review_list:
 		review_tag_list = [each_review.tag_1, each_review.tag_2, each_review.tag_3, each_review.tag_4, each_review.tag_5]
 		#print review_tag_list
-		review_tag_list = [item.id for item in review_tag_list if item]	
+		#review_tag_list = [item.id for item in review_tag_list if item]	
 		#print review_tag_list
-		review_tag_list = [tag_list[item-1] for item in review_tag_list]
+		review_tag_list = [find_tag_in_taglist(item.id, tag_list) for item in review_tag_list if item]
+
 		#print review_tag_list
 		each_review.tag_list = review_tag_list
 		for item in review_tag_list:
