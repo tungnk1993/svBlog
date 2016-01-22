@@ -57,7 +57,7 @@ body, h1, h2, h3, h4 {
 }
 
 .landing-bg {
-	background-image: url('images/bg.jpg');
+	background-image: url('images/progressive.jpg');
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -134,13 +134,24 @@ body, h1, h2, h3, h4 {
 
 .feature-icon {
 	color: rgb(103,151,165);
-	font-size: 5em;
+	font-size: 4.6em;
 }
-.feature-paragraph {
-	font-family: 'Open Sans';
-	font-size: 1.2em;
-	color: #606060;
-	font-weight: 400;
+@media (min-width: 320px) {
+	.feature-paragraph {
+		font-family: 'Open Sans';
+		font-size: 1.1em;
+		color: #606060;
+		font-weight: 400;	
+	}
+}
+
+@media (min-width: 1025px) {
+	.feature-paragraph {
+		font-family: 'Open Sans';
+		font-size: 1.3em;
+		color: #606060;
+		font-weight: 400;	
+	}
 }
 
 .feature-highlight {

@@ -355,6 +355,7 @@ def change_vote(request, review_id, vote_value):
 		return HttpResponse("Error AJAX", request.path)		
 	return HttpResponse("OK")
 
+
 def get_subject_list(entity_info):
 	if entity_info.is_teacher:
 		extra = ["Khác ()"]
