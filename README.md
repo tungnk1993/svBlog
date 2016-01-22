@@ -18,7 +18,8 @@
 ## TODO (should be in order)
 
 * Login notice when trying to vote
-* Landing page (18-19)
+* Landing page
+	* Landing page mobile/ipad portrait
 * Small UI Fixes
 	* Write_review_mobile
 		* ~~Bigger star on write review mobile~~
@@ -42,9 +43,14 @@
 * Bootstrap-select
 * Heart button under teacher image 
 
+## Optimization
+* Font
+* Image load order
+* Cache
+
 ## Deployment
-* Gitignore setup
-	* Sqlite
+* ~~Gitignore setup~~
+	* ~~Sqlite~~
 * uWsgi, nginx setup
 * Static files configure
 * Setup logging

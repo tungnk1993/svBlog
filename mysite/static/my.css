@@ -2,14 +2,14 @@
 	font-family: 'Gotham-Medium';
 	font-style: normal;
 	font-weight: normal;
-	src: local('Gotham-Medium'), url('fonts/Gotham-Medium.otf') format('opentype');
+	src: local('Gotham-Medium'), url('http://res.cloudinary.com/svblog/raw/upload/v1453469469/Gotham-Medium_omadpl.otf') format('opentype');
 }
 
 @font-face {
 	font-family: 'VNF-Gotham Book';
 	font-style: normal;
 	font-weight: normal;
-	src: local('VNF-Gotham Book'), url('fonts/VNF-Gotham Book.ttf') format('truetype');
+	src: local('VNF-Gotham Book'), url('http://res.cloudinary.com/svblog/raw/upload/v1453469467/VNF-Gotham_Book_kxh2hp.ttf') format('truetype');
 }
 
 body, h1, h2, h3, h4 {

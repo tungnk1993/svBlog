@@ -11,7 +11,7 @@
 }
 
 .landing-bg {
-	background-image: url('images/progressive.jpg');
+	background-image: url('http://res.cloudinary.com/svblog/image/upload/v1453468958/progressive_ne7ym2.jpg');
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -28,6 +28,26 @@
 	height: 35%;
 }
 
+@media (min-width: 320px) {
+	.landing-search-input {
+		width: 100%;
+		margin: auto;
+	}
+}
+
+@media (min-width: 768px) {
+	.landing-search-input {
+		width: 80%;
+		margin: auto;
+	}
+}
+
+@media (min-width: 1024px) {
+	.landing-search-input {
+		width: 50%;
+		margin: auto;
+	}
+}
 @media (min-width: 320px) {
 	.landing-header {
 		font-size: 2.2em;
