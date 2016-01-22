@@ -114,6 +114,50 @@ body, h1, h2, h3, h4 {
 	color: #ffffff;
 }
 
+.landing-divider {
+	margin-top: 3em;
+	border-top: 1.5px solid #ccc;
+	width: 80%;
+}
+
+.feature-section {
+	width: 100%;
+	margin: auto;
+}
+
+.feature-header {
+	font-family: 'Open Sans';
+	font-size: 1.5em;
+	font-weight: 600;
+	color: #111;
+}
+
+.feature-icon {
+	color: rgb(103,151,165);
+	font-size: 5em;
+}
+.feature-paragraph {
+	font-family: 'Open Sans';
+	font-size: 1.2em;
+	color: #606060;
+	font-weight: 400;
+}
+
+.feature-highlight {
+	font-weight: 600;
+	color: #ff9900;
+}
+
+.landing-info {
+}
+
+.text-fb {
+	color: #3b5998;
+	font-weight: 700;
+}
+.img-center {
+	margin: 0 auto;
+}
 .text-pink {
 	color: #F62469;
 }
