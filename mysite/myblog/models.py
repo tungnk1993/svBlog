@@ -76,7 +76,7 @@ class Review(models.Model):
 	# hidden stuff
 	is_fake = models.BooleanField(default=False)
 	hidden_name = models.CharField(max_length=100, blank=True, null=True)
-	hidden_profile = models.ImageField(blank=True, null=True)
+	hidden_profile = models.ImageField(blank=True, null=True, default='default_user_image.jpg')
 	hidden_bio = models.CharField(max_length=100, blank=True, null=True)
 
 	def __unicode__(self):
