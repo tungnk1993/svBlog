@@ -12,21 +12,6 @@
 	src: local('VNF-Gotham Book'), url('fonts/VNF-Gotham Book.ttf') format('truetype');
 }
 
-@font-face {
-	font-family: 'UTM Avo';
-	font-style: normal;
-	font-weight: normal;
-	src: local('UTM Avo'), url('fonts/utm-avo.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'Proxima Nova';
-	font-style: normal;
-	font-weight: normal;
-	src: local('Proxima Nova'), url('fonts/proximanova-regular-webfont.ttf') format('truetype');
-}
-
-
 body, h1, h2, h3, h4 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	color: #293742;
@@ -44,124 +29,30 @@ body, h1, h2, h3, h4 {
 	margin-bottom: 0px;
 }
 
-.landing-li {
-	color: #000000 !important;
+.navbar-username {
+	color: #000 !important;
 	font-weight: 700;
-	font-family: 'PT Sans', sans-serif;
-	letter-spacing: 0.5px;
-	font-size: 1.1em;
 }
 
-.landing-collapse-button {
-	background-color: #1a242f;
+.open>a {
+	background-color: #6599ff !important;
+	color: #fff !important;
 }
 
-.landing-bg {
-	background-image: url('images/progressive.jpg');
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	background-position: 50% 30%;
-	height: 130%;
+@media (max-width: 767px) {
+	.open .dropdown-menu>li>a {
+		color: #000 !important;
+	}	
 }
 
-.landing-search {
+.nicer-btn {
 	border-width: 1px;
+	margin-right: 1em;
 }
 
-.landing-header-space {
-	height: 35%;
+.nicer-btn::-webkit-input-placeholder {
+	color: #999;
 }
-
-.landing-header {
-	font-size: 5.5em;
-	color: #ffffff;
-	text-shadow: 1px 2px 3px #000000;
-	font-family: 'Gotham-Medium';
-}
-
-.landing-header-bg {
-	position: absolute;
-	background-color: black;
-	z-index: 0;
-	opacity: 0.3;
-	height: 130%;
-	width: 100%;
-}
-
-.landing-welcome {
-	font-size: 3em;
-	font-family: 'VNF-Gotham Book';
-	font-weight: 700;
-	color: #293742;
-}
-
-.landing-welcome-small {
-	margin-top: 1em;
-	font-size: 1.6em;
-	font-family: 'Roboto';
-	color: #000000;
-	letter-spacing: 1px;
-}
-
-.landing-start-now {
-	font-family: 'Open Sans';
-	font-weight: 600;
-	font-size: 2.2em;
-
-	background-color: #ff9900;
-	color: #ffffff;
-}
-
-.landing-divider {
-	margin-top: 3em;
-	border-top: 1.5px solid #ccc;
-	width: 80%;
-}
-
-.feature-section {
-	width: 100%;
-	margin: auto;
-}
-
-.feature-header {
-	font-family: 'Open Sans';
-	font-size: 1.5em;
-	font-weight: 600;
-	color: #111;
-}
-
-.feature-icon {
-	color: rgb(103,151,165);
-	font-size: 4.6em;
-}
-@media (min-width: 320px) {
-	.feature-paragraph {
-		font-family: 'Open Sans';
-		font-size: 1.1em;
-		color: #606060;
-		font-weight: 400;	
-	}
-}
-
-@media (min-width: 1025px) {
-	.feature-paragraph {
-		font-family: 'Open Sans';
-		font-size: 1.3em;
-		color: #606060;
-		font-weight: 400;	
-	}
-}
-
-.feature-highlight {
-	font-weight: 600;
-	color: #ff9900;
-}
-
-.landing-info {
-}
-
 .text-fb {
 	color: #3b5998;
 	font-weight: 700;

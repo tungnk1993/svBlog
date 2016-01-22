@@ -142,3 +142,14 @@ class Entity_Add_Info(models.Model):
 	def __unicode__(self):
 		return ' | '.join([self.name, self.date_added.strftime("%d-%m-%Y %H:%M")])
 
+
+class Mailing(models.Model):
+	name = models.TextField()
+	email = models.EmailField()
+
+	def __unicode__(self):
+		return ' | '.join([self.name, self.email])
+
+	class Meta:
+		unique_together = ('email',)
+

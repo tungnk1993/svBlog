@@ -1,0 +1,146 @@
+.landing-li {
+	color: #000000 !important;
+	font-weight: 700;
+	font-family: 'PT Sans', sans-serif;
+	letter-spacing: 0.5px;
+	font-size: 1.1em;
+}
+
+.landing-collapse-button {
+	background-color: #1a242f;
+}
+
+.landing-bg {
+	background-image: url('images/progressive.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: 50% 30%;
+	height: 130%;
+}
+
+.landing-search {
+	border-width: 1px;
+}
+
+.landing-header-space {
+	height: 35%;
+}
+
+@media (min-width: 320px) {
+	.landing-header {
+		font-size: 2.2em;
+		color: #ffffff;
+		text-shadow: 1px 2px 3px #000000;
+		font-family: 'Gotham-Medium';	
+	}
+}
+
+@media (min-width: 768px) {
+	.landing-header {
+		font-size: 5.5em;
+		color: #ffffff;
+		text-shadow: 1px 2px 3px #000000;
+		font-family: 'Gotham-Medium';	
+	}
+}
+
+.landing-header-bg {
+	position: absolute;
+	background-color: black;
+	z-index: 0;
+	opacity: 0.3;
+	height: 130%;
+	width: 100%;
+}
+
+.landing-welcome {
+	font-size: 3em;
+	font-family: 'VNF-Gotham Book';
+	font-weight: 700;
+	color: #293742;
+}
+
+.landing-welcome-small {
+	margin-top: 1em;
+	font-size: 1.6em;
+	font-family: 'Roboto';
+	color: #000000;
+	letter-spacing: 1px;
+}
+
+.landing-start-now {
+	font-family: 'Open Sans';
+	font-weight: 600;
+	font-size: 2.2em;
+
+	background-color: #ff9900;
+	color: #ffffff;
+}
+
+.landing-divider {
+	margin-top: 3em;
+	border-top: 1.5px solid #ccc;
+	width: 80%;
+}
+
+.feature-section {
+	width: 100%;
+	margin: auto;
+}
+
+.feature-header {
+	font-family: 'Open Sans';
+	font-size: 1.5em;
+	font-weight: 600;
+	color: #111;
+}
+
+.feature-icon {
+	color: rgb(103,151,165);
+	font-size: 4.6em;
+}
+@media (min-width: 320px) {
+	.feature-paragraph {
+		font-family: 'Open Sans';
+		font-size: 1.1em;
+		color: #606060;
+		font-weight: 400;	
+	}
+}
+
+@media (min-width: 1025px) {
+	.feature-paragraph {
+		font-family: 'Open Sans';
+		font-size: 1.3em;
+		color: #606060;
+		font-weight: 400;	
+	}
+}
+
+.feature-highlight {
+	font-weight: 600;
+	color: #ff9900;
+}
+
+.landing-feature {
+	background-color: #f5f5f5;
+}
+
+.landing-mailing {
+	background-color: #45707d;
+
+}
+
+.mailing-one {
+	font-family: 'Open Sans';
+	font-size: 2em;
+	color: #fff;
+}
+
+.mailing-two {
+	font-family: 'Open Sans';
+	font-size: 1.3em;
+	color: #fff;
+}

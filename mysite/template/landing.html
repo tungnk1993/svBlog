@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
 		<link rel="stylesheet" href="{% static "my.css" %}">
+		<link rel="stylesheet" href="{% static "landing.css" %}">
 		<link rel="stylesheet" href="{% static "style.css" %}">
 		<link rel="stylesheet" href="{% static "bootstrap-social.css" %}">
 		<script>
@@ -110,7 +111,7 @@
 
 						{% if user.is_authenticated %}
 						<li>
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<a href="#" class="dropdown-toggle navbar-username" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								<img src="{{ user.myuser.profile_icon.url }}" width="20" height="20">
 								&nbsp; {{ user.myuser.name}}
 								<span class="caret"></span>
@@ -118,7 +119,6 @@
 
 							<ul class="dropdown-menu">
 								<li><a href="{% url 'write_profile' %}">Cá nhân</a></li>
-								<li role="separator" class="divider"></li>
 								<li><a href="/accounts/logout?next={{ request.path }}">Logout</a></li>
 							</ul>
 						</li>
@@ -192,7 +192,7 @@
 				<div class="row feature-section">
 					<div class="col-sm-4 text-center no-padding-side">
 						<div class="col-sm-12 no-padding-side">
-							<img class="img-responsive img-center" src="{% static "images/c1.jpg" %}">
+							<img class="img-responsive img-center" src="{% static "images/d1.jpg" %}">
 							<br />
 							<span class="feature-header">ĐƠN GIẢN </span>
 							<br /><br />
@@ -204,7 +204,7 @@
 
 					<div class="col-sm-4 text-center no-padding-side">
 						<div class="col-sm-12 no-padding-side">
-							<img class="img-responsive img-center" src="{% static "images/c2.jpg" %}">
+							<img class="img-responsive img-center" src="{% static "images/d2.jpg" %}">
 							<br />
 							<span class="feature-header">KẾT NỐI</span>
 							<br /><br />
@@ -216,7 +216,7 @@
 
 					<div class="col-sm-4 text-center no-padding-side">
 						<div class="col-sm-12 no-padding-side">
-							<img class="img-responsive img-center" src="{% static "images/c3.jpg" %}">
+							<img class="img-responsive img-center" src="{% static "images/d3.jpg" %}">
 							<br />
 							<span class="feature-header">CỘNG ĐỒNG</span>
 							<br /><br />
@@ -229,63 +229,30 @@
 			</div>
 		</section>
 
-		<section id="feature">
+		<section class="landing-feature">
+			<div class="container-fluid">
+			</div>
+		</section>
+
+		<section class="landing-mailing">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12 text-center">
-						<h2>Featured Teacher/University</h2>
+					<div class="col-sm-12 text-center">
+						<span class="mailing-one">Để lại email của bạn để nhận tin từ svBlog</span>
+						<br />
+						<span class="mailing-two">Đừng lo, chúng tôi cũng ghét spam lắm ;)</span> <br />
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="col-md-3">
-							<img class="img-responsive" src="face.jpg">
-						</div>
-						<div class="col-md-9">
-							<h4>Thầy Trương Tuấn Dũng</h4>
-							<div>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star-empty"></span>
-
+					<div class="col-sm-12 text-center div-buffer">
+						<form class="form-inline">
+							<div class="form-group">
+								<input type="text" class="form-control nicer-btn" name="mailing-name" placeholder="Một cái tên">
 							</div>
-							<div>
-								<span class="glyphicon glyphicon-user"></span>1,000 reviews
+							<div class="form-group">
+								<input type="email" class="form-control nicer-btn" name="mailing-email" placeholder="Email">
 							</div>
-							<div class="tag-button">
-								<a href="#" class="btn btn-primary btn-xs">Mặt Ngu</a>
-								<a href="#" class="btn btn-primary btn-xs">Nói lắm</a>
-							</div>
-						</div>
+							<button type="submit" class="btn btn-success">ĐĂNG KÝ</button>
+						</form>
 					</div>
-					<div class="col-md-6">
-						<div class="col-md-3">
-							<img class="img-responsive" src="ftu.jpg">
-						</div>
-						<div class="col-md-9">
-						
-							<h4>Đại học Ngoại Thương FTU</h4>
-							<div>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star-empty"></span>
-
-							</div>
-							<div>
-								<span class="glyphicon glyphicon-user"></span>1,000 reviews
-							</div>
-							<div class="tag-button">
-								<a href="#" class="btn btn-primary btn-xs">Chất lượng giảng dạy</a>
-								<a href="#" class="btn btn-primary btn-xs">Cơ hội việc làm</a>
-							</div>
-						</div>
-					</div>
-
-			
 				</div>
 			</div>
 		</section>
