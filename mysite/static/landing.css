@@ -30,7 +30,7 @@
 
 @media (min-width: 320px) {
 	.landing-search-input {
-		width: 100%;
+		width: 95%;
 		margin: auto;
 	}
 }
@@ -55,6 +55,61 @@
 		text-shadow: 1px 2px 3px #000000;
 		font-family: 'Gotham-Medium';	
 	}
+
+	.landing-welcome {
+		font-size: 1.4em;
+		font-family: 'VNF-Gotham Book';
+		font-weight: 700;
+		color: #293742;
+	}
+
+	.landing-welcome-small {
+		margin-top: 1em;
+		font-size: 1.1em;
+		font-family: 'Roboto';
+		color: #000000;
+		letter-spacing: 1px;
+	}
+
+	.landing-start-now {
+		font-family: 'Open Sans';
+		font-weight: 600;
+		font-size: 1.3em;
+
+		background-color: #ff9900;
+		color: #ffffff;
+	}
+
+	.feature-header {
+		font-family: 'Open Sans';
+		font-size: 1.5em;
+		font-weight: 600;
+		color: #111;
+	}
+
+	.feature-icon {
+		color: rgb(103,151,165);
+		font-size: 4.6em;
+	}
+
+	.feature-paragraph {
+		font-family: 'Open Sans';
+		font-size: 0.9em;
+		color: #606060;
+		font-weight: 400;	
+	}
+
+	.mailing-one {
+		font-family: 'Open Sans';
+		font-size: 1.6em;
+		color: #fff;
+	}
+
+	.mailing-two {
+		font-family: 'Open Sans';
+		font-size: 0.9em;
+		color: #fff;
+	}
 }
 
 @media (min-width: 768px) {
@@ -63,6 +118,63 @@
 		color: #ffffff;
 		text-shadow: 1px 2px 3px #000000;
 		font-family: 'Gotham-Medium';	
+	}
+
+	.landing-welcome {
+		font-size: 3em;
+		font-family: 'VNF-Gotham Book';
+		font-weight: 700;
+		color: #293742;
+	}
+
+	.landing-welcome-small {
+		margin-top: 1em;
+		font-size: 1.6em;
+		font-family: 'Roboto';
+		color: #000000;
+		letter-spacing: 1px;
+	}
+
+	.landing-start-now {
+		font-family: 'Open Sans';
+		font-weight: 600;
+		font-size: 2.2em;
+
+		background-color: #ff9900;
+		color: #ffffff;
+	}
+
+	.feature-header {
+		font-family: 'Open Sans';
+		font-size: 1.5em;
+		font-weight: 600;
+		color: #111;
+	}
+
+	.feature-icon {
+		color: rgb(103,151,165);
+		font-size: 4.6em;
+	}
+
+	.mailing-one {
+		font-family: 'Open Sans';
+		font-size: 2em;
+		color: #fff;
+	}
+
+	.mailing-two {
+		font-family: 'Open Sans';
+		font-size: 1.3em;
+		color: #fff;
+	}
+}
+
+@media (min-width: 1025px) {
+	.feature-paragraph {
+		font-family: 'Open Sans';
+		font-size: 1.3em;
+		color: #606060;
+		font-weight: 400;	
 	}
 }
 
@@ -73,30 +185,7 @@
 	opacity: 0.3;
 	height: 130%;
 	width: 100%;
-}
-
-.landing-welcome {
-	font-size: 3em;
-	font-family: 'VNF-Gotham Book';
-	font-weight: 700;
-	color: #293742;
-}
-
-.landing-welcome-small {
-	margin-top: 1em;
-	font-size: 1.6em;
-	font-family: 'Roboto';
-	color: #000000;
-	letter-spacing: 1px;
-}
-
-.landing-start-now {
-	font-family: 'Open Sans';
-	font-weight: 600;
-	font-size: 2.2em;
-
-	background-color: #ff9900;
-	color: #ffffff;
+	top: 0;
 }
 
 .landing-divider {
@@ -110,34 +199,6 @@
 	margin: auto;
 }
 
-.feature-header {
-	font-family: 'Open Sans';
-	font-size: 1.5em;
-	font-weight: 600;
-	color: #111;
-}
-
-.feature-icon {
-	color: rgb(103,151,165);
-	font-size: 4.6em;
-}
-@media (min-width: 320px) {
-	.feature-paragraph {
-		font-family: 'Open Sans';
-		font-size: 1.1em;
-		color: #606060;
-		font-weight: 400;	
-	}
-}
-
-@media (min-width: 1025px) {
-	.feature-paragraph {
-		font-family: 'Open Sans';
-		font-size: 1.3em;
-		color: #606060;
-		font-weight: 400;	
-	}
-}
 
 .feature-highlight {
 	font-weight: 600;
@@ -153,14 +214,3 @@
 
 }
 
-.mailing-one {
-	font-family: 'Open Sans';
-	font-size: 2em;
-	color: #fff;
-}
-
-.mailing-two {
-	font-family: 'Open Sans';
-	font-size: 1.3em;
-	color: #fff;
-}
